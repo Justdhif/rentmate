@@ -4,3 +4,5 @@ export * from './properties.schema';
 export * from './property-facilities.schema';
 export * from './rooms.schema';
 export * from './room-assignments.schema';
+export * from './payments.schema';
+export * from './payment-invoices.schema';
