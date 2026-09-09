@@ -23,11 +23,14 @@ export const users = pgTable('users', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
-export const usersRelations = relations(users, ({ one }) => ({
+import { properties } from './properties.schema';
+
+export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(userProfiles, {
     fields: [users.id],
     references: [userProfiles.userId],
   }),
+  properties: many(properties),
 }));
 
 export type User = typeof users.$inferSelect;
