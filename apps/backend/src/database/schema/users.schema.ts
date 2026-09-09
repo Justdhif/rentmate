@@ -24,6 +24,7 @@ export const users = pgTable('users', {
 });
 
 import { properties } from './properties.schema';
+import { roomAssignments } from './room-assignments.schema';
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(userProfiles, {
@@ -31,6 +32,7 @@ export const usersRelations = relations(users, ({ one, many }) => ({
     references: [userProfiles.userId],
   }),
   properties: many(properties),
+  assignments: many(roomAssignments),
 }));
 
 export type User = typeof users.$inferSelect;

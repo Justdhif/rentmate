@@ -35,11 +35,14 @@ export const rooms = pgTable('rooms', {
   updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 });
 
-export const roomsRelations = relations(rooms, ({ one }) => ({
+import { roomAssignments } from './room-assignments.schema';
+
+export const roomsRelations = relations(rooms, ({ one, many }) => ({
   property: one(properties, {
     fields: [rooms.propertyId],
     references: [properties.id],
   }),
+  assignments: many(roomAssignments),
 }));
 
 export type Room = typeof rooms.$inferSelect;
