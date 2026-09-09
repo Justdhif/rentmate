@@ -1,0 +1,21 @@
+import { drizzle } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
+import { ConfigService } from '@nestjs/config';
+import * as schema from './schema';
+
+export const DRIZZLE = 'DRIZZLE';
+
+export const databaseProviders = [
+  {
+    provide: DRIZZLE,
+    inject: [ConfigService],
+    useFactory: (configService: ConfigService) => {
+      const connectionString = configService.get<string>('DATABASE_URL')!;
+      const client = postgres(connectionString, {
+        ssl: 'require',
+        max: 10,
+      });
+      return drizzle(client, { schema });
+    },
+  },
+];
