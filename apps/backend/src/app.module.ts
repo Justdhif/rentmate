@@ -10,6 +10,8 @@ import { RoomsModule } from './rooms/rooms.module';
 import { TenantsModule } from './tenants/tenants.module';
 import { PaymentsModule } from './payments/payments.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
+import { AnalyticsModule } from './analytics/analytics.module';
+import { AiModule } from './ai/ai.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { MaintenanceModule } from './maintenance/maintenance.module';
     TenantsModule,
     PaymentsModule,
     MaintenanceModule,
+    AnalyticsModule,
+    AiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
