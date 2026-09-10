@@ -3,8 +3,14 @@
 import React, { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
 import {
   DoorClosed,
@@ -253,115 +259,115 @@ function RoomsContent() {
         </div>
       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Tambah Unit Kamar Baru"
-      >
-        <form onSubmit={handleCreateRoom} className="space-y-4">
-          {submitError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{submitError}</span>
-            </div>
-          )}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tambah Unit Kamar Baru</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleCreateRoom} className="space-y-4">
+            {submitError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Gedung / Properti
-            </label>
-            <select
-              required
-              value={formData.propertyId}
-              onChange={(e) => setFormData({ ...formData, propertyId: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              {properties.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Nomor Kamar
-              </label>
-              <input
-                type="text"
-                required
-                placeholder="101"
-                value={formData.roomNumber}
-                onChange={(e) => setFormData({ ...formData, roomNumber: e.target.value })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Lantai
-              </label>
-              <input
-                type="number"
-                required
-                min={1}
-                value={formData.floor}
-                onChange={(e) => setFormData({ ...formData, floor: Number(e.target.value) })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Tipe Kamar
+                Gedung / Properti
               </label>
               <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                required
+                value={formData.propertyId}
+                onChange={(e) => setFormData({ ...formData, propertyId: e.target.value })}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               >
-                <option value="STANDARD">Standard</option>
-                <option value="DELUXE">Deluxe</option>
-                <option value="VIP">VIP</option>
-                <option value="SUITE">Suite</option>
+                {properties.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
               </select>
             </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Tarif Bulanan (Rp)
-              </label>
-              <input
-                type="number"
-                required
-                step={50000}
-                value={formData.monthlyPrice}
-                onChange={(e) => setFormData({ ...formData, monthlyPrice: Number(e.target.value) })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
-            </div>
-          </div>
 
-          <div className="pt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 cursor-pointer"
-            >
-              {submitting ? 'Menyimpan...' : 'Simpan Kamar'}
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Nomor Kamar
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="101"
+                  value={formData.roomNumber}
+                  onChange={(e) => setFormData({ ...formData, roomNumber: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Lantai
+                </label>
+                <input
+                  type="number"
+                  required
+                  min={1}
+                  value={formData.floor}
+                  onChange={(e) => setFormData({ ...formData, floor: Number(e.target.value) })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Tipe Kamar
+                </label>
+                <select
+                  value={formData.type}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                >
+                  <option value="STANDARD">Standard</option>
+                  <option value="DELUXE">Deluxe</option>
+                  <option value="VIP">VIP</option>
+                  <option value="SUITE">Suite</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Tarif Bulanan (Rp)
+                </label>
+                <input
+                  type="number"
+                  required
+                  step={50000}
+                  value={formData.monthlyPrice}
+                  onChange={(e) => setFormData({ ...formData, monthlyPrice: Number(e.target.value) })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                disabled={submitting}
+              >
+                {submitting ? 'Menyimpan...' : 'Simpan Kamar'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

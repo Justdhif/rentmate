@@ -112,13 +112,6 @@ export default function LoginPage() {
             </p>
           </div>
         </div>
-
-        <div className="mt-6 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-medium">
-            <Sparkles className="w-3 h-3 text-indigo-600" />
-            <span>Didukung AI Groq & Midtrans Payment</span>
-          </div>
-        </div>
       </div>
     </div>
   );

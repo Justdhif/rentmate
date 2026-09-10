@@ -2,8 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
 import {
   Plus,
@@ -231,107 +237,107 @@ export default function PaymentsPage() {
         </div>
       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Terbitkan Tagihan Sewa Baru"
-      >
-        <form onSubmit={handleCreateInvoice} className="space-y-4">
-          {submitError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{submitError}</span>
-            </div>
-          )}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Terbitkan Tagihan Sewa Baru</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleCreateInvoice} className="space-y-4">
+            {submitError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Pilih Penghuni Kost
-            </label>
-            <select
-              required
-              value={formData.roomAssignmentId}
-              onChange={(e) => {
-                const ass = assignments.find((a) => a.id === e.target.value);
-                setFormData({
-                  ...formData,
-                  roomAssignmentId: e.target.value,
-                  amount: ass?.rentAmount || formData.amount,
-                });
-              }}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              {assignments.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.user?.profile?.fullName || a.user?.email} - Kamar {a.room?.roomNumber}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Nominal Tagihan (Rp)
+                Pilih Penghuni Kost
+              </label>
+              <select
+                required
+                value={formData.roomAssignmentId}
+                onChange={(e) => {
+                  const ass = assignments.find((a) => a.id === e.target.value);
+                  setFormData({
+                    ...formData,
+                    roomAssignmentId: e.target.value,
+                    amount: ass?.rentAmount || formData.amount,
+                  });
+                }}
+                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              >
+                {assignments.map((a) => (
+                  <option key={a.id} value={a.id}>
+                    {a.user?.profile?.fullName || a.user?.email} - Kamar {a.room?.roomNumber}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Nominal Tagihan (Rp)
+                </label>
+                <input
+                  type="number"
+                  required
+                  value={formData.amount}
+                  onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Jatuh Tempo Pembayaran
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={formData.dueDate}
+                  onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Keterangan Tagihan
               </label>
               <input
-                type="number"
+                type="text"
                 required
-                value={formData.amount}
-                onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Jatuh Tempo Pembayaran
-              </label>
-              <input
-                type="date"
-                required
-                value={formData.dueDate}
-                onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
+            <div className="p-3 bg-indigo-50/70 rounded-xl text-[11px] text-indigo-800 leading-relaxed">
+              Invoice ini akan langsung di-generate ke Midtrans Sandbox dan menghasilkan tautan QRIS, Virtual Account, & GoPay.
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Keterangan Tagihan
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-          </div>
-
-          <div className="p-3 bg-indigo-50/70 rounded-xl text-[11px] text-indigo-800 leading-relaxed">
-            Invoice ini akan langsung di-generate ke Midtrans Sandbox dan menghasilkan tautan QRIS, Virtual Account, & GoPay.
-          </div>
-
-          <div className="pt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 cursor-pointer"
-            >
-              {submitting ? 'Menerbitkan...' : 'Terbitkan Tagihan'}
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="pt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                disabled={submitting}
+              >
+                {submitting ? 'Menerbitkan...' : 'Terbitkan Tagihan'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

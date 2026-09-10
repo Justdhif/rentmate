@@ -1,8 +1,15 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
-import { api, setStoredToken, clearStoredAuth, getStoredToken } from '@/lib/api';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
+import {
+  api,
+  setStoredTokens,
+  clearStoredAuth,
+  getStoredToken,
+  getStoredRefreshToken,
+  refreshTokensSilently,
+} from '@/lib/api';
 
 export interface UserProfile {
   id: string;
@@ -27,6 +34,7 @@ interface AuthContextType {
   register: (fullName: string, email: string, password: string, role?: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
+  cycleTokens: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,9 +44,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
-  const pathname = usePathname();
 
-  const fetchCurrentUser = async () => {
+  const fetchCurrentUser = useCallback(async () => {
     try {
       const res = await api.get<User>('/auth/me');
       if (res.success && res.data) {
@@ -46,11 +53,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('rentmate_user', JSON.stringify(res.data));
       }
     } catch {
-      clearStoredAuth();
-      setUser(null);
-      setToken(null);
+      // Handled by apiRequest 401 interceptor
     }
-  };
+  }, []);
+
+  /**
+   * Proactively cycles the access and refresh tokens in the background
+   * (Sliding session / Endless token cycle)
+   */
+  const cycleTokens = useCallback(async () => {
+    const refreshToken = getStoredRefreshToken();
+    if (!refreshToken) return;
+
+    try {
+      const newToken = await refreshTokensSilently();
+      if (newToken) {
+        setToken(newToken);
+      }
+    } catch {
+      // Ignored for silent background execution
+    }
+  }, []);
 
   useEffect(() => {
     const initAuth = async () => {
@@ -71,7 +94,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     initAuth();
-  }, []);
+  }, [fetchCurrentUser]);
+
+  // Background Token Cycling:
+  // 1. Cycle periodically every 15 minutes
+  useEffect(() => {
+    const CYCLE_INTERVAL_MS = 15 * 60 * 1000;
+    const interval = setInterval(() => {
+      if (getStoredToken() && getStoredRefreshToken()) {
+        cycleTokens();
+      }
+    }, CYCLE_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, [cycleTokens]);
+
+  // 2. Cycle when user refocuses the app / switches back to the tab
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        if (getStoredToken() && getStoredRefreshToken()) {
+          cycleTokens();
+        }
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [cycleTokens]);
 
   const login = async (email: string, password: string) => {
     const res = await api.post<{ user: User; accessToken: string; refreshToken: string }>(
@@ -80,10 +130,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 
     if (res.success && res.data) {
-      setStoredToken(res.data.accessToken);
-      if (res.data.refreshToken) {
-        localStorage.setItem('rentmate_refresh_token', res.data.refreshToken);
-      }
+      setStoredTokens(res.data.accessToken, res.data.refreshToken);
       localStorage.setItem('rentmate_user', JSON.stringify(res.data.user));
       setToken(res.data.accessToken);
       setUser(res.data.user);
@@ -103,10 +150,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 
     if (res.success && res.data) {
-      setStoredToken(res.data.accessToken);
-      if (res.data.refreshToken) {
-        localStorage.setItem('rentmate_refresh_token', res.data.refreshToken);
-      }
+      setStoredTokens(res.data.accessToken, res.data.refreshToken);
       localStorage.setItem('rentmate_user', JSON.stringify(res.data.user));
       setToken(res.data.accessToken);
       setUser(res.data.user);
@@ -141,6 +185,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         register,
         logout,
         refreshUser,
+        cycleTokens,
       }}
     >
       {children}

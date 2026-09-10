@@ -2,8 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
 import {
   Users,
@@ -274,107 +280,107 @@ export default function TenantsPage() {
         </div>
       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Tetapkan Penghuni ke Kamar"
-      >
-        <form onSubmit={handleAssign} className="space-y-4">
-          {submitError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{submitError}</span>
-            </div>
-          )}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tetapkan Penghuni ke Kamar</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAssign} className="space-y-4">
+            {submitError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Email Penghuni (Akun Terdaftar)
-            </label>
-            <input
-              type="email"
-              required
-              placeholder="penghuni@gmail.com"
-              value={formData.tenantEmail}
-              onChange={(e) => setFormData({ ...formData, tenantEmail: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-            <p className="text-[10px] text-gray-400 mt-1">
-              Jika penghuni belum memiliki akun, sistem akan membuatkan akses secara otomatis.
-            </p>
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Pilih Kamar Tersedia
-            </label>
-            <select
-              required
-              value={formData.roomId}
-              onChange={(e) => {
-                const room = availableRooms.find((r) => r.id === e.target.value);
-                setFormData({
-                  ...formData,
-                  roomId: e.target.value,
-                  rentAmount: room?.monthlyPrice || formData.rentAmount,
-                });
-              }}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            >
-              {availableRooms.map((r) => (
-                <option key={r.id} value={r.id}>
-                  Kamar {r.roomNumber} ({r.property?.name || 'Gedung'}) - {formatCurrency(Number(r.monthlyPrice))}/bln
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Tarif Kesepakatan (Rp)
+                Email Penghuni (Akun Terdaftar)
               </label>
               <input
-                type="number"
+                type="email"
                 required
-                value={formData.rentAmount}
-                onChange={(e) => setFormData({ ...formData, rentAmount: Number(e.target.value) })}
+                placeholder="penghuni@gmail.com"
+                value={formData.tenantEmail}
+                onChange={(e) => setFormData({ ...formData, tenantEmail: e.target.value })}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
+              <p className="text-[10px] text-gray-400 mt-1">
+                Jika penghuni belum memiliki akun, sistem akan membuatkan akses secara otomatis.
+              </p>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Tanggal Masuk
+                Pilih Kamar Tersedia
               </label>
-              <input
-                type="date"
+              <select
                 required
-                value={formData.startDate}
-                onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                value={formData.roomId}
+                onChange={(e) => {
+                  const room = availableRooms.find((r) => r.id === e.target.value);
+                  setFormData({
+                    ...formData,
+                    roomId: e.target.value,
+                    rentAmount: room?.monthlyPrice || formData.rentAmount,
+                  });
+                }}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              />
+              >
+                {availableRooms.map((r) => (
+                  <option key={r.id} value={r.id}>
+                    Kamar {r.roomNumber} ({r.property?.name || 'Gedung'}) - {formatCurrency(Number(r.monthlyPrice))}/bln
+                  </option>
+                ))}
+              </select>
             </div>
-          </div>
 
-          <div className="pt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 cursor-pointer"
-            >
-              {submitting ? 'Memproses...' : 'Tetapkan Kamar'}
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Tarif Kesepakatan (Rp)
+                </label>
+                <input
+                  type="number"
+                  required
+                  value={formData.rentAmount}
+                  onChange={(e) => setFormData({ ...formData, rentAmount: Number(e.target.value) })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Tanggal Masuk
+                </label>
+                <input
+                  type="date"
+                  required
+                  value={formData.startDate}
+                  onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="pt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                disabled={submitting}
+              >
+                {submitting ? 'Memproses...' : 'Tetapkan Kamar'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

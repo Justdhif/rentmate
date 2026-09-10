@@ -3,7 +3,13 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Modal } from '@/components/ui/Modal';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
 import {
   Building2,
@@ -195,108 +201,108 @@ export default function PropertiesPage() {
         </div>
       )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Tambah Unit Properti Baru"
-      >
-        <form onSubmit={handleCreate} className="space-y-4">
-          {submitError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{submitError}</span>
-            </div>
-          )}
+      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tambah Unit Properti Baru</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleCreate} className="space-y-4">
+            {submitError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Nama Properti Kost
-            </label>
-            <input
-              type="text"
-              required
-              placeholder="Kost Putri Menteng Asri"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Tipe Kost
-              </label>
-              <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-              >
-                <option value="CAMPUR">Campur</option>
-                <option value="PUTRA">Khusus Putra</option>
-                <option value="PUTRI">Khusus Putri</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-semibold text-gray-700 mb-1">
-                Kota / Kabupaten
+                Nama Properti Kost
               </label>
               <input
                 type="text"
                 required
-                placeholder="Bandung"
-                value={formData.city}
-                onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                placeholder="Kost Putri Menteng Asri"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
               />
             </div>
-          </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Alamat Lengkap
-            </label>
-            <textarea
-              required
-              rows={2}
-              placeholder="Jl. Sukajadi No. 42, RT 02/05"
-              value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-          </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Tipe Kost
+                </label>
+                <select
+                  value={formData.type}
+                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                >
+                  <option value="CAMPUR">Campur</option>
+                  <option value="PUTRA">Khusus Putra</option>
+                  <option value="PUTRI">Khusus Putri</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-gray-700 mb-1">
+                  Kota / Kabupaten
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="Bandung"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                />
+              </div>
+            </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Deskripsi Singkat (Opsional)
-            </label>
-            <input
-              type="text"
-              placeholder="Dekat kampus, wifi 100mbps, keamanan 24 jam"
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-          </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Alamat Lengkap
+              </label>
+              <textarea
+                required
+                rows={2}
+                placeholder="Jl. Sukajadi No. 42, RT 02/05"
+                value={formData.address}
+                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
 
-          <div className="pt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setIsModalOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 cursor-pointer"
-            >
-              {submitting ? 'Menyimpan...' : 'Simpan Properti'}
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Deskripsi Singkat (Opsional)
+              </label>
+              <input
+                type="text"
+                placeholder="Dekat kampus, wifi 100mbps, keamanan 24 jam"
+                value={formData.description}
+                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+            </div>
+
+            <div className="pt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                disabled={submitting}
+              >
+                {submitting ? 'Menyimpan...' : 'Simpan Properti'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }

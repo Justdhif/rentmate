@@ -1,10 +1,11 @@
-'use client';
+﻿'use client';
 
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -28,10 +29,10 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/20 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-medium text-gray-500">Memuat RentMate...</p>
+          <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-medium text-muted-foreground">Memuat RentMate...</p>
         </div>
       </div>
     );
@@ -40,12 +41,16 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50 flex">
-      <Sidebar />
-      <div className="flex-1 flex flex-col min-w-0">
-        <Header title={title} subtitle={subtitle} />
-        <main className="flex-1 p-8 overflow-y-auto">{children}</main>
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background">
+        <Sidebar />
+        <SidebarInset className="flex flex-col min-w-0 bg-background">
+          <Header title={title} subtitle={subtitle} />
+          <main className="flex-1 p-6 lg:p-8 overflow-y-auto bg-gray-50/50">
+            {children}
+          </main>
+        </SidebarInset>
       </div>
-    </div>
+    </SidebarProvider>
   );
 };

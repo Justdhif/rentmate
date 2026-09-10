@@ -31,12 +31,83 @@ export const setStoredToken = (token: string): void => {
   localStorage.setItem('rentmate_token', token);
 };
 
+export const getStoredRefreshToken = (): string | null => {
+  if (typeof window === 'undefined') return null;
+  return localStorage.getItem('rentmate_refresh_token');
+};
+
+export const setStoredRefreshToken = (token: string): void => {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('rentmate_refresh_token', token);
+};
+
+export const setStoredTokens = (accessToken: string, refreshToken?: string): void => {
+  if (typeof window === 'undefined') return;
+  localStorage.setItem('rentmate_token', accessToken);
+  if (refreshToken) {
+    localStorage.setItem('rentmate_refresh_token', refreshToken);
+  }
+};
+
 export const clearStoredAuth = (): void => {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('rentmate_token');
   localStorage.removeItem('rentmate_refresh_token');
   localStorage.removeItem('rentmate_user');
 };
+
+// State for concurrent silent refresh requests
+let isRefreshing = false;
+let refreshSubscribers: Array<(newToken: string) => void> = [];
+
+const subscribeTokenRefresh = (callback: (newToken: string) => void) => {
+  refreshSubscribers.push(callback);
+};
+
+const onRefreshed = (newToken: string) => {
+  refreshSubscribers.forEach((callback) => callback(newToken));
+  refreshSubscribers = [];
+};
+
+const onRefreshFailed = () => {
+  refreshSubscribers = [];
+};
+
+/**
+ * Perform silent token rotation / cycling (Endless Session)
+ * Calls /auth/refresh with the stored refresh token.
+ * On success, saves both new access token and new refresh token.
+ */
+export async function refreshTokensSilently(): Promise<string | null> {
+  const currentRefreshToken = getStoredRefreshToken();
+  if (!currentRefreshToken) {
+    return null;
+  }
+
+  try {
+    const response = await fetch(`${API_BASE_URL}/auth/refresh`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ refreshToken: currentRefreshToken }),
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const json = await response.json();
+    if (json.success && json.data?.accessToken) {
+      setStoredTokens(json.data.accessToken, json.data.refreshToken);
+      return json.data.accessToken;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 export async function apiRequest<T = any>(
   endpoint: string,
@@ -67,13 +138,101 @@ export async function apiRequest<T = any>(
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      if (response.status === 401 && typeof window !== 'undefined') {
-        // Token expired or invalid
-        clearStoredAuth();
-        if (!window.location.pathname.startsWith('/login') && !window.location.pathname.startsWith('/register')) {
-          window.location.href = '/login';
+      const isAuthEndpoint =
+        endpoint.includes('/auth/login') ||
+        endpoint.includes('/auth/register') ||
+        endpoint.includes('/auth/refresh');
+
+      // Intercept 401 Unauthorized for Seamless Token Cycling
+      if (response.status === 401 && !isAuthEndpoint && typeof window !== 'undefined') {
+        const refreshToken = getStoredRefreshToken();
+
+        if (refreshToken) {
+          // If a refresh is already in flight, queue this request until it completes
+          if (isRefreshing) {
+            return new Promise<ApiResponse<T>>((resolve, reject) => {
+              subscribeTokenRefresh(async (newToken) => {
+                try {
+                  const retryHeaders = {
+                    ...headers,
+                    Authorization: `Bearer ${newToken}`,
+                  };
+                  const retryRes = await fetch(url, {
+                    ...options,
+                    headers: retryHeaders,
+                  });
+                  const retryData = await retryRes.json().catch(() => ({}));
+                  if (!retryRes.ok) {
+                    reject(
+                      new ApiError(
+                        retryData.message || 'Request failed after refresh',
+                        retryRes.status,
+                        retryData.errors,
+                      ),
+                    );
+                  } else {
+                    resolve(retryData);
+                  }
+                } catch (err: any) {
+                  reject(err);
+                }
+              });
+            });
+          }
+
+          // Initiate silent refresh
+          isRefreshing = true;
+          try {
+            const newToken = await refreshTokensSilently();
+            if (newToken) {
+              onRefreshed(newToken);
+
+              // Retry the original request with the new rotated access token
+              const retryHeaders = {
+                ...headers,
+                Authorization: `Bearer ${newToken}`,
+              };
+              const retryRes = await fetch(url, {
+                ...options,
+                headers: retryHeaders,
+              });
+              const retryData = await retryRes.json().catch(() => ({}));
+
+              if (!retryRes.ok) {
+                throw new ApiError(
+                  retryData.message || `Request failed with status ${retryRes.status}`,
+                  retryRes.status,
+                  retryData.errors,
+                );
+              }
+
+              return retryData;
+            } else {
+              // Refresh token is completely expired or revoked
+              onRefreshFailed();
+              clearStoredAuth();
+              if (
+                !window.location.pathname.startsWith('/login') &&
+                !window.location.pathname.startsWith('/register')
+              ) {
+                window.location.href = '/login';
+              }
+              throw new ApiError('Session expired. Please log in again.', 401);
+            }
+          } finally {
+            isRefreshing = false;
+          }
+        } else {
+          clearStoredAuth();
+          if (
+            !window.location.pathname.startsWith('/login') &&
+            !window.location.pathname.startsWith('/register')
+          ) {
+            window.location.href = '/login';
+          }
         }
       }
+
       throw new ApiError(
         data.message || `Request failed with status ${response.status}`,
         response.status,

@@ -2,8 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
-import { Badge } from '@/components/ui/Badge';
-import { Modal } from '@/components/ui/Modal';
+import { Badge } from '@/components/ui/badge';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
 import { api } from '@/lib/api';
 import {
   Clock,
@@ -244,60 +250,60 @@ export default function MaintenancePage() {
         </div>
       )}
 
-      <Modal
-        isOpen={isAssignModalOpen}
-        onClose={() => setIsAssignModalOpen(false)}
-        title="Tugaskan Teknisi Perbaikan"
-      >
-        <form onSubmit={handleAssignTechnician} className="space-y-4">
-          {submitError && (
-            <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
-              <AlertCircle className="w-4 h-4 shrink-0" />
-              <span>{submitError}</span>
+      <Dialog open={isAssignModalOpen} onOpenChange={setIsAssignModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>Tugaskan Teknisi Perbaikan</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAssignTechnician} className="space-y-4">
+            {submitError && (
+              <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-700 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0" />
+                <span>{submitError}</span>
+              </div>
+            )}
+
+            <div>
+              <p className="text-xs text-gray-500 mb-2">
+                Tiket: <strong>{selectedTicket?.title}</strong> (Kamar {selectedTicket?.room?.roomNumber})
+              </p>
             </div>
-          )}
 
-          <div>
-            <p className="text-xs text-gray-500 mb-2">
-              Tiket: <strong>{selectedTicket?.title}</strong> (Kamar {selectedTicket?.room?.roomNumber})
-            </p>
-          </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-700 mb-1">
+                Email Akun Teknisi
+              </label>
+              <input
+                type="email"
+                required
+                placeholder="teknisi@rentmate.id"
+                value={techEmail}
+                onChange={(e) => setTechEmail(e.target.value)}
+                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              />
+              <p className="text-[10px] text-gray-400 mt-1">
+                Teknisi akan menerima notifikasi pengerjaan dan dapat mengisi rincian biaya & bukti foto perbaikan.
+              </p>
+            </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-gray-700 mb-1">
-              Email Akun Teknisi
-            </label>
-            <input
-              type="email"
-              required
-              placeholder="teknisi@rentmate.id"
-              value={techEmail}
-              onChange={(e) => setTechEmail(e.target.value)}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none"
-            />
-            <p className="text-[10px] text-gray-400 mt-1">
-              Teknisi akan menerima notifikasi pengerjaan dan dapat mengisi rincian biaya & bukti foto perbaikan.
-            </p>
-          </div>
-
-          <div className="pt-4 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={() => setIsAssignModalOpen(false)}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 cursor-pointer"
-            >
-              Batal
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              className="px-4 py-2 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 disabled:opacity-50 cursor-pointer"
-            >
-              {submitting ? 'Menugaskan...' : 'Tugaskan Sekarang'}
-            </button>
-          </div>
-        </form>
-      </Modal>
+            <div className="pt-4 flex justify-end gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => setIsAssignModalOpen(false)}
+              >
+                Batal
+              </Button>
+              <Button
+                type="submit"
+                disabled={submitting}
+              >
+                {submitting ? 'Menugaskan...' : 'Tugaskan Sekarang'}
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </AppLayout>
   );
 }
