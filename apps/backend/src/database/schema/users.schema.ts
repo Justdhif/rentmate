@@ -26,6 +26,7 @@ export const users = pgTable('users', {
 import { properties } from './properties.schema';
 import { roomAssignments } from './room-assignments.schema';
 import { payments } from './payments.schema';
+import { maintenanceRequests } from './maintenance-requests.schema';
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(userProfiles, {
@@ -35,6 +36,12 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   properties: many(properties),
   assignments: many(roomAssignments),
   payments: many(payments),
+  tenantMaintenanceRequests: many(maintenanceRequests, {
+    relationName: 'tenant_requests',
+  }),
+  technicianMaintenanceTasks: many(maintenanceRequests, {
+    relationName: 'technician_tasks',
+  }),
 }));
 
 export type User = typeof users.$inferSelect;

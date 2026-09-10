@@ -6,3 +6,5 @@ export * from './rooms.schema';
 export * from './room-assignments.schema';
 export * from './payments.schema';
 export * from './payment-invoices.schema';
+export * from './maintenance-requests.schema';
+export * from './maintenance-attachments.schema';
