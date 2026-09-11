@@ -11,12 +11,26 @@ import { AuthService } from './auth.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { GoogleAuthDto } from './dto/google-auth.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Post('google')
+  @HttpCode(HttpStatus.OK)
+  async googleAuth(@Body() dto: GoogleAuthDto) {
+    const result = await this.authService.googleAuth(dto);
+    return {
+      success: true,
+      message: result.isNewUser
+        ? 'Silakan tentukan peran akun Anda'
+        : 'Login dengan Google berhasil',
+      data: result,
+    };
+  }
 
   @Post('register')
   async register(@Body() dto: RegisterDto) {

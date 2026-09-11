@@ -26,11 +26,23 @@ export interface User {
   profile?: UserProfile;
 }
 
+export interface GoogleAuthResult {
+  isNewUser: boolean;
+  email?: string;
+  fullName?: string;
+  avatarUrl?: string;
+  googleId?: string;
+  user?: User;
+  accessToken?: string;
+  refreshToken?: string;
+}
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
+  loginWithGoogle: (idToken: string, role?: 'OWNER' | 'TENANT') => Promise<GoogleAuthResult>;
   register: (fullName: string, email: string, password: string, role?: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -66,9 +78,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (!refreshToken) return;
 
     try {
-      const newToken = await refreshTokensSilently();
-      if (newToken) {
-        setToken(newToken);
+      const res = await refreshTokensSilently();
+      if (res.status === 'SUCCESS' && res.token) {
+        setToken(res.token);
       }
     } catch {
       // Ignored for silent background execution
@@ -138,6 +150,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const loginWithGoogle = async (
+    idToken: string,
+    role?: 'OWNER' | 'TENANT',
+  ): Promise<GoogleAuthResult> => {
+    const res = await api.post<GoogleAuthResult>('/auth/google', {
+      idToken,
+      role,
+    });
+
+    if (res.success && res.data) {
+      if (res.data.isNewUser) {
+        return res.data;
+      }
+
+      if (res.data.accessToken && res.data.user) {
+        setStoredTokens(res.data.accessToken, res.data.refreshToken);
+        localStorage.setItem('rentmate_user', JSON.stringify(res.data.user));
+        setToken(res.data.accessToken);
+        setUser(res.data.user);
+        router.push('/dashboard');
+      }
+      return res.data;
+    }
+
+    throw new Error(res.message || 'Autentikasi Google gagal');
+  };
+
   const register = async (
     fullName: string,
     email: string,
@@ -182,6 +221,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         token,
         isLoading,
         login,
+        loginWithGoogle,
         register,
         logout,
         refreshUser,

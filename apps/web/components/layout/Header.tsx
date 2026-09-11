@@ -1,12 +1,9 @@
-﻿'use client';
+'use client';
 
 import React from 'react';
-import { useAuth } from '@/contexts/AuthContext';
-import { LogOut, Bell } from 'lucide-react';
+import { Bell, Search } from 'lucide-react';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 interface HeaderProps {
   title?: string;
@@ -17,18 +14,16 @@ export const Header: React.FC<HeaderProps> = ({
   title = 'Dashboard',
   subtitle,
 }) => {
-  const { user, logout } = useAuth();
-
   return (
-    <header className="h-16 bg-background border-b border-border px-4 lg:px-8 flex items-center justify-between shrink-0">
-      <div className="flex items-center gap-3">
-        <SidebarTrigger className="text-muted-foreground hover:text-foreground" />
-        <div>
-          <h1 className="text-lg lg:text-xl font-bold text-foreground tracking-tight leading-tight">
+    <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-card/80 backdrop-blur-md border-b border-slate-200/80 dark:border-border/60 px-4 lg:px-8 flex items-center justify-between shrink-0">
+      <div className="flex items-center gap-3 min-w-0">
+        <SidebarTrigger />
+        <div className="min-w-0">
+          <h1 className="text-base sm:text-lg font-bold text-slate-900 dark:text-foreground tracking-tight leading-tight truncate">
             {title}
           </h1>
           {subtitle && (
-            <p className="text-xs text-muted-foreground hidden sm:block mt-0.5">
+            <p className="text-xs text-slate-500 dark:text-muted-foreground hidden sm:block mt-0.5 truncate">
               {subtitle}
             </p>
           )}
@@ -36,44 +31,29 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       <div className="flex items-center gap-3">
-        {/* Notification indicator */}
+        {/* Global Search Trigger */}
+        <Button
+          variant="outline"
+          size="sm"
+          className="hidden md:flex items-center gap-2 text-slate-500 dark:text-muted-foreground font-normal h-9 px-3 rounded-xl border-slate-200 dark:border-border/60 bg-slate-50 dark:bg-muted/30 hover:bg-slate-100 dark:hover:bg-muted/50 w-60 justify-start"
+        >
+          <Search className="w-3.5 h-3.5 shrink-0 text-slate-400" />
+          <span className="text-xs truncate">Cari kamar, penghuni...</span>
+          <kbd className="ml-auto text-[10px] bg-white dark:bg-background border border-slate-200 dark:border-border rounded px-1.5 py-0.5 font-mono text-slate-400">
+            ⌘K
+          </kbd>
+        </Button>
+
+        {/* Notification Bell */}
         <Button
           variant="ghost"
           size="icon"
-          className="relative text-muted-foreground hover:text-foreground rounded-xl"
+          className="relative text-slate-500 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-slate-100 dark:hover:bg-accent rounded-xl h-9 w-9"
           title="Notifikasi"
         >
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-background" />
+          <Bell className="w-4 h-4" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-indigo-600 rounded-full ring-2 ring-white dark:ring-card" />
         </Button>
-
-        {/* User Profile info */}
-        <div className="flex items-center gap-3 pl-3 border-l border-border">
-          <Avatar className="w-8 h-8">
-            <AvatarFallback className="bg-primary/10 text-primary font-bold text-xs">
-              {user?.profile?.fullName?.charAt(0) || user?.email?.charAt(0) || 'O'}
-            </AvatarFallback>
-          </Avatar>
-
-          <div className="hidden sm:block text-left text-xs">
-            <p className="font-semibold text-foreground line-clamp-1">
-              {user?.profile?.fullName || user?.email || 'Owner'}
-            </p>
-            <Badge variant="outline" className="text-[10px] px-1.5 py-0 uppercase font-medium mt-0.5">
-              {user?.role || 'OWNER'}
-            </Badge>
-          </div>
-
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => logout()}
-            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-xl ml-1"
-            title="Keluar (Logout)"
-          >
-            <LogOut className="w-4 h-4" />
-          </Button>
-        </div>
       </div>
     </header>
   );

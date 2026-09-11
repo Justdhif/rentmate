@@ -12,10 +12,13 @@ import { PaymentsModule } from './payments/payments.module';
 import { MaintenanceModule } from './maintenance/maintenance.module';
 import { AnalyticsModule } from './analytics/analytics.module';
 import { AiModule } from './ai/ai.module';
+import { MailModule } from './mail/mail.module';
+import { CloudinaryModule } from './common/cloudinary/cloudinary.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    CloudinaryModule,
     DatabaseModule,
     UsersModule,
     AuthModule,
@@ -26,6 +29,7 @@ import { AiModule } from './ai/ai.module';
     MaintenanceModule,
     AnalyticsModule,
     AiModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

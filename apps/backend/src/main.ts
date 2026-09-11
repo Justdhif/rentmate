@@ -23,7 +23,7 @@ async function bootstrap() {
 
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  const port = process.env.PORT ?? 3000;
+  const port = process.env.PORT ?? 4000;
   await app.listen(port);
   console.log(`🚀 RentMate API is running on: http://localhost:${port}/api/v1`);
 }

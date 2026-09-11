@@ -4,6 +4,8 @@ import { DRIZZLE } from '../database/database.provider';
 import * as schema from '../database/schema';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 
+import { AvatarHelper } from '../common/helpers/avatar.helper';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -23,17 +25,27 @@ export class UsersService {
       return null;
     }
 
+    if (user.profile && !user.profile.avatarUrl) {
+      user.profile.avatarUrl = AvatarHelper.generateDefaultAvatar(user.id);
+    }
+
     const { passwordHash, refreshTokenHash, ...result } = user;
     return result;
   }
 
   async findByEmail(email: string) {
-    return this.db.query.users.findFirst({
+    const user = await this.db.query.users.findFirst({
       where: eq(schema.users.email, email.toLowerCase().trim()),
       with: {
         profile: true,
       },
     });
+
+    if (user && user.profile && !user.profile.avatarUrl) {
+      user.profile.avatarUrl = AvatarHelper.generateDefaultAvatar(user.id);
+    }
+
+    return user;
   }
 
   async updateRefreshToken(userId: string, refreshTokenHash: string | null) {

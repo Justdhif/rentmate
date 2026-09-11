@@ -1,5 +1,5 @@
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api/v1';
+  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
 
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -73,15 +73,20 @@ const onRefreshFailed = () => {
   refreshSubscribers = [];
 };
 
+export interface RefreshResult {
+  token: string | null;
+  status: 'SUCCESS' | 'EXPIRED' | 'NETWORK_ERROR';
+}
+
 /**
  * Perform silent token rotation / cycling (Endless Session)
  * Calls /auth/refresh with the stored refresh token.
  * On success, saves both new access token and new refresh token.
  */
-export async function refreshTokensSilently(): Promise<string | null> {
+export async function refreshTokensSilently(): Promise<RefreshResult> {
   const currentRefreshToken = getStoredRefreshToken();
   if (!currentRefreshToken) {
-    return null;
+    return { token: null, status: 'EXPIRED' };
   }
 
   try {
@@ -94,18 +99,22 @@ export async function refreshTokensSilently(): Promise<string | null> {
       body: JSON.stringify({ refreshToken: currentRefreshToken }),
     });
 
+    if (response.status === 401 || response.status === 403) {
+      return { token: null, status: 'EXPIRED' };
+    }
+
     if (!response.ok) {
-      return null;
+      return { token: null, status: 'NETWORK_ERROR' };
     }
 
     const json = await response.json();
     if (json.success && json.data?.accessToken) {
       setStoredTokens(json.data.accessToken, json.data.refreshToken);
-      return json.data.accessToken;
+      return { token: json.data.accessToken, status: 'SUCCESS' };
     }
-    return null;
+    return { token: null, status: 'EXPIRED' };
   } catch {
-    return null;
+    return { token: null, status: 'NETWORK_ERROR' };
   }
 }
 
@@ -141,7 +150,8 @@ export async function apiRequest<T = any>(
       const isAuthEndpoint =
         endpoint.includes('/auth/login') ||
         endpoint.includes('/auth/register') ||
-        endpoint.includes('/auth/refresh');
+        endpoint.includes('/auth/refresh') ||
+        endpoint.includes('/auth/google');
 
       // Intercept 401 Unauthorized for Seamless Token Cycling
       if (response.status === 401 && !isAuthEndpoint && typeof window !== 'undefined') {
@@ -183,14 +193,14 @@ export async function apiRequest<T = any>(
           // Initiate silent refresh
           isRefreshing = true;
           try {
-            const newToken = await refreshTokensSilently();
-            if (newToken) {
-              onRefreshed(newToken);
+            const refreshRes = await refreshTokensSilently();
+            if (refreshRes.status === 'SUCCESS' && refreshRes.token) {
+              onRefreshed(refreshRes.token);
 
               // Retry the original request with the new rotated access token
               const retryHeaders = {
                 ...headers,
-                Authorization: `Bearer ${newToken}`,
+                Authorization: `Bearer ${refreshRes.token}`,
               };
               const retryRes = await fetch(url, {
                 ...options,
@@ -207,7 +217,7 @@ export async function apiRequest<T = any>(
               }
 
               return retryData;
-            } else {
+            } else if (refreshRes.status === 'EXPIRED') {
               // Refresh token is completely expired or revoked
               onRefreshFailed();
               clearStoredAuth();
@@ -218,6 +228,10 @@ export async function apiRequest<T = any>(
                 window.location.href = '/login';
               }
               throw new ApiError('Session expired. Please log in again.', 401);
+            } else {
+              // Temporary server or network failure: do not clear auth
+              onRefreshFailed();
+              throw new ApiError('Tidak dapat terhubung ke server backend.', 503);
             }
           } finally {
             isRefreshing = false;

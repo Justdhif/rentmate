@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
+import { SplashScreen } from '@/components/ui/SplashScreen';
 
 export default function HomePage() {
   const router = useRouter();
@@ -18,12 +19,5 @@ export default function HomePage() {
     }
   }, [user, isLoading, router]);
 
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-9 h-9 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin" />
-        <p className="text-sm font-medium text-gray-500">Mengarahkan...</p>
-      </div>
-    </div>
-  );
+  return <SplashScreen message="Mengarahkan ke halaman..." />;
 }
