@@ -1,30 +1,20 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import { api } from '@/lib/api';
 import { Building2, Plus } from 'lucide-react';
 import { Property, PropertyCard } from './PropertyCard';
-import { AddPropertyModal } from './AddPropertyModal';
+import { toast } from 'sonner';
 
 export const PropertiesView: React.FC = () => {
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    city: '',
-    province: 'Jawa Barat',
-    postalCode: '',
-    description: '',
-    type: 'CAMPUR',
-  });
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState(false);
 
   const fetchProperties = async () => {
     try {
@@ -44,57 +34,27 @@ export const PropertiesView: React.FC = () => {
     fetchProperties();
   }, []);
 
-  const handleCreate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitError(null);
-    setSubmitting(true);
-
-    try {
-      const res = await api.post('/properties', formData);
-      if (res.success) {
-        setIsModalOpen(false);
-        setFormData({
-          name: '',
-          address: '',
-          city: '',
-          province: 'Jawa Barat',
-          postalCode: '',
-          description: '',
-          type: 'CAMPUR',
-        });
-        await fetchProperties();
-      }
-    } catch (err: any) {
-      setSubmitError(err.message || 'Gagal menambahkan properti');
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   const handleDelete = async (id: string, name: string) => {
     if (!confirm('Hapus properti "' + name + '" beserta kamar di dalamnya?')) return;
     try {
       await api.delete('/properties/' + id);
+      toast.success(`Properti "${name}" berhasil dihapus.`);
       await fetchProperties();
     } catch (err: any) {
-      alert(err.message || 'Gagal menghapus properti');
+      toast.error(err.message || 'Gagal menghapus properti');
     }
   };
 
   const totalRooms = properties.reduce((acc, curr) => acc + (curr.rooms?.length || 0), 0);
 
   return (
-    <AppLayout
-      title="Manajemen Properti"
-      subtitle="Kelola gedung dan unit rumah kost yang Anda miliki."
-    >
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3">
-          <div>
-            <h2 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-foreground">
-              Daftar Gedung Kost
-            </h2>
-            <div className="flex items-center gap-2 mt-1">
+    <AppLayout>
+      <PageHeader
+        title="Manajemen Properti"
+        description="Kelola gedung dan unit rumah kost yang Anda miliki."
+        actions={
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2">
               <Badge variant="outline" className="bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400 border-indigo-100 dark:border-indigo-500/20">
                 {properties.length} Properti
               </Badge>
@@ -102,17 +62,18 @@ export const PropertiesView: React.FC = () => {
                 {totalRooms} Kamar Total
               </Badge>
             </div>
+            <Button
+              asChild
+              className="flex items-center gap-2 rounded-xl shadow-md shadow-indigo-500/20 cursor-pointer"
+            >
+              <Link href="/properties/create">
+                <Plus className="w-4 h-4" />
+                <span>Tambah Properti</span>
+              </Link>
+            </Button>
           </div>
-        </div>
-
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center gap-2 rounded-xl shadow-md shadow-indigo-500/20 cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Tambah Properti</span>
-        </Button>
-      </div>
+        }
+      />
 
       {isLoading ? (
         <div className="py-20 flex justify-center">
@@ -129,10 +90,12 @@ export const PropertiesView: React.FC = () => {
               Mulai kelola bisnis kost Anda dengan menambahkan properti pertama. Anda dapat menambahkan kamar dan memantau penghuni setelahnya.
             </p>
             <Button
-              onClick={() => setIsModalOpen(true)}
+              asChild
               className="mt-6 rounded-xl shadow-xs cursor-pointer"
             >
-              Tambah Properti Sekarang
+              <Link href="/properties/create">
+                Tambah Properti Sekarang
+              </Link>
             </Button>
           </CardContent>
         </Card>
@@ -148,16 +111,6 @@ export const PropertiesView: React.FC = () => {
           ))}
         </div>
       )}
-
-      <AddPropertyModal
-        isOpen={isModalOpen}
-        onOpenChange={setIsModalOpen}
-        formData={formData}
-        setFormData={setFormData}
-        onSubmit={handleCreate}
-        submitting={submitting}
-        submitError={submitError}
-      />
     </AppLayout>
   );
 };

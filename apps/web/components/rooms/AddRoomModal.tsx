@@ -9,7 +9,15 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
+import { ImageGalleryUploader } from '@/components/common/ImageGalleryUploader';
 
 interface AddRoomModalProps {
   isOpen: boolean;
@@ -23,6 +31,7 @@ interface AddRoomModalProps {
     monthlyPrice: number;
     dailyPrice: number;
     status: string;
+    photos?: string[];
   };
   setFormData: React.Dispatch<React.SetStateAction<any>>;
   onSubmit: (e: React.FormEvent) => Promise<void>;
@@ -42,8 +51,8 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg p-0 overflow-hidden bg-white dark:bg-card border-gray-200 dark:border-border">
-        <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-white dark:bg-card border-gray-200 dark:border-border">
+        <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10 sticky top-0 z-20">
           <DialogTitle className="text-lg font-semibold">Tambah Kamar Baru</DialogTitle>
         </DialogHeader>
 
@@ -60,18 +69,21 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
                 Pilih Gedung Kost / Properti
               </label>
-              <select
-                required
+              <Select
                 value={formData.propertyId}
-                onChange={(e) => setFormData({ ...formData, propertyId: e.target.value })}
-                className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                onValueChange={(val) => setFormData({ ...formData, propertyId: val })}
               >
-                {properties.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    {p.name} ({p.city})
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="w-full h-10 rounded-xl">
+                  <SelectValue placeholder="Pilih gedung kost" />
+                </SelectTrigger>
+                <SelectContent>
+                  {properties.map((p) => (
+                    <SelectItem key={p.id} value={p.id}>
+                      {p.name} ({p.city})
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
@@ -109,15 +121,19 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
                 <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
                   Tipe Kamar
                 </label>
-                <select
+                <Select
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  onValueChange={(val) => setFormData({ ...formData, type: val })}
                 >
-                  <option value="STANDARD">Standard</option>
-                  <option value="DELUXE">Deluxe</option>
-                  <option value="VIP">VIP</option>
-                </select>
+                  <SelectTrigger className="w-full h-10 rounded-xl">
+                    <SelectValue placeholder="Pilih tipe kamar" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="STANDARD">Standard</SelectItem>
+                    <SelectItem value="DELUXE">Deluxe</SelectItem>
+                    <SelectItem value="VIP">VIP</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
@@ -133,6 +149,16 @@ export const AddRoomModal: React.FC<AddRoomModalProps> = ({
                   className="h-10 rounded-xl"
                 />
               </div>
+            </div>
+
+            <div className="pt-2">
+              <ImageGalleryUploader
+                images={formData.photos || []}
+                onChange={(photos) => setFormData({ ...formData, photos })}
+                type="room"
+                title="Foto & Pratinjau Kamar"
+                description="Tambahkan foto suasana kamar tidur, kasur, atau kamar mandi. Foto pertama menjadi cover utama."
+              />
             </div>
           </div>
 

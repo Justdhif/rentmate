@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Card, CardContent } from '@/components/ui/card';
 import { api } from '@/lib/api';
 import { Wrench, CheckCircle2 } from 'lucide-react';
 import { MaintenanceTicket, MaintenanceTicketCard } from './MaintenanceTicketCard';
 import { MaintenanceStats } from './MaintenanceStats';
 import { AssignTechnicianModal } from './AssignTechnicianModal';
+import { toast } from 'sonner';
 
 export const MaintenanceView: React.FC = () => {
   const [tickets, setTickets] = useState<MaintenanceTicket[]>([]);
@@ -50,11 +52,13 @@ export const MaintenanceView: React.FC = () => {
 
       if (res.success) {
         setIsAssignModalOpen(false);
+        toast.success(`Teknisi ${techEmail} berhasil ditugaskan!`);
         setTechEmail('');
         await fetchTickets();
       }
     } catch (err: any) {
       setSubmitError(err.message || 'Gagal menugaskan teknisi');
+      toast.error(err.message || 'Gagal menugaskan teknisi');
     } finally {
       setSubmitting(false);
     }
@@ -66,9 +70,10 @@ export const MaintenanceView: React.FC = () => {
       await api.post('/maintenance/' + id + '/resolve', {
         actualCost: 0,
       });
+      toast.success('Tiket perbaikan berhasil ditandai selesai!');
       await fetchTickets();
     } catch (err: any) {
-      alert(err.message || 'Gagal menyelesaikan tiket');
+      toast.error(err.message || 'Gagal menyelesaikan tiket');
     }
   };
 
@@ -76,10 +81,11 @@ export const MaintenanceView: React.FC = () => {
   const resolvedCount = tickets.filter((t) => t.status === 'RESOLVED').length;
 
   return (
-    <AppLayout
-      title="Tiket & Maintenance"
-      subtitle="Pantau laporan kerusakan dari penghuni kost dan koordinasikan perbaikan teknisi."
-    >
+    <AppLayout>
+      <PageHeader
+        title="Tiket & Maintenance"
+        description="Pantau laporan kerusakan dari penghuni kost dan koordinasikan perbaikan teknisi."
+      />
       {/* Metric Cards */}
       <MaintenanceStats
         totalCount={tickets.length}
@@ -87,11 +93,8 @@ export const MaintenanceView: React.FC = () => {
         resolvedCount={resolvedCount}
       />
 
-      <div className="mb-6">
+      <div className="mb-4">
         <h2 className="text-lg font-bold text-gray-900 dark:text-foreground">Daftar Tiket Perbaikan</h2>
-        <p className="text-sm text-gray-500 dark:text-muted-foreground mt-0.5">
-          Keluhan fasilitas yang dilaporkan oleh penghuni kamar.
-        </p>
       </div>
 
       {isLoading ? (

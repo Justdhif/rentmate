@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useMemo, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { api } from '@/lib/api';
@@ -10,6 +11,7 @@ import { DoorClosed, Plus } from 'lucide-react';
 import { Room, RoomCard } from './RoomCard';
 import { AddRoomModal } from './AddRoomModal';
 import { RoomFilterBar } from './RoomFilterBar';
+import { toast } from 'sonner';
 
 function RoomsContent() {
   const searchParams = useSearchParams();
@@ -32,6 +34,7 @@ function RoomsContent() {
     monthlyPrice: 1500000,
     dailyPrice: 0,
     status: 'AVAILABLE',
+    photos: [] as string[],
   });
 
   const fetchData = async () => {
@@ -75,6 +78,7 @@ function RoomsContent() {
 
       if (res.success) {
         setIsModalOpen(false);
+        toast.success(`Kamar ${formData.roomNumber} berhasil ditambahkan!`);
         setFormData({
           propertyId: properties[0]?.id || '',
           roomNumber: '',
@@ -83,11 +87,13 @@ function RoomsContent() {
           monthlyPrice: 1500000,
           dailyPrice: 0,
           status: 'AVAILABLE',
+          photos: [],
         });
         await fetchData();
       }
     } catch (err: any) {
       setSubmitError(err.message || 'Gagal menambahkan kamar');
+      toast.error(err.message || 'Gagal menambahkan kamar');
     } finally {
       setSubmitting(false);
     }
@@ -97,9 +103,10 @@ function RoomsContent() {
     if (!confirm(`Hapus kamar ${roomNumber}? Data riwayat kamar ini akan dihapus.`)) return;
     try {
       await api.delete(`/rooms/${id}`);
+      toast.success(`Kamar ${roomNumber} berhasil dihapus.`);
       await fetchData();
     } catch (err: any) {
-      alert(err.message || 'Gagal menghapus kamar');
+      toast.error(err.message || 'Gagal menghapus kamar');
     }
   };
 
@@ -128,17 +135,39 @@ function RoomsContent() {
   };
 
   return (
-    <AppLayout
-      title="Manajemen Kamar"
-      subtitle="Kelola ketersediaan, tipe, dan tarif kamar pada setiap properti kost."
-    >
+    <AppLayout>
+      <PageHeader
+        title="Manajemen Kamar"
+        description="Kelola ketersediaan, tipe, dan tarif kamar pada setiap properti kost."
+        actions={
+          <Button
+            onClick={() => {
+              if (properties.length === 0) {
+                toast.warning('Tambahkan gedung properti terlebih dahulu sebelum mendaftarkan kamar.');
+                return;
+              }
+              setIsModalOpen(true);
+            }}
+            className="flex items-center gap-2 rounded-xl shadow-md shadow-indigo-500/20 cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Tambah Kamar</span>
+          </Button>
+        }
+      />
       <RoomFilterBar
         properties={properties}
         selectedProperty={selectedProperty}
         setSelectedProperty={setSelectedProperty}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
-        onOpenAddModal={() => setIsModalOpen(true)}
+        onOpenAddModal={() => {
+          if (properties.length === 0) {
+            toast.warning('Tambahkan gedung properti terlebih dahulu sebelum mendaftarkan kamar.');
+            return;
+          }
+          setIsModalOpen(true);
+        }}
         stats={stats}
       />
 
@@ -160,7 +189,17 @@ function RoomsContent() {
                 ? 'Tambahkan properti terlebih dahulu sebelum dapat mendaftarkan unit kamar.'
                 : 'Belum ada unit kamar yang sesuai dengan filter yang dipilih.'}
             </p>
-            {properties.length > 0 && (
+            {properties.length === 0 ? (
+              <Button
+                onClick={() => {
+                  toast.warning('Tambahkan gedung properti terlebih dahulu.');
+                }}
+                asChild
+                className="mt-6 rounded-xl shadow-xs cursor-pointer"
+              >
+                <a href="/properties/create">+ Buat Properti Terlebih Dahulu</a>
+              </Button>
+            ) : (
               <Button
                 onClick={() => setIsModalOpen(true)}
                 className="mt-6 rounded-xl shadow-xs cursor-pointer"

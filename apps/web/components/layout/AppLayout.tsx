@@ -4,20 +4,22 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { Sidebar } from './Sidebar';
-import { Header } from './Header';
+import { Header, BreadcrumbEntry } from './Header';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
 
 interface AppLayoutProps {
   children: React.ReactNode;
-  title: string;
+  title?: string;
   subtitle?: string;
+  breadcrumbs?: BreadcrumbEntry[];
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
   children,
   title,
   subtitle,
+  breadcrumbs,
 }) => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
@@ -81,7 +83,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
     <SidebarProvider>
       <Sidebar />
       <SidebarInset className="flex flex-col min-w-0 flex-1 bg-background">
-        <Header title={title} subtitle={subtitle} />
+        <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
         <main className="flex-1 p-5 md:p-6 lg:p-8 overflow-y-auto bg-slate-50/80 dark:bg-background">
           <div className="max-w-7xl mx-auto w-full animate-fade-in">
             {children}

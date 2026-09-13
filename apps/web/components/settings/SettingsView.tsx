@@ -2,11 +2,15 @@
 
 import React, { useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { useAuth } from '@/contexts/AuthContext';
 import { api } from '@/lib/api';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { ProfileSettingsForm } from './ProfileSettingsForm';
+import { ThemeSettingsCard } from './ThemeSettingsCard';
 import { SystemIntegrationCard } from './SystemIntegrationCard';
+import { AccountSecurityCard } from './AccountSecurityCard';
+import { toast } from 'sonner';
 
 export const SettingsView: React.FC = () => {
   const { user, refreshUser } = useAuth();
@@ -41,21 +45,26 @@ export const SettingsView: React.FC = () => {
 
       if (res.success) {
         setSuccessMsg('Profil berhasil diperbarui!');
+        toast.success('Profil berhasil diperbarui!');
         await refreshUser();
       }
     } catch (err: any) {
-      setErrorMsg(err.message || 'Gagal memperbarui profil');
+      const msg = err.message || 'Gagal memperbarui profil';
+      setErrorMsg(msg);
+      toast.error(msg);
     } finally {
       setIsSaving(false);
     }
   };
 
   return (
-    <AppLayout
-      title="Pengaturan Akun"
-      subtitle="Kelola profil pemilik kost, kredensial akses, dan preferensi notifikasi."
-    >
-      <div className="max-w-3xl space-y-6 animate-fade-in">
+    <AppLayout>
+      <div className="w-full space-y-6 sm:space-y-8 animate-fade-in">
+        <PageHeader
+          title="Pengaturan Akun"
+          description="Kelola profil pemilik kost, kredensial akses, preferensi tampilan, dan status integrasi."
+        />
+
         {successMsg && (
           <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-800 dark:text-emerald-400 text-sm flex items-center gap-3 animate-slide-up">
             <CheckCircle2 className="w-5 h-5 shrink-0" />
@@ -70,19 +79,30 @@ export const SettingsView: React.FC = () => {
           </div>
         )}
 
-        <ProfileSettingsForm
-          user={user}
-          fullName={fullName}
-          setFullName={setFullName}
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
-          avatarUrl={avatarUrl}
-          setAvatarUrl={setAvatarUrl}
-          onSubmit={handleUpdateProfile}
-          isSaving={isSaving}
-        />
+        {/* 2-Column Responsive Layout for Balanced Dashboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          {/* Main Left Column: Profile Form */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+            <ProfileSettingsForm
+              user={user}
+              fullName={fullName}
+              setFullName={setFullName}
+              phoneNumber={phoneNumber}
+              setPhoneNumber={setPhoneNumber}
+              avatarUrl={avatarUrl}
+              setAvatarUrl={setAvatarUrl}
+              onSubmit={handleUpdateProfile}
+              isSaving={isSaving}
+            />
+          </div>
 
-        <SystemIntegrationCard />
+          {/* Supporting Right Column: Theme, Security & Integrations */}
+          <div className="lg:col-span-5 xl:col-span-4 space-y-6">
+            <ThemeSettingsCard />
+            <AccountSecurityCard user={user} />
+            <SystemIntegrationCard />
+          </div>
+        </div>
       </div>
     </AppLayout>
   );

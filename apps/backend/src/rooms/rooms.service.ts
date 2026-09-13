@@ -6,7 +6,7 @@ import {
   BadRequestException,
   Inject,
 } from '@nestjs/common';
-import { eq, and } from 'drizzle-orm';
+import { eq, and, inArray, desc } from 'drizzle-orm';
 import { DRIZZLE } from '../database/database.provider';
 import * as schema from '../database/schema';
 import { CreateRoomDto } from './dto/create-room.dto';
@@ -63,6 +63,55 @@ export class RoomsService {
     return newRoom;
   }
 
+  async findAllForUser(
+    userId: string,
+    userRole: string,
+    query?: RoomQueryDto,
+  ) {
+    let propertyIds: string[] = [];
+
+    if (userRole !== 'ADMIN') {
+      const properties = await this.propertiesService.findAll(userId, userRole);
+      if (!properties || properties.length === 0) {
+        return [];
+      }
+      propertyIds = properties.map((p: any) => p.id);
+    }
+
+    const conditions: any[] = [];
+    if (propertyIds.length > 0) {
+      conditions.push(inArray(schema.rooms.propertyId, propertyIds));
+    }
+
+    if (query?.status) {
+      conditions.push(eq(schema.rooms.status, query.status));
+    }
+
+    if (query?.roomType) {
+      conditions.push(eq(schema.rooms.roomType, query.roomType));
+    }
+
+    const whereClause = conditions.length > 0 ? and(...conditions) : undefined;
+
+    const roomList = await this.db.query.rooms.findMany({
+      where: whereClause,
+      with: {
+        property: true,
+      },
+      orderBy: (rooms: any, { asc }: any) => [
+        asc(rooms.propertyId),
+        asc(rooms.floor),
+        asc(rooms.roomNumber),
+      ],
+    });
+
+    return roomList.map((room: any) => ({
+      ...room,
+      monthlyPrice: Number(room.price) || 0,
+      type: room.roomType || 'STANDARD',
+    }));
+  }
+
   async findAllByProperty(
     propertyId: string,
     userId: string,
@@ -82,10 +131,19 @@ export class RoomsService {
       conditions.push(eq(schema.rooms.roomType, query.roomType));
     }
 
-    return this.db.query.rooms.findMany({
+    const roomList = await this.db.query.rooms.findMany({
       where: and(...conditions),
-      orderBy: (rooms, { asc }) => [asc(rooms.floor), asc(rooms.roomNumber)],
+      with: {
+        property: true,
+      },
+      orderBy: (rooms: any, { asc }: any) => [asc(rooms.floor), asc(rooms.roomNumber)],
     });
+
+    return roomList.map((room: any) => ({
+      ...room,
+      monthlyPrice: Number(room.price) || 0,
+      type: room.roomType || 'STANDARD',
+    }));
   }
 
   async findOne(id: string, userId: string, userRole: string) {

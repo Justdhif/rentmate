@@ -41,6 +41,32 @@ export class TenantsController {
     };
   }
 
+  @Post('tenants/assign')
+  @Roles('OWNER', 'ADMIN')
+  async assignTenantDirect(
+    @CurrentUser('id') ownerId: string,
+    @CurrentUser('role') role: string,
+    @Body() dto: any,
+  ) {
+    const roomId = dto.roomId;
+    const result = await this.tenantsService.assignRoom(
+      roomId,
+      ownerId,
+      role,
+      {
+        tenantEmail: dto.email || dto.tenantEmail,
+        startDate: dto.startDate || new Date().toISOString().split('T')[0],
+        endDate: dto.endDate,
+        monthlyRent: dto.rentAmount ? Number(dto.rentAmount) : undefined,
+      },
+    );
+    return {
+      success: true,
+      message: 'Tenant assigned to room successfully',
+      data: result,
+    };
+  }
+
   @Post('rooms/:id/unassign')
   @Roles('OWNER', 'ADMIN')
   async unassignRoom(
@@ -50,6 +76,17 @@ export class TenantsController {
     @Body() dto: UnassignRoomDto,
   ) {
     return this.tenantsService.unassignRoom(roomId, ownerId, role, dto);
+  }
+
+  @Post('tenants/:id/unassign')
+  @Roles('OWNER', 'ADMIN')
+  async unassignTenant(
+    @Param('id') id: string,
+    @CurrentUser('id') ownerId: string,
+    @CurrentUser('role') role: string,
+    @Body() dto: UnassignRoomDto,
+  ) {
+    return this.tenantsService.unassignByAnyId(id, ownerId, role, dto);
   }
 
   @Post('tenants/invite')

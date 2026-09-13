@@ -9,7 +9,15 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
+import { ImageGalleryUploader } from '@/components/common/ImageGalleryUploader';
 
 interface AddPropertyModalProps {
   isOpen: boolean;
@@ -18,20 +26,22 @@ interface AddPropertyModalProps {
     name: string;
     address: string;
     city: string;
-    province: string;
-    postalCode: string;
+    province?: string;
+    postalCode?: string;
     description: string;
     type: string;
+    photos?: string[];
   };
   setFormData: React.Dispatch<
     React.SetStateAction<{
       name: string;
       address: string;
       city: string;
-      province: string;
-      postalCode: string;
+      province?: string;
+      postalCode?: string;
       description: string;
       type: string;
+      photos?: string[];
     }>
   >;
   onSubmit: (e: React.FormEvent) => Promise<void>;
@@ -50,8 +60,8 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
 }) => {
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-lg p-0 overflow-hidden bg-white dark:bg-card border-gray-200 dark:border-border">
-        <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10">
+      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-white dark:bg-card border-gray-200 dark:border-border">
+        <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10 sticky top-0 z-20">
           <DialogTitle className="text-lg font-semibold">Tambah Properti Baru</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="p-6 space-y-5">
@@ -82,15 +92,19 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
                 <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
                   Tipe Kost
                 </label>
-                <select
+                <Select
                   value={formData.type}
-                  onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  onValueChange={(val) => setFormData({ ...formData, type: val })}
                 >
-                  <option value="CAMPUR">Campur</option>
-                  <option value="PUTRA">Khusus Putra</option>
-                  <option value="PUTRI">Khusus Putri</option>
-                </select>
+                  <SelectTrigger className="w-full h-10 rounded-xl">
+                    <SelectValue placeholder="Pilih tipe kost" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="CAMPUR">Campur</SelectItem>
+                    <SelectItem value="PUTRA">Khusus Putra</SelectItem>
+                    <SelectItem value="PUTRI">Khusus Putri</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
@@ -132,6 +146,16 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                 placeholder="Fasilitas umum, akses lokasi, atau ketentuan kost..."
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+              />
+            </div>
+
+            <div className="pt-2">
+              <ImageGalleryUploader
+                images={formData.photos || []}
+                onChange={(photos) => setFormData({ ...formData, photos })}
+                type="property"
+                title="Foto & Galeri Properti"
+                description="Tambahkan foto bangunan atau fasilitas kost. Foto pertama menjadi cover utama."
               />
             </div>
           </div>

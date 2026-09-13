@@ -9,6 +9,13 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
 
 interface CreateInvoiceModalProps {
@@ -56,26 +63,29 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
             <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
               Pilih Penghuni Kost
             </label>
-            <select
-              required
+            <Select
               value={formData.roomAssignmentId}
-              onChange={(e) => {
-                const ass = assignments.find((a) => a.id === e.target.value);
+              onValueChange={(val) => {
+                const ass = assignments.find((a) => a.id === val);
                 setFormData({
                   ...formData,
-                  roomAssignmentId: e.target.value,
+                  roomAssignmentId: val,
                   amount: ass ? Number(ass.rentAmount) : formData.amount,
                 });
               }}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              {assignments.map((a) => (
-                <option key={a.id} value={a.id}>
-                  {a.user?.profile?.fullName || a.user?.email} - Kamar {a.room?.roomNumber} (
-                  {a.room?.property?.name})
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="w-full h-10 rounded-xl">
+                <SelectValue placeholder="Pilih penghuni kost" />
+              </SelectTrigger>
+              <SelectContent>
+                {assignments.map((a) => (
+                  <SelectItem key={a.id} value={a.id}>
+                    {a.user?.profile?.fullName || a.user?.email} - Kamar {a.room?.roomNumber} (
+                    {a.room?.property?.name})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

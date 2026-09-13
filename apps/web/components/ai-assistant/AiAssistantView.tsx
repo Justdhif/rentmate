@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from "react";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { PageHeader } from "@/components/layout/PageHeader";
 import { Card } from "@/components/ui/card";
 import { api } from "@/lib/api";
 import { Sparkles, Bot } from "lucide-react";
@@ -110,10 +111,11 @@ export const AiAssistantView: React.FC = () => {
   };
 
   return (
-    <AppLayout
-      title="AI Smart Assistant"
-      subtitle="Konsultasi cerdas untuk optimasi bisnis kost, analisis keuangan, dan rekomendasi berbasis AI."
-    >
+    <AppLayout>
+      <PageHeader
+        title="AI Smart Assistant"
+        description="Konsultasi cerdas untuk optimasi bisnis kost, analisis keuangan, dan rekomendasi berbasis AI."
+      />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-fade-in items-start">
         {/* Main Chat Interface */}
         <Card className="lg:col-span-2 rounded-3xl border-gray-100 dark:border-border shadow-sm flex flex-col h-175 overflow-hidden bg-white dark:bg-card">

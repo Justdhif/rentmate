@@ -3,6 +3,13 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Plus } from 'lucide-react';
 
 interface RoomFilterBarProps {
@@ -30,28 +37,8 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
   stats,
 }) => {
   return (
-    <div className="space-y-4 mb-8">
+    <div className="space-y-4 mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-foreground">
-            Daftar Kamar
-          </h2>
-          <p className="text-sm text-gray-500 dark:text-muted-foreground mt-1">
-            Pantau status ketersediaan dan rincian harga sewa setiap kamar.
-          </p>
-        </div>
-
-        <Button
-          onClick={onOpenAddModal}
-          disabled={properties.length === 0}
-          className="flex items-center gap-2 rounded-xl shadow-md shadow-indigo-500/20 cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Tambah Kamar</span>
-        </Button>
-      </div>
-
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
         {/* Status Filter Tabs */}
         <div className="flex items-center gap-1.5 p-1 bg-gray-100 dark:bg-muted rounded-xl text-xs font-medium overflow-x-auto max-w-full">
           <button
@@ -102,18 +89,22 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
             <span className="text-xs text-gray-500 dark:text-muted-foreground whitespace-nowrap">
               Gedung:
             </span>
-            <select
+            <Select
               value={selectedProperty}
-              onChange={(e) => setSelectedProperty(e.target.value)}
-              className="px-3 py-1.5 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-xs font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer"
+              onValueChange={(val) => setSelectedProperty(val)}
             >
-              <option value="ALL">Semua Gedung ({properties.length})</option>
-              {properties.map((p) => (
-                <option key={p.id} value={p.id}>
-                  {p.name}
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="h-8 px-3 py-1 text-xs rounded-xl bg-white dark:bg-background border-gray-200 dark:border-border min-w-[160px]">
+                <SelectValue placeholder="Semua Gedung" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="ALL">Semua Gedung ({properties.length})</SelectItem>
+                {properties.map((p) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         )}
       </div>

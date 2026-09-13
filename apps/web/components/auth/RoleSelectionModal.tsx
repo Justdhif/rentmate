@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Building2, Home, Check, ArrowRight, Sparkles } from 'lucide-react';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
+import { toast } from 'sonner';
 
 interface RoleSelectionModalProps {
   isOpen: boolean;
@@ -40,7 +41,9 @@ export const RoleSelectionModal: React.FC<RoleSelectionModalProps> = ({
     try {
       await onSelectRole(selectedRole);
     } catch (err: any) {
-      setError(err.message || 'Gagal menyimpan pilihan peran. Coba lagi.');
+      const msg = err.message || 'Gagal menyimpan pilihan peran. Coba lagi.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

@@ -23,6 +23,48 @@ import { CurrentUser } from '../common/decorators/current-user.decorator';
 export class RoomsController {
   constructor(private readonly roomsService: RoomsService) {}
 
+  @Get('rooms')
+  async findAll(
+    @CurrentUser('id') userId: string,
+    @CurrentUser('role') role: string,
+    @Query() query: RoomQueryDto,
+  ) {
+    const roomList = await this.roomsService.findAllForUser(
+      userId,
+      role,
+      query,
+    );
+    return {
+      success: true,
+      data: roomList,
+    };
+  }
+
+  @Post('rooms')
+  @Roles('OWNER', 'ADMIN')
+  async createDirect(
+    @CurrentUser('id') ownerId: string,
+    @CurrentUser('role') role: string,
+    @Body() dto: any,
+  ) {
+    const propertyId = dto.propertyId;
+    const room = await this.roomsService.create(propertyId, ownerId, role, {
+      roomNumber: dto.roomNumber,
+      floor: dto.floor ? Number(dto.floor) : 1,
+      roomType: dto.type || dto.roomType || 'STANDARD',
+      price: Number(dto.monthlyPrice ?? dto.price ?? 0),
+      status: dto.status || 'AVAILABLE',
+      description: dto.description,
+      facilities: dto.facilities || [],
+      photos: dto.photos || [],
+    });
+    return {
+      success: true,
+      message: 'Room created successfully',
+      data: room,
+    };
+  }
+
   @Post('properties/:propertyId/rooms')
   @Roles('OWNER', 'ADMIN')
   async create(

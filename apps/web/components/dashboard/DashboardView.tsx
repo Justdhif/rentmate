@@ -8,8 +8,11 @@ import { DashboardStats, OverviewStats } from './DashboardStats';
 import { DashboardAiInsights } from './DashboardAiInsights';
 import { DashboardRecentActivity } from './DashboardRecentActivity';
 import { DashboardProperties } from './DashboardProperties';
+import { PageHeader } from '@/components/layout/PageHeader';
+import { useAuth } from '@/contexts/AuthContext';
 
 export const DashboardView: React.FC = () => {
+  const { user } = useAuth();
   const [stats, setStats] = useState<OverviewStats | null>(null);
   const [properties, setProperties] = useState<any[]>([]);
   const [recentMaintenance, setRecentMaintenance] = useState<any[]>([]);
@@ -76,27 +79,21 @@ export const DashboardView: React.FC = () => {
     year: 'numeric',
   }).format(new Date());
 
+  const displayName = user?.profile?.username || user?.profile?.fullName;
+
   return (
-    <AppLayout title="Dashboard" subtitle="Overview kinerja properti Anda">
+    <AppLayout>
       <div className="animate-fade-in space-y-7">
-        {/* Welcome Section */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-1">
-          <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-foreground tracking-tight flex items-center gap-2">
-              <span>Selamat {greeting}!</span>
-              <span className="text-2xl">??</span>
-            </h1>
-            <p className="text-slate-500 dark:text-muted-foreground mt-1 text-sm">
-              Berikut ringkasan kinerja dan operasional properti kost Anda hari ini.
-            </p>
-          </div>
-          <div className="flex items-center gap-2.5">
+        <PageHeader
+          title={`Selamat ${greeting}${displayName ? `, ${displayName}` : ''}!`}
+          description="Berikut ringkasan kinerja dan operasional properti kost Anda hari ini."
+          actions={
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white dark:bg-card border border-slate-200/80 dark:border-border text-xs font-medium text-slate-600 dark:text-muted-foreground shadow-xs">
               <Calendar className="w-3.5 h-3.5 text-slate-400" />
               <span>{todayFormatted}</span>
             </div>
-          </div>
-        </div>
+          }
+        />
 
         {/* Metric Cards */}
         <DashboardStats stats={stats} formatCurrency={formatCurrency} />

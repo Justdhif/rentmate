@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { api } from '@/lib/api';
@@ -9,6 +10,7 @@ import { Plus, Receipt } from 'lucide-react';
 import { Payment, PaymentTable } from './PaymentTable';
 import { PaymentStats } from './PaymentStats';
 import { CreateInvoiceModal } from './CreateInvoiceModal';
+import { toast } from 'sonner';
 
 export const PaymentsView: React.FC = () => {
   const [payments, setPayments] = useState<Payment[]>([]);
@@ -78,6 +80,7 @@ export const PaymentsView: React.FC = () => {
         });
 
         setIsModalOpen(false);
+        toast.success('Tagihan sewa berhasil dibuat & pembayaran Midtrans disiapkan!');
         setFormData({
           roomAssignmentId: assignments[0]?.id || '',
           amount: 1500000,
@@ -88,17 +91,11 @@ export const PaymentsView: React.FC = () => {
       }
     } catch (err: any) {
       setSubmitError(err.message || 'Gagal membuat tagihan sewa');
+      toast.error(err.message || 'Gagal membuat tagihan sewa');
     } finally {
       setSubmitting(false);
     }
   };
-
-  const formatCurrency = (val: number = 0) =>
-    new Intl.NumberFormat('id-ID', {
-      style: 'currency',
-      currency: 'IDR',
-      maximumFractionDigits: 0,
-    }).format(val);
 
   const totalPaid = payments
     .filter((p) => p.status === 'PAID')
@@ -108,11 +105,34 @@ export const PaymentsView: React.FC = () => {
     .reduce((acc, curr) => acc + Number(curr.amount || 0), 0);
   const paidCount = payments.filter((p) => p.status === 'PAID').length;
 
+  const formatCurrency = (val: number = 0) =>
+    new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+      maximumFractionDigits: 0,
+    }).format(val);
+
   return (
-    <AppLayout
-      title="Penagihan & Pembayaran"
-      subtitle="Kelola tagihan sewa kost, pantau pembayaran Midtrans, dan buat invoice tagihan."
-    >
+    <AppLayout>
+      <PageHeader
+        title="Penagihan & Pembayaran"
+        description="Kelola tagihan sewa kost, pantau pembayaran Midtrans, dan buat invoice tagihan."
+        actions={
+          <Button
+            onClick={() => {
+              if (assignments.length === 0) {
+                toast.warning('Belum ada penyewa aktif untuk dibuatkan tagihan.');
+                return;
+              }
+              setIsModalOpen(true);
+            }}
+            className="flex items-center gap-2 rounded-xl shadow-sm shadow-indigo-200 dark:shadow-none cursor-pointer"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Buat Tagihan Baru</span>
+          </Button>
+        }
+      />
       {/* Metric Cards */}
       <PaymentStats
         totalPaid={totalPaid}
@@ -121,27 +141,8 @@ export const PaymentsView: React.FC = () => {
         formatCurrency={formatCurrency}
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-foreground">Riwayat Pembayaran</h2>
-          <p className="text-sm text-gray-500 dark:text-muted-foreground mt-0.5">
-            Daftar transaksi pembayaran sewa melalui Midtrans Payment Gateway.
-          </p>
-        </div>
-
-        <Button
-          onClick={() => {
-            if (assignments.length === 0) {
-              alert('Belum ada penyewa aktif untuk dibuatkan tagihan.');
-              return;
-            }
-            setIsModalOpen(true);
-          }}
-          className="flex items-center gap-2 rounded-xl shadow-sm shadow-indigo-200 dark:shadow-none cursor-pointer"
-        >
-          <Plus className="w-4 h-4" />
-          <span>Buat Tagihan Baru</span>
-        </Button>
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-foreground">Riwayat Pembayaran</h2>
       </div>
 
       {isLoading ? (

@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 import { RoleSelectionModal } from '@/components/auth/RoleSelectionModal';
 import { AuthBanner } from '@/components/auth/AuthBanner';
+import { toast } from 'sonner';
 
 export const LoginView: React.FC = () => {
   const router = useRouter();
@@ -43,8 +44,11 @@ export const LoginView: React.FC = () => {
 
     try {
       await login(email, password);
+      toast.success('Login berhasil! Mengalihkan ke dashboard...');
     } catch (err: any) {
-      setError(err.message || 'Login gagal. Periksa kembali email dan password.');
+      const msg = err.message || 'Login gagal. Periksa kembali email dan password.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -64,9 +68,13 @@ export const LoginView: React.FC = () => {
           avatarUrl: res.avatarUrl,
         });
         setShowRoleModal(true);
+      } else {
+        toast.success('Login Google berhasil!');
       }
     } catch (err: any) {
-      setError(err.message || 'Login Google gagal. Silakan coba lagi.');
+      const msg = err.message || 'Login Google gagal. Silakan coba lagi.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { api } from '@/lib/api';
 import { RevenueChartCard } from './RevenueChartCard';
 import { OccupancyPieCard } from './OccupancyPieCard';
@@ -65,10 +66,11 @@ export const AnalyticsView: React.FC = () => {
     (occupancyData?.maintenanceRooms || 0);
 
   return (
-    <AppLayout
-      title="Statistik & Analisis Bisnis"
-      subtitle="Visualisasi data performa omset, tren tingkat hunian, dan evaluasi operasional kost."
-    >
+    <AppLayout>
+      <PageHeader
+        title="Statistik & Analisis Bisnis"
+        description="Visualisasi data performa omset, tren tingkat hunian, dan evaluasi operasional kost."
+      />
       {isLoading ? (
         <div className="py-24 flex justify-center">
           <div className="w-8 h-8 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin" />

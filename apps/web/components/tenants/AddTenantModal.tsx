@@ -9,6 +9,13 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
 
 interface AddTenantModalProps {
@@ -73,25 +80,28 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
             <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
               Pilih Kamar Tersedia
             </label>
-            <select
-              required
+            <Select
               value={formData.roomId}
-              onChange={(e) => {
-                const room = availableRooms.find((r) => r.id === e.target.value);
+              onValueChange={(val) => {
+                const room = availableRooms.find((r) => r.id === val);
                 setFormData({
                   ...formData,
-                  roomId: e.target.value,
+                  roomId: val,
                   rentAmount: room ? Number(room.monthlyPrice) : formData.rentAmount,
                 });
               }}
-              className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              {availableRooms.map((r) => (
-                <option key={r.id} value={r.id}>
-                  {r.property?.name || 'Kost'} - Kamar {r.roomNumber} ({r.type})
-                </option>
-              ))}
-            </select>
+              <SelectTrigger className="w-full h-10 rounded-xl">
+                <SelectValue placeholder="Pilih kamar yang tersedia" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableRooms.map((r) => (
+                  <SelectItem key={r.id} value={r.id}>
+                    {r.property?.name || 'Kost'} - Kamar {r.roomNumber} ({r.type})
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid grid-cols-2 gap-3">

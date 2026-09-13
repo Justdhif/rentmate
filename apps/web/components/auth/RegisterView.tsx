@@ -11,6 +11,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { GoogleSignInButton } from '@/components/auth/GoogleSignInButton';
 import { RoleSelectionModal } from '@/components/auth/RoleSelectionModal';
 import { AuthBanner } from '@/components/auth/AuthBanner';
+import { toast } from 'sonner';
 
 export const RegisterView: React.FC = () => {
   const router = useRouter();
@@ -44,8 +45,11 @@ export const RegisterView: React.FC = () => {
 
     try {
       await register(fullName, email, password, 'OWNER');
+      toast.success('Pendaftaran berhasil! Selamat datang di RentMate.');
     } catch (err: any) {
-      setError(err.message || 'Pendaftaran gagal. Pastikan email belum terdaftar.');
+      const msg = err.message || 'Pendaftaran gagal. Pastikan email belum terdaftar.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }
@@ -65,9 +69,13 @@ export const RegisterView: React.FC = () => {
           avatarUrl: res.avatarUrl,
         });
         setShowRoleModal(true);
+      } else {
+        toast.success('Login Google berhasil!');
       }
     } catch (err: any) {
-      setError(err.message || 'Pendaftaran via Google gagal. Silakan coba lagi.');
+      const msg = err.message || 'Pendaftaran via Google gagal. Silakan coba lagi.';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setLoading(false);
     }

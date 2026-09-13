@@ -1,4 +1,5 @@
 import {
+  ArrayMaxSize,
   IsArray,
   IsEnum,
   IsInt,
@@ -9,6 +10,7 @@ import {
 } from 'class-validator';
 import { Type } from 'class-transformer';
 import { RoomStatus } from './create-room.dto';
+import { IsValidImageFile } from '../../common/decorators/is-valid-image-file.decorator';
 
 export class UpdateRoomDto {
   @IsOptional()
@@ -49,5 +51,11 @@ export class UpdateRoomDto {
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
+  @ArrayMaxSize(10, { message: 'Maksimal 10 foto diperbolehkan.' })
+  @IsValidImageFile({
+    each: true,
+    message:
+      'Setiap foto harus berupa file gambar valid (JPG, JPEG, PNG, WEBP) dengan ukuran maksimal 5MB.',
+  })
   photos?: string[];
 }

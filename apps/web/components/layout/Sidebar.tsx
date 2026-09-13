@@ -18,7 +18,10 @@ import {
   LogOut,
   ChevronUp,
   User,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 import {
   Sidebar as ShadcnSidebar,
   SidebarContent,
@@ -80,6 +83,7 @@ const bottomItems = [
 export const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { user, logout } = useAuth();
+  const { resolvedTheme, toggleTheme } = useTheme();
 
   const initials = user?.profile?.fullName?.charAt(0) || user?.email?.charAt(0) || 'O';
   const fullName = user?.profile?.fullName || 'Pemilik Kost';
@@ -257,6 +261,22 @@ export const Sidebar: React.FC = () => {
                 <Settings className="w-3.5 h-3.5 text-slate-500" />
                 <span>Pengaturan Sistem</span>
               </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={toggleTheme}
+              className="flex items-center gap-2 cursor-pointer text-xs"
+            >
+              {resolvedTheme === 'dark' ? (
+                <>
+                  <Sun className="w-3.5 h-3.5 text-amber-500" />
+                  <span>Mode Terang</span>
+                </>
+              ) : (
+                <>
+                  <Moon className="w-3.5 h-3.5 text-indigo-600" />
+                  <span>Mode Gelap</span>
+                </>
+              )}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { api } from '@/lib/api';
@@ -9,6 +10,7 @@ import { Users, UserPlus } from 'lucide-react';
 import { TenantStats } from './TenantStats';
 import { Assignment, TenantTable } from './TenantTable';
 import { AddTenantModal } from './AddTenantModal';
+import { toast } from 'sonner';
 
 export const TenantsView: React.FC = () => {
   const [assignments, setAssignments] = useState<Assignment[]>([]);
@@ -75,6 +77,7 @@ export const TenantsView: React.FC = () => {
 
       if (res.success) {
         setIsModalOpen(false);
+        toast.success(`Penghuni ${formData.tenantEmail} berhasil ditetapkan ke kamar!`);
         setFormData({
           tenantEmail: '',
           roomId: availableRooms[0]?.id || '',
@@ -85,6 +88,7 @@ export const TenantsView: React.FC = () => {
       }
     } catch (err: any) {
       setSubmitError(err.message || 'Gagal menetapkan kamar ke penyewa');
+      toast.error(err.message || 'Gagal menetapkan kamar ke penyewa');
     } finally {
       setSubmitting(false);
     }
@@ -101,9 +105,10 @@ export const TenantsView: React.FC = () => {
       return;
     try {
       await api.post('/tenants/' + id + '/unassign');
+      toast.success(`Penyewa "${name}" berhasil di-checkout.`);
       await fetchData();
     } catch (err: any) {
-      alert(err.message || 'Gagal unassign penyewa');
+      toast.error(err.message || 'Gagal unassign penyewa');
     }
   };
 
@@ -121,10 +126,26 @@ export const TenantsView: React.FC = () => {
   );
 
   return (
-    <AppLayout
-      title="Daftar Penghuni Kost"
-      subtitle="Manajemen data penghuni aktif, penempatan kamar, dan riwayat sewa."
-    >
+    <AppLayout>
+      <PageHeader
+        title="Daftar Penghuni Kost"
+        description="Manajemen data penghuni aktif, penempatan kamar, dan riwayat sewa."
+        actions={
+          <Button
+            onClick={() => {
+              if (availableRooms.length === 0) {
+                toast.warning('Tidak ada kamar kosong yang tersedia saat ini.');
+                return;
+              }
+              setIsModalOpen(true);
+            }}
+            className="flex items-center gap-2 rounded-xl shadow-sm shadow-indigo-200 dark:shadow-none cursor-pointer"
+          >
+            <UserPlus className="w-4 h-4" />
+            <span>Tetapkan Penghuni Baru</span>
+          </Button>
+        }
+      />
       {/* Stats Bar */}
       <TenantStats
         activeCount={activeTenants.length}
@@ -132,27 +153,8 @@ export const TenantsView: React.FC = () => {
         formatCurrency={formatCurrency}
       />
 
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-foreground">Daftar Penghuni</h2>
-          <p className="text-sm text-gray-500 dark:text-muted-foreground mt-0.5">
-            Kelola penempatan dan checkout penghuni.
-          </p>
-        </div>
-
-        <Button
-          onClick={() => {
-            if (availableRooms.length === 0) {
-              alert('Tidak ada kamar kosong yang tersedia saat ini.');
-              return;
-            }
-            setIsModalOpen(true);
-          }}
-          className="flex items-center gap-2 rounded-xl shadow-sm shadow-indigo-200 dark:shadow-none cursor-pointer"
-        >
-          <UserPlus className="w-4 h-4" />
-          <span>Tetapkan Penghuni Baru</span>
-        </Button>
+      <div className="mb-4">
+        <h2 className="text-lg font-bold text-gray-900 dark:text-foreground">Daftar Penghuni</h2>
       </div>
 
       {isLoading ? (

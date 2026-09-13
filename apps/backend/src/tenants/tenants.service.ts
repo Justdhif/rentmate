@@ -165,6 +165,47 @@ export class TenantsService {
     };
   }
 
+  async unassignByAnyId(
+    targetId: string,
+    ownerId: string,
+    userRole: string,
+    dto: UnassignRoomDto,
+  ) {
+    // 1. Check if targetId is an assignment id
+    let assignment = await this.db.query.roomAssignments.findFirst({
+      where: and(
+        eq(schema.roomAssignments.id, targetId),
+        eq(schema.roomAssignments.status, 'ACTIVE'),
+      ),
+    });
+
+    // 2. If not, check if targetId is a tenantId
+    if (!assignment) {
+      assignment = await this.db.query.roomAssignments.findFirst({
+        where: and(
+          eq(schema.roomAssignments.tenantId, targetId),
+          eq(schema.roomAssignments.status, 'ACTIVE'),
+        ),
+      });
+    }
+
+    // 3. If not, check if targetId is a roomId
+    if (!assignment) {
+      assignment = await this.db.query.roomAssignments.findFirst({
+        where: and(
+          eq(schema.roomAssignments.roomId, targetId),
+          eq(schema.roomAssignments.status, 'ACTIVE'),
+        ),
+      });
+    }
+
+    if (!assignment) {
+      throw new NotFoundException('No active room assignment found to checkout');
+    }
+
+    return this.unassignRoom(assignment.roomId, ownerId, userRole, dto);
+  }
+
   async findAllByOwner(ownerId: string, userRole: string) {
     const properties = await this.propertiesService.findAll(ownerId, userRole);
     if (!properties || properties.length === 0) {
