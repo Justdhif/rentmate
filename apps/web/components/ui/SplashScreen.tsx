@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface SplashScreenProps {
   message?: string;
@@ -9,10 +10,14 @@ interface SplashScreenProps {
 }
 
 export const SplashScreen: React.FC<SplashScreenProps> = ({
-  message = 'Memuat aplikasi...',
-  submessage = 'Smart Kost Management Platform',
+  message,
+  submessage,
   isFading = false,
 }) => {
+  const { t } = useTranslation();
+  const displayMessage = message ?? t('splash.loadingApp');
+  const displaySubmessage = submessage ?? t('splash.platformTagline');
+
   return (
     <div
       className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background/95 backdrop-blur-md transition-all duration-700 ${
@@ -37,7 +42,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
           Rent<span className="text-indigo-600 dark:text-indigo-400">Mate</span>
         </h1>
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1 mb-8">
-          {submessage}
+          {displaySubmessage}
         </p>
 
         {/* Modern Shimmer Progress Bar */}
@@ -47,14 +52,14 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
 
         {/* Loading Message */}
         <p className="text-xs font-medium text-muted-foreground mt-4 tracking-wide animate-pulse">
-          {message}
+          {displayMessage}
         </p>
       </div>
 
       {/* Modern Footer Note */}
       <div className="absolute bottom-8 text-center">
         <span className="text-[11px] font-medium text-slate-400 dark:text-slate-600 tracking-wider uppercase">
-          Powered by AI Smart Assistant
+          {t('splash.poweredBy')}
         </span>
       </div>
     </div>

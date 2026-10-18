@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DatePicker } from '@/components/ui/date-picker';
 import {
   Select,
   SelectContent,
@@ -16,16 +17,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Receipt } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface CreateInvoiceModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   assignments: any[];
   formData: {
-    roomAssignmentId: string;
+    roomId: string;
+    tenantId?: string;
     amount: number;
     dueDate: string;
+    period: string;
     description: string;
   };
   setFormData: React.Dispatch<React.SetStateAction<any>>;
@@ -44,54 +48,86 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
   submitting,
   submitError,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-gray-200 dark:border-border">
-        <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10">
-          <DialogTitle className="text-lg font-semibold">Buat Tagihan Sewa Baru</DialogTitle>
+      <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-slate-200 dark:border-border rounded-2xl shadow-xl">
+        <DialogHeader className="px-6 py-4 border-b border-slate-100 dark:border-border/60 bg-slate-50/60 dark:bg-muted/20 flex flex-row items-center gap-3 space-y-0">
+          <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+            <Receipt className="w-5 h-5" />
+          </div>
+          <div>
+            <DialogTitle className="text-base font-bold text-slate-900 dark:text-foreground">
+              {t('payments.modalTitle', { defaultValue: 'Buat Tagihan Sewa Baru' })}
+            </DialogTitle>
+            <p className="text-xs text-slate-500 dark:text-muted-foreground mt-0.5">
+              {t('payments.pageDesc', { defaultValue: 'Terbitkan invoice pembayaran untuk penyewa aktif.' })}
+            </p>
+          </div>
         </DialogHeader>
 
-        <form onSubmit={onSubmit} className="p-6 space-y-4">
+        <form onSubmit={onSubmit} className="p-6 space-y-4 text-xs">
           {submitError && (
-            <div className="p-3 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 rounded-xl text-sm text-rose-700 dark:text-rose-400 flex items-center gap-2">
+            <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-xl text-xs text-rose-700 dark:text-rose-400 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{submitError}</span>
             </div>
           )}
 
+          {/* Tenant & Room Selector */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-              Pilih Penghuni Kost
+            <label className="block font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+              {t('payments.modalTenantLabel', { defaultValue: 'Pilih Penghuni Kost *' })}
             </label>
             <Select
-              value={formData.roomAssignmentId}
+              value={formData.roomId}
               onValueChange={(val) => {
-                const ass = assignments.find((a) => a.id === val);
-                setFormData({
-                  ...formData,
-                  roomAssignmentId: val,
-                  amount: ass ? Number(ass.rentAmount) : formData.amount,
-                });
+                const ass = assignments.find(
+                  (a) => a.currentRoom?.id === val || a.roomId === val || a.id === val
+                );
+                const rId = ass?.currentRoom?.id || ass?.roomId || val;
+                const tId = ass?.id || ass?.tenantId || ass?.user?.id;
+                const rent = Number(ass?.currentRoom?.monthlyRent || ass?.rentAmount || ass?.monthlyRent) || formData.amount;
+                setFormData((prev: any) => ({
+                  ...prev,
+                  roomId: rId,
+                  tenantId: tId,
+                  amount: rent,
+                }));
               }}
             >
-              <SelectTrigger className="w-full h-10 rounded-xl">
-                <SelectValue placeholder="Pilih penghuni kost" />
+              <SelectTrigger className="w-full h-10 rounded-xl text-xs border-slate-200 dark:border-border">
+                <SelectValue placeholder={t('payments.modalTenantPlaceholder', { defaultValue: 'Pilih penghuni kost...' })} />
               </SelectTrigger>
-              <SelectContent>
-                {assignments.map((a) => (
-                  <SelectItem key={a.id} value={a.id}>
-                    {a.user?.profile?.fullName || a.user?.email} - Kamar {a.room?.roomNumber} (
-                    {a.room?.property?.name})
-                  </SelectItem>
-                ))}
+              <SelectContent className="rounded-xl text-xs">
+                {assignments.map((a) => {
+                  const rId = a.currentRoom?.id || a.roomId || a.id;
+                  const tenantName =
+                    a.profile?.fullName ||
+                    a.user?.profile?.fullName ||
+                    a.name ||
+                    a.fullName ||
+                    a.email?.split('@')[0] ||
+                    'Penyewa';
+                  const roomNum = a.currentRoom?.roomNumber || a.roomNumber || a.room?.roomNumber || 'Kamar';
+                  const propName = a.currentRoom?.propertyName || a.propertyName || a.room?.property?.name || 'Kost';
+
+                  return (
+                    <SelectItem key={a.id || rId} value={rId}>
+                      {tenantName} — Kamar {roomNum} ({propName})
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
           </div>
 
+          {/* Amount & Due Date */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Jumlah Tagihan (Rp)
+              <label className="block font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+                {t('payments.modalAmountLabel', { defaultValue: 'Jumlah Tagihan (Rp) *' })}
               </label>
               <Input
                 type="number"
@@ -99,53 +135,71 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
                 required
                 value={formData.amount}
                 onChange={(e) => setFormData({ ...formData, amount: Number(e.target.value) })}
-                className="h-10 rounded-xl"
+                className="h-10 rounded-xl text-xs border-slate-200 dark:border-border font-medium"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Jatuh Tempo
+              <label className="block font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+                {t('payments.modalDueDateLabel', { defaultValue: 'Jatuh Tempo *' })}
               </label>
-              <Input
-                type="date"
-                required
+              <DatePicker
                 value={formData.dueDate}
-                onChange={(e) => setFormData({ ...formData, dueDate: e.target.value })}
-                className="h-10 rounded-xl"
+                onChange={(val) => setFormData({ ...formData, dueDate: val })}
+                placeholder={t('payments.modalDueDatePlaceholder', { defaultValue: 'Pilih jatuh tempo' })}
+                clearLabel={t('common.clear', { defaultValue: 'Clear' })}
+                todayLabel={t('common.today', { defaultValue: 'Today' })}
+                required
               />
             </div>
           </div>
 
+          {/* Period */}
           <div>
-            <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-              Keterangan Tagihan
+            <label className="block font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+              {t('payments.modalPeriodLabel', { defaultValue: 'Periode Tagihan' })}
             </label>
             <Input
               type="text"
               required
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              placeholder="Tagihan Sewa Kamar Bulan Ini"
-              className="h-10 rounded-xl"
+              value={formData.period}
+              onChange={(e) => setFormData({ ...formData, period: e.target.value })}
+              placeholder={t('payments.modalPeriodPlaceholder', { defaultValue: 'cth. September 2026' })}
+              className="h-10 rounded-xl text-xs border-slate-200 dark:border-border"
             />
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-gray-100 dark:border-border/60">
+          {/* Description */}
+          <div>
+            <label className="block font-semibold text-slate-700 dark:text-slate-200 mb-1.5">
+              {t('payments.modalDescLabel', { defaultValue: 'Keterangan Tagihan' })}
+            </label>
+            <Input
+              type="text"
+              value={formData.description}
+              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+              placeholder={t('payments.modalDescPlaceholder', { defaultValue: 'Tagihan Sewa Kamar Bulanan' })}
+              className="h-10 rounded-xl text-xs border-slate-200 dark:border-border"
+            />
+          </div>
+
+          <div className="flex justify-end gap-2.5 pt-4 border-t border-slate-100 dark:border-border/60">
             <Button
               type="button"
               variant="outline"
               onClick={() => onOpenChange(false)}
-              className="rounded-xl"
+              className="h-9 px-4 rounded-xl text-xs font-semibold border-slate-200 dark:border-border cursor-pointer"
             >
-              Batal
+              {t('common.cancel', { defaultValue: 'Batal' })}
             </Button>
             <Button
               type="submit"
               disabled={submitting}
-              className="rounded-xl shadow-xs"
+              className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer"
             >
-              {submitting ? 'Memproses...' : 'Terbitkan & Buat Link Bayar'}
+              {submitting
+                ? t('payments.modalSubmitSaving', { defaultValue: 'Menyimpan...' })
+                : t('payments.modalSubmitButton', { defaultValue: 'Terbitkan Tagihan' })}
             </Button>
           </div>
         </form>
@@ -153,3 +207,4 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
     </Dialog>
   );
 };
+

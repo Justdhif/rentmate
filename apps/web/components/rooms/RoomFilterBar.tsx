@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Plus } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface RoomFilterBarProps {
   properties: any[];
@@ -36,6 +37,8 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
   onOpenAddModal,
   stats,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4 mb-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -49,7 +52,7 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
                 : 'text-gray-500 dark:text-muted-foreground hover:text-gray-900'
             }`}
           >
-            Semua ({stats.total})
+            {t('rooms.filterAll', { count: stats.total })}
           </button>
           <button
             onClick={() => setStatusFilter('AVAILABLE')}
@@ -59,7 +62,7 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
                 : 'text-gray-500 dark:text-muted-foreground hover:text-gray-900'
             }`}
           >
-            Kosong ({stats.available})
+            {t('rooms.filterAvailable', { count: stats.available })}
           </button>
           <button
             onClick={() => setStatusFilter('OCCUPIED')}
@@ -69,7 +72,7 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
                 : 'text-gray-500 dark:text-muted-foreground hover:text-gray-900'
             }`}
           >
-            Terisi ({stats.occupied})
+            {t('rooms.filterOccupied', { count: stats.occupied })}
           </button>
           <button
             onClick={() => setStatusFilter('MAINTENANCE')}
@@ -79,7 +82,7 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
                 : 'text-gray-500 dark:text-muted-foreground hover:text-gray-900'
             }`}
           >
-            Perbaikan ({stats.maintenance})
+            {t('rooms.filterMaintenance', { count: stats.maintenance })}
           </button>
         </div>
 
@@ -87,17 +90,17 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
         {properties.length > 0 && (
           <div className="flex items-center gap-2">
             <span className="text-xs text-gray-500 dark:text-muted-foreground whitespace-nowrap">
-              Gedung:
+              {t('rooms.filterPropertyLabel')}
             </span>
             <Select
               value={selectedProperty}
               onValueChange={(val) => setSelectedProperty(val)}
             >
               <SelectTrigger className="h-8 px-3 py-1 text-xs rounded-xl bg-white dark:bg-background border-gray-200 dark:border-border min-w-[160px]">
-                <SelectValue placeholder="Semua Gedung" />
+                <SelectValue placeholder={t('rooms.filterPropertyAll')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="ALL">Semua Gedung ({properties.length})</SelectItem>
+                <SelectItem value="ALL">{t('rooms.filterPropertyAllCount', { count: properties.length })}</SelectItem>
                 {properties.map((p) => (
                   <SelectItem key={p.id} value={p.id}>
                     {p.name}

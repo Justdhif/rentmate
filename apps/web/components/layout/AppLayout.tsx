@@ -7,12 +7,14 @@ import { Sidebar } from './Sidebar';
 import { Header, BreadcrumbEntry } from './Header';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 interface AppLayoutProps {
   children: React.ReactNode;
   title?: string;
   subtitle?: string;
   breadcrumbs?: BreadcrumbEntry[];
+  noPadding?: boolean;
 }
 
 export const AppLayout: React.FC<AppLayoutProps> = ({
@@ -20,6 +22,7 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   title,
   subtitle,
   breadcrumbs,
+  noPadding = false,
 }) => {
   const { user, isLoading } = useAuth();
   const router = useRouter();
@@ -82,10 +85,28 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
   return (
     <SidebarProvider>
       <Sidebar />
-      <SidebarInset className="flex flex-col min-w-0 flex-1 bg-background">
+      <SidebarInset
+        className={cn(
+          'flex flex-col min-w-0 flex-1 bg-background',
+          noPadding && 'h-screen overflow-hidden'
+        )}
+      >
         <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
-        <main className="flex-1 p-5 md:p-6 lg:p-8 overflow-y-auto bg-slate-50/80 dark:bg-background">
-          <div className="max-w-7xl mx-auto w-full animate-fade-in">
+        <main
+          className={cn(
+            'flex-1 bg-slate-50/80 dark:bg-background',
+            noPadding
+              ? 'p-0 overflow-hidden flex flex-col h-[calc(100vh-4rem)] min-h-0'
+              : 'p-5 md:p-6 lg:p-8'
+          )}
+        >
+          <div
+            className={cn(
+              noPadding
+                ? 'w-full h-full flex-1 flex flex-col min-h-0 overflow-hidden'
+                : 'max-w-7xl mx-auto w-full animate-fade-in'
+            )}
+          >
             {children}
           </div>
         </main>

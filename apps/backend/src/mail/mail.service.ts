@@ -164,6 +164,16 @@ export class MailService implements OnModuleInit {
     });
   }
 
+  private escapeHtml(text?: string): string {
+    if (!text) return '';
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   /**
    * Template HTML responsif yang setema dengan UI Web RentMate:
    * Modern SaaS, Soft Neutral Background (#F8FAFC), Primary Color (#5B5FEF),
@@ -189,11 +199,11 @@ export class MailService implements OnModuleInit {
               (item, idx) => `
             <tr>
               <td style="padding: 12px 16px; font-size: 13px; font-weight: 500; color: #64748B; border-bottom: ${idx < options.metadata!.length - 1 ? '1px solid #F1F5F9' : 'none'}; width: 38%; vertical-align: middle;">
-                ${item.label}
+                ${this.escapeHtml(item.label)}
               </td>
               <td style="padding: 12px 16px; font-size: 13px; font-weight: 600; color: ${item.isHighlight ? '#16A34A' : '#0F172A'}; border-bottom: ${idx < options.metadata!.length - 1 ? '1px solid #F1F5F9' : 'none'}; vertical-align: middle;">
                 ${item.isHighlight ? '<span style="display: inline-block; width: 7px; height: 7px; background-color: #16A34A; border-radius: 50%; margin-right: 6px; vertical-align: middle;"></span>' : ''}
-                ${item.value}
+                ${this.escapeHtml(item.value)}
               </td>
             </tr>
           `

@@ -7,6 +7,7 @@ import {
   timestamp,
   text,
   pgEnum,
+  index,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm';
 import { users } from './users.schema';
@@ -21,26 +22,34 @@ export const paymentStatusEnum = pgEnum('payment_status', [
   'CANCELLED',
 ]);
 
-export const payments = pgTable('payments', {
-  id: uuid('id').defaultRandom().primaryKey(),
-  tenantId: uuid('tenant_id')
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
-  roomId: uuid('room_id')
-    .notNull()
-    .references(() => rooms.id, { onDelete: 'cascade' }),
-  amount: numeric('amount', { precision: 12, scale: 2 }).notNull(),
-  dueDate: date('due_date').notNull(),
-  paidAt: timestamp('paid_at', { withTimezone: true }),
-  status: paymentStatusEnum('status').default('PENDING').notNull(),
-  paymentMethod: varchar('payment_method', { length: 50 }),
-  transactionReference: varchar('transaction_reference', { length: 255 }),
-  snapToken: text('snap_token'),
-  snapRedirectUrl: text('snap_redirect_url'),
-  period: varchar('period', { length: 50 }),
-  createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
-  updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-});
+export const payments = pgTable(
+  'payments',
+  {
+    id: uuid('id').defaultRandom().primaryKey(),
+    tenantId: uuid('tenant_id')
+      .notNull()
+      .references(() => users.id, { onDelete: 'restrict' }),
+    roomId: uuid('room_id')
+      .notNull()
+      .references(() => rooms.id, { onDelete: 'restrict' }),
+    amount: numeric('amount', { precision: 12, scale: 2 }).notNull(),
+    dueDate: date('due_date').notNull(),
+    paidAt: timestamp('paid_at', { withTimezone: true }),
+    status: paymentStatusEnum('status').default('PENDING').notNull(),
+    paymentMethod: varchar('payment_method', { length: 50 }),
+    transactionReference: varchar('transaction_reference', { length: 255 }),
+    snapToken: text('snap_token'),
+    snapRedirectUrl: text('snap_redirect_url'),
+    period: varchar('period', { length: 50 }),
+    createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index('payments_tenant_status_idx').on(table.tenantId, table.status),
+    index('payments_room_id_idx').on(table.roomId),
+    index('payments_due_date_idx').on(table.dueDate),
+  ],
+);
 
 export const paymentsRelations = relations(payments, ({ one }) => ({
   tenant: one(users, {

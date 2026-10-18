@@ -3,6 +3,7 @@
 import React from 'react';
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useTranslation } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 
 interface ThemeToggleProps {
@@ -17,6 +18,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
   showLabel = false,
 }) => {
   const { resolvedTheme, toggleTheme } = useTheme();
+  const { t } = useTranslation();
   const isDark = resolvedTheme === 'dark';
 
   return (
@@ -29,8 +31,8 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
           ? 'text-slate-500 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-slate-100 dark:hover:bg-accent'
           : 'border-slate-200 dark:border-border/60 bg-white dark:bg-card'
       } ${className}`}
-      title={isDark ? 'Ganti ke Mode Terang' : 'Ganti ke Mode Gelap'}
-      aria-label="Toggle theme"
+      title={isDark ? t('ui.toggleThemeLight') : t('ui.toggleThemeDark')}
+      aria-label={t('ui.themeToggleLabel')}
     >
       <div className="relative flex items-center justify-center">
         {isDark ? (
@@ -41,7 +43,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       </div>
       {showLabel && (
         <span className="text-xs font-medium ml-2">
-          {isDark ? 'Mode Terang' : 'Mode Gelap'}
+          {isDark ? t('ui.lightMode') : t('ui.darkMode')}
         </span>
       )}
     </Button>

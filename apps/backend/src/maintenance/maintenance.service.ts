@@ -7,10 +7,12 @@ import {
 } from '@nestjs/common';
 import { eq, and, desc, inArray, count } from 'drizzle-orm';
 import { DRIZZLE } from '../database/database.provider';
+import type { DrizzleDB } from '../database/database.provider';
 import * as schema from '../database/schema';
 import { RoomsService } from '../rooms/rooms.service';
 import { PropertiesService } from '../properties/properties.service';
 import { UsersService } from '../users/users.service';
+import { AnalyticsService } from '../analytics/analytics.service';
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto';
 import { AssignTechnicianDto } from './dto/assign-technician.dto';
 import { ResolveWorkDto } from './dto/resolve-work.dto';
@@ -20,10 +22,11 @@ import { MaintenanceQueryDto } from './dto/maintenance-query.dto';
 export class MaintenanceService {
   constructor(
     @Inject(DRIZZLE)
-    private db: any,
+    private db: DrizzleDB,
     private roomsService: RoomsService,
     private propertiesService: PropertiesService,
     private usersService: UsersService,
+    private analyticsService: AnalyticsService,
   ) {}
 
   async createReport(tenantId: string, dto: CreateMaintenanceDto) {
@@ -31,6 +34,21 @@ export class MaintenanceService {
 
     if (dto.roomId) {
       targetRoomId = dto.roomId;
+
+      // Anti-IDOR: verify that the tenant has an active assignment for this specified room
+      const activeAssignment = await this.db.query.roomAssignments.findFirst({
+        where: and(
+          eq(schema.roomAssignments.roomId, targetRoomId),
+          eq(schema.roomAssignments.tenantId, tenantId),
+          eq(schema.roomAssignments.status, 'ACTIVE'),
+        ),
+      });
+
+      if (!activeAssignment) {
+        throw new ForbiddenException(
+          'Akses ditolak: Anda hanya dapat membuat laporan perbaikan untuk kamar yang sedang aktif Anda sewa.',
+        );
+      }
     } else {
       const activeAssignment = await this.db.query.roomAssignments.findFirst({
         where: and(
@@ -41,7 +59,7 @@ export class MaintenanceService {
 
       if (!activeAssignment) {
         throw new BadRequestException(
-          'You do not have an active room assignment to report maintenance.',
+          'Anda belum memiliki kamar sewa aktif untuk mengajukan laporan perbaikan.',
         );
       }
 
@@ -59,12 +77,11 @@ export class MaintenanceService {
       throw new NotFoundException('Target room not found');
     }
 
-    // Generate readable ticket number (e.g. MT-1001)
-    const [countResult] = await this.db
-      .select({ val: count() })
-      .from(schema.maintenanceRequests);
-    const totalCount = Number(countResult?.val || 0);
-    const ticketNumber = `MT-${1001 + totalCount}`;
+    // Generate readable, collision-free ticket number (e.g. MT-20261018-AB12)
+    const now = new Date();
+    const dateStr = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+    const randomSuffix = Math.random().toString(36).substring(2, 6).toUpperCase();
+    const ticketNumber = `MT-${dateStr}-${randomSuffix}`;
 
     const [newRequest] = await this.db
       .insert(schema.maintenanceRequests)
@@ -93,6 +110,11 @@ export class MaintenanceService {
         .returning();
     }
 
+    // Invalidate analytics overview cache so owners see real-time maintenance counts
+    if (room?.property?.ownerId) {
+      this.analyticsService.clearCache(room.property.ownerId);
+    }
+
     return {
       ...newRequest,
       attachments: createdAttachments,
@@ -118,6 +140,12 @@ export class MaintenanceService {
       );
     }
 
+    if (ticket.status === 'RESOLVED' || ticket.status === 'CLOSED') {
+      throw new BadRequestException(
+        `Tidak dapat menugaskan teknisi untuk tiket yang sudah dalam status ${ticket.status}`,
+      );
+    }
+
     const technician = await this.usersService.findById(dto.technicianId);
     if (!technician) {
       throw new NotFoundException('Technician not found');
@@ -140,6 +168,10 @@ export class MaintenanceService {
       .where(eq(schema.maintenanceRequests.id, ticketId))
       .returning();
 
+    if (ticket.room?.property?.ownerId) {
+      this.analyticsService.clearCache(ticket.room.property.ownerId);
+    }
+
     return this.findOne(ticketId, ownerId, userRole);
   }
 
@@ -150,6 +182,26 @@ export class MaintenanceService {
       throw new ForbiddenException(
         'Access denied: You are not assigned to this maintenance job',
       );
+    }
+
+    if (ticket.status === 'REPORTED') {
+      throw new BadRequestException(
+        'Tiket perbaikan belum ditugaskan kepada teknisi secara resmi',
+      );
+    }
+
+    if (ticket.status === 'RESOLVED' || ticket.status === 'CLOSED') {
+      throw new BadRequestException(
+        `Pekerjaan tidak dapat dimulai kembali karena tiket sudah dalam status ${ticket.status}`,
+      );
+    }
+
+    if (ticket.status === 'IN_PROGRESS') {
+      return {
+        success: true,
+        message: 'Tiket sudah dalam proses pengerjaan (IN_PROGRESS).',
+        data: ticket,
+      };
     }
 
     const [updated] = await this.db
@@ -182,6 +234,18 @@ export class MaintenanceService {
       );
     }
 
+    if (ticket.status === 'CLOSED') {
+      throw new BadRequestException(
+        'Tiket perbaikan sudah ditutup dan tidak dapat diselesaikan kembali',
+      );
+    }
+
+    if (ticket.status === 'REPORTED' || ticket.status === 'ASSIGNED') {
+      throw new BadRequestException(
+        'Pekerjaan perbaikan harus dimulai terlebih dahulu (status IN_PROGRESS) sebelum diselesaikan',
+      );
+    }
+
     await this.db
       .update(schema.maintenanceRequests)
       .set({
@@ -206,6 +270,10 @@ export class MaintenanceService {
         .values(afterAttachments);
     }
 
+    if (ticket.room?.property?.ownerId) {
+      this.analyticsService.clearCache(ticket.room.property.ownerId);
+    }
+
     return this.findOne(ticketId, technicianId, userRole);
   }
 
@@ -222,6 +290,12 @@ export class MaintenanceService {
       );
     }
 
+    if (ticket.status === 'CLOSED') {
+      throw new BadRequestException(
+        'Tiket perbaikan ini sudah ditutup sebelumnya',
+      );
+    }
+
     const [updated] = await this.db
       .update(schema.maintenanceRequests)
       .set({
@@ -231,6 +305,9 @@ export class MaintenanceService {
       })
       .where(eq(schema.maintenanceRequests.id, ticketId))
       .returning();
+
+    // Invalidate analytics overview cache so owners see real-time maintenance counts
+    this.analyticsService.clearCache(ticket.room?.property?.ownerId || ownerId);
 
     return {
       success: true,
@@ -257,77 +334,12 @@ export class MaintenanceService {
       conditions.push(eq(schema.maintenanceRequests.roomId, query.roomId));
     }
 
-    if (userRole === 'TENANT') {
-      conditions.push(eq(schema.maintenanceRequests.tenantId, userId));
-      return this.db.query.maintenanceRequests.findMany({
-        where: and(...conditions),
-        with: {
-          room: {
-            with: {
-              property: true,
-            },
-          },
-          technician: {
-            with: {
-              profile: true,
-            },
-          },
-          attachments: true,
-        },
-        orderBy: [desc(schema.maintenanceRequests.createdAt)],
-      });
-    }
-
-    if (userRole === 'TECHNICIAN') {
-      conditions.push(eq(schema.maintenanceRequests.assignedTo, userId));
-      return this.db.query.maintenanceRequests.findMany({
-        where: and(...conditions),
-        with: {
-          room: {
-            with: {
-              property: true,
-            },
-          },
-          tenant: {
-            with: {
-              profile: true,
-            },
-          },
-          attachments: true,
-        },
-        orderBy: [desc(schema.maintenanceRequests.createdAt)],
-      });
-    }
-
-    // Owner role
-    const properties = await this.propertiesService.findAll(userId, userRole);
-    if (!properties || properties.length === 0) {
-      return [];
-    }
-
-    const propertyIds = properties.map((p: any) => p.id);
-    const rooms = await this.db.query.rooms.findMany({
-      where: inArray(schema.rooms.propertyId, propertyIds),
-    });
-
-    if (!rooms || rooms.length === 0) {
-      return [];
-    }
-
-    const roomIds = rooms.map((r: any) => r.id);
-    conditions.push(inArray(schema.maintenanceRequests.roomId, roomIds));
-
-    return this.db.query.maintenanceRequests.findMany({
+    const findOptions: any = {
       where: and(...conditions),
       with: {
         room: {
           with: {
             property: true,
-          },
-        },
-        tenant: {
-          with: {
-            profile: true,
           },
         },
         technician: {
@@ -338,7 +350,60 @@ export class MaintenanceService {
         attachments: true,
       },
       orderBy: [desc(schema.maintenanceRequests.createdAt)],
-    });
+    };
+
+    if (query?.limit) {
+      findOptions.limit = query.limit;
+    }
+    if (query?.skip !== undefined && query.skip > 0) {
+      findOptions.offset = query.skip;
+    }
+
+    if (userRole === 'TENANT') {
+      conditions.push(eq(schema.maintenanceRequests.tenantId, userId));
+      return this.db.query.maintenanceRequests.findMany(findOptions);
+    }
+
+    if (userRole === 'TECHNICIAN') {
+      conditions.push(eq(schema.maintenanceRequests.assignedTo, userId));
+      findOptions.with.tenant = {
+        with: {
+          profile: true,
+        },
+      };
+      return this.db.query.maintenanceRequests.findMany(findOptions);
+    }
+
+    // Owner role
+    const ownerProperties = await this.db
+      .select({ id: schema.properties.id })
+      .from(schema.properties)
+      .where(eq(schema.properties.ownerId, userId));
+
+    if (!ownerProperties || ownerProperties.length === 0) {
+      return [];
+    }
+
+    const propertyIds = ownerProperties.map((p: any) => p.id);
+    const rooms = await this.db
+      .select({ id: schema.rooms.id })
+      .from(schema.rooms)
+      .where(inArray(schema.rooms.propertyId, propertyIds));
+
+    if (!rooms || rooms.length === 0) {
+      return [];
+    }
+
+    const roomIds = rooms.map((r: any) => r.id);
+    conditions.push(inArray(schema.maintenanceRequests.roomId, roomIds));
+
+    findOptions.with.tenant = {
+      with: {
+        profile: true,
+      },
+    };
+
+    return this.db.query.maintenanceRequests.findMany(findOptions);
   }
 
   async findOne(ticketId: string, userId: string, userRole: string) {

@@ -25,7 +25,32 @@ import {
   Crosshair,
   LocateFixed,
   Loader2,
+  Wifi,
+  Wind,
+  Bath,
+  Bike,
+  UtensilsCrossed,
+  ShieldCheck,
+  Check,
+  Sparkles,
 } from 'lucide-react';
+
+interface AvailableFacility {
+  id: string;
+  name: string;
+  labelKey: string;
+  icon: React.ComponentType<{ className?: string }>;
+}
+
+const AVAILABLE_FACILITIES: AvailableFacility[] = [
+  { id: 'wifi', name: 'WiFi', labelKey: 'properties.facilityWifi', icon: Wifi },
+  { id: 'ac', name: 'AC', labelKey: 'properties.facilityAC', icon: Wind },
+  { id: 'km_dalam', name: 'Kamar Mandi Dalam', labelKey: 'properties.facilityPrivateBathroom', icon: Bath },
+  { id: 'km_luar', name: 'Kamar Mandi Luar', labelKey: 'properties.facilitySharedBathroom', icon: Bath },
+  { id: 'parkir', name: 'Parkir Motor', labelKey: 'properties.facilityMotorcycleParking', icon: Bike },
+  { id: 'dapur', name: 'Dapur Bersama', labelKey: 'properties.facilitySharedKitchen', icon: UtensilsCrossed },
+  { id: 'security', name: 'Security', labelKey: 'properties.facilitySecurity', icon: ShieldCheck },
+];
 import { PropertyMapPicker, LocationData } from './PropertyMapPicker';
 import { reverseGeocodeCoords } from '@/lib/location';
 import {
@@ -44,8 +69,11 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { ImageGalleryUploader } from '@/components/common/ImageGalleryUploader';
+import { useTranslation } from '@/contexts/LanguageContext';
+import { useFormDiscardWarning } from '@/hooks/useFormDiscardWarning';
 
 export const CreatePropertyView: React.FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
 
   // Form states
@@ -55,6 +83,15 @@ export const CreatePropertyView: React.FC = () => {
   const [description, setDescription] = useState('');
   const [rules, setRules] = useState('');
   const [photos, setPhotos] = useState<string[]>([]);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+
+  const handleToggleFacility = (facilityName: string) => {
+    setSelectedFacilities((prev) =>
+      prev.includes(facilityName)
+        ? prev.filter((name) => name !== facilityName)
+        : [...prev, facilityName]
+    );
+  };
 
   // Restore photos from localStorage on initial render
   useEffect(() => {
@@ -71,6 +108,9 @@ export const CreatePropertyView: React.FC = () => {
       // Ignore
     }
   }, []);
+
+  // Track successful submission to suppress discard warnings
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Address & search states (two-way sync with map)
   const [address, setAddress] = useState('');
@@ -390,13 +430,13 @@ export const CreatePropertyView: React.FC = () => {
     if (item.province) setProvince(item.province);
     if (item.postalCode) setPostalCode(item.postalCode);
     syncWithRegions(item.province, item.city);
-    toast.success('Alamat dipilih! Peta dan detail wilayah diperbarui.');
+    toast.success(t('properties.addressSelected'));
   };
 
   // Handler to detect current GPS location
   const handleUseCurrentLocation = () => {
     if (typeof window === 'undefined' || !navigator.geolocation) {
-      toast.error('Browser Anda tidak mendukung deteksi lokasi.');
+      toast.error(t('properties.geoNotSupported'));
       return;
     }
 
@@ -422,16 +462,16 @@ export const CreatePropertyView: React.FC = () => {
             }
             syncWithRegions(result.province, result.city);
           }
-          toast.success('Lokasi GPS dan detail wilayah berhasil disinkronkan!');
+          toast.success(t('properties.geoSynced'));
         } catch {
-          toast.success('Lokasi GPS ditemukan!');
+          toast.success(t('properties.geoFound'));
         } finally {
           setIsLocating(false);
         }
       },
       (err) => {
         setIsLocating(false);
-        toast.error('Gagal mendeteksi lokasi: ' + err.message);
+        toast.error(t('properties.geoFailed') + err.message);
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -451,20 +491,43 @@ export const CreatePropertyView: React.FC = () => {
     syncWithRegions(loc.province, loc.city);
   };
 
+  // Form dirty state detection
+  const isDirty =
+    !isSubmitted &&
+    Boolean(
+      name.trim() ||
+      contactInfo.trim() ||
+      description.trim() ||
+      rules.trim() ||
+      address.trim() ||
+      photos.length > 0 ||
+      selectedFacilities.length > 0 ||
+      lat !== null ||
+      lng !== null
+    );
+
+  const { guard } = useFormDiscardWarning({ isDirty });
+
+  const handleCancel = () => {
+    guard(() => {
+      router.push('/properties');
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
     setSuccessMsg(null);
 
     if (!name.trim()) {
-      setErrorMsg('Nama properti / kost wajib diisi.');
-      toast.error('Nama properti / kost wajib diisi.');
+      setErrorMsg(t('properties.validationNameRequired'));
+      toast.error(t('properties.validationNameRequired'));
       return;
     }
 
     if (!address.trim()) {
-      setErrorMsg('Alamat properti wajib diisi atau ditentukan pada peta.');
-      toast.error('Alamat properti wajib diisi atau ditentukan pada peta.');
+      setErrorMsg(t('properties.validationAddressRequired'));
+      toast.error(t('properties.validationAddressRequired'));
       return;
     }
 
@@ -488,11 +551,13 @@ export const CreatePropertyView: React.FC = () => {
         rules: rules.trim() || undefined,
         contactInfo: contactInfo.trim() || undefined,
         photos: photos.length > 0 ? photos : [],
+        facilities: selectedFacilities,
       };
 
       const res = await api.post('/properties', payload);
 
       if (res.success) {
+        setIsSubmitted(true);
         if (typeof window !== 'undefined') {
           try {
             localStorage.removeItem('rentmate_create_property_photos');
@@ -500,14 +565,14 @@ export const CreatePropertyView: React.FC = () => {
             // Ignore
           }
         }
-        setSuccessMsg('Properti berhasil ditambahkan! Mengalihkan...');
-        toast.success(`Properti "${name.trim()}" berhasil ditambahkan!`);
+        setSuccessMsg(t('properties.createSuccess'));
+        toast.success(t('properties.createSuccessNamed', { name: name.trim() }));
         setTimeout(() => {
           router.push('/properties');
         }, 1000);
       }
     } catch (err: any) {
-      const msg = err.message || 'Gagal menambahkan properti. Silakan periksa kembali formulir.';
+      const msg = err.message || t('properties.createFailed');
       setErrorMsg(msg);
       toast.error(msg);
     } finally {
@@ -519,9 +584,10 @@ export const CreatePropertyView: React.FC = () => {
     <AppLayout>
       <div className="max-w-7xl mx-auto space-y-6 pb-12 animate-fade-in">
         <PageHeader
-          backHref="/properties"
-          title="Tambah Properti Baru"
-          description="Daftarkan unit gedung kost Anda dengan menentukan titik lokasi pada peta interaktif."
+          onBack={handleCancel}
+          showBackButton
+          title={t('properties.createTitle')}
+          description={t('properties.createDesc')}
         />
 
         {/* Feedback Alerts */}
@@ -552,10 +618,10 @@ export const CreatePropertyView: React.FC = () => {
                     </div>
                     <div>
                       <h3 className="text-base font-bold text-gray-900 dark:text-foreground">
-                        Informasi Utama Kost
+                        {t('properties.infoSectionTitle')}
                       </h3>
                       <p className="text-xs text-gray-500 dark:text-muted-foreground">
-                        Identitas dan tipe properti yang akan dikelola.
+                        {t('properties.infoSectionDesc')}
                       </p>
                     </div>
                   </div>
@@ -563,14 +629,14 @@ export const CreatePropertyView: React.FC = () => {
                   <div className="space-y-4">
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                        Nama Properti / Kost <span className="text-rose-500">*</span>
+                        {t('properties.nameLabel')}
                       </label>
                       <Input
                         type="text"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="cth. Kost Harmoni Residence"
+                        placeholder={t('properties.namePlaceholder')}
                         className="h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
                       />
                     </div>
@@ -578,23 +644,23 @@ export const CreatePropertyView: React.FC = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                          Tipe Kost
+                          {t('properties.typeLabel')}
                         </label>
                         <Select value={type} onValueChange={(val) => setType(val)}>
                           <SelectTrigger className="w-full h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
-                            <SelectValue placeholder="Pilih tipe kost" />
+                            <SelectValue placeholder={t('properties.modalTypePlaceholder')} />
                           </SelectTrigger>
                           <SelectContent>
-                            <SelectItem value="CAMPUR">Campur (Putra & Putri)</SelectItem>
-                            <SelectItem value="PUTRA">Khusus Putra</SelectItem>
-                            <SelectItem value="PUTRI">Khusus Putri</SelectItem>
+                            <SelectItem value="CAMPUR">{t('properties.typeMixed')}</SelectItem>
+                            <SelectItem value="PUTRA">{t('properties.typeMale')}</SelectItem>
+                            <SelectItem value="PUTRI">{t('properties.typeFemale')}</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>
 
                       <div>
                         <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                          Kontak Pengelola / WA
+                          {t('properties.contactLabel')}
                         </label>
                         <div className="relative">
                           <Phone className="w-4 h-4 text-gray-400 dark:text-muted-foreground absolute left-3.5 top-3.5 z-10 pointer-events-none" />
@@ -602,7 +668,7 @@ export const CreatePropertyView: React.FC = () => {
                             type="tel"
                             value={contactInfo}
                             onChange={(e) => setContactInfo(e.target.value)}
-                            placeholder="081234567890"
+                            placeholder={t('properties.contactPlaceholder')}
                             className="pl-10 h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
                           />
                         </div>
@@ -611,26 +677,26 @@ export const CreatePropertyView: React.FC = () => {
 
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                        Deskripsi Singkat (Opsional)
+                        {t('properties.descLabel')}
                       </label>
                       <Textarea
                         rows={3}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Ceritakan keunggulan, lokasi strategis (dekat kampus/stasiun), atau suasana kost..."
+                        placeholder={t('properties.descPlaceholder')}
                         className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed"
                       />
                     </div>
 
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                        Peraturan Kost (Opsional)
+                        {t('properties.rulesLabel')}
                       </label>
                       <Textarea
                         rows={2}
                         value={rules}
                         onChange={(e) => setRules(e.target.value)}
-                        placeholder="cth. Jam malam tamu maks 22.00, dilarang membawa hewan peliharaan..."
+                        placeholder={t('properties.rulesPlaceholder')}
                         className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed"
                       />
                     </div>
@@ -647,14 +713,70 @@ export const CreatePropertyView: React.FC = () => {
                     images={photos}
                     onChange={setPhotos}
                     type="property"
-                    title="Foto & Galeri Properti (Google Maps Preview)"
-                    description="Pratinjau foto gedung kost seperti pada Google Maps. Foto pertama otomatis menjadi cover utama properti."
+                    title={t('properties.photoSectionTitle')}
+                    description={t('properties.photoSectionDesc')}
                     storageKey="rentmate_create_property_photos"
                   />
                 </CardContent>
               </Card>
             </div>
           </div>
+
+          {/* Middle Row: Fasilitas Properti */}
+          <Card className="rounded-2xl border border-gray-100 dark:border-border/60 shadow-xs bg-white dark:bg-card">
+            <CardContent className="p-6 space-y-4">
+              <div className="flex items-center gap-2.5 pb-4 border-b border-gray-100 dark:border-border/60">
+                <div className="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-gray-900 dark:text-foreground">
+                    {t('properties.facilitiesSectionTitle')}
+                  </h3>
+                  <p className="text-xs text-gray-500 dark:text-muted-foreground">
+                    {t('properties.facilitiesSectionDesc')}
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 pt-1">
+                {AVAILABLE_FACILITIES.map((facility) => {
+                  const isSelected = selectedFacilities.includes(facility.name);
+                  const IconComponent = facility.icon;
+                  return (
+                    <button
+                      key={facility.id}
+                      type="button"
+                      onClick={() => handleToggleFacility(facility.name)}
+                      className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
+                        isSelected
+                          ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-300 dark:border-indigo-600 text-indigo-900 dark:text-indigo-200 shadow-xs ring-1 ring-indigo-500/30'
+                          : 'bg-white dark:bg-card border-gray-200 dark:border-border text-gray-700 dark:text-muted-foreground hover:border-gray-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-accent/40'
+                      }`}
+                    >
+                      <div
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected
+                            ? 'bg-indigo-600 text-white shadow-xs'
+                            : 'bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400'
+                        }`}
+                      >
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <span className="text-xs font-semibold block truncate">
+                          {t(facility.labelKey)}
+                        </span>
+                      </div>
+                      {isSelected && (
+                        <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Bottom Row: Unified Wide Card (Alamat Manual & Peta Leaflet Berdampingan) */}
           <Card className="rounded-2xl border border-gray-100 dark:border-border/60 shadow-xs bg-white dark:bg-card">
@@ -666,10 +788,10 @@ export const CreatePropertyView: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-base font-bold text-gray-900 dark:text-foreground">
-                      Lokasi & Detail Alamat Properti
+                      {t('properties.locationSectionTitle')}
                     </h3>
                     <p className="text-xs text-gray-500 dark:text-muted-foreground">
-                      Cari alamat, gunakan GPS, atau tentukan titik langsung pada peta interaktif di sebelah kanan.
+                      {t('properties.locationSectionDesc')}
                     </p>
                   </div>
                 </div>
@@ -683,7 +805,7 @@ export const CreatePropertyView: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                        <span>Provinsi</span>
+                        <span>{t('properties.provinceLabel')}</span>
                         {isLoadingProvinces && (
                           <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
                         )}
@@ -694,7 +816,7 @@ export const CreatePropertyView: React.FC = () => {
                         disabled={isLoadingProvinces}
                       >
                         <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500">
-                          <SelectValue placeholder="Pilih Provinsi" />
+                          <SelectValue placeholder={t('properties.provincePlaceholder')} />
                         </SelectTrigger>
                         <SelectContent className="max-h-64 bg-white dark:bg-card border-gray-200 dark:border-border">
                           {provinces.map((prov) => (
@@ -708,7 +830,7 @@ export const CreatePropertyView: React.FC = () => {
 
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                        <span>Kota / Kabupaten</span>
+                        <span>{t('properties.cityLabel')}</span>
                         {isLoadingRegencies && (
                           <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
                         )}
@@ -722,10 +844,10 @@ export const CreatePropertyView: React.FC = () => {
                           <SelectValue
                             placeholder={
                               !selectedProvinceId
-                                ? 'Pilih provinsi dahulu'
+                                ? t('properties.cityPlaceholderFirst')
                                 : isLoadingRegencies
-                                ? 'Memuat kota...'
-                                : 'Pilih Kota / Kab'
+                                ? t('properties.cityPlaceholderLoading')
+                                : t('properties.cityPlaceholderSelect')
                             }
                           />
                         </SelectTrigger>
@@ -744,7 +866,7 @@ export const CreatePropertyView: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
-                        <span>Kecamatan</span>
+                        <span>{t('properties.districtLabel')}</span>
                         {isLoadingDistricts && (
                           <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
                         )}
@@ -758,10 +880,10 @@ export const CreatePropertyView: React.FC = () => {
                           <SelectValue
                             placeholder={
                               !selectedRegencyId
-                                ? 'Pilih kota dahulu'
+                                ? t('properties.districtPlaceholderFirst')
                                 : isLoadingDistricts
-                                ? 'Memuat kecamatan...'
-                                : 'Pilih Kecamatan'
+                                ? t('properties.districtPlaceholderLoading')
+                                : t('properties.districtPlaceholderSelect')
                             }
                           />
                         </SelectTrigger>
@@ -777,13 +899,13 @@ export const CreatePropertyView: React.FC = () => {
 
                     <div>
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                        Kode Pos
+                        {t('properties.postalLabel')}
                       </label>
                       <Input
                         type="text"
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
-                        placeholder="cth. 40141"
+                        placeholder={t('properties.postalPlaceholder')}
                         className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
                       />
                     </div>
@@ -792,7 +914,7 @@ export const CreatePropertyView: React.FC = () => {
                   {/* 3. Titik Koordinat GPS */}
                   <div>
                     <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5">
-                      Titik Koordinat GPS
+                      {t('properties.coordLabel')}
                     </label>
                     <div className="h-10 px-3 rounded-xl border border-gray-200 dark:border-border bg-gray-50/70 dark:bg-muted/20 text-xs font-mono text-gray-600 dark:text-gray-300 flex items-center">
                       {lat && lng ? (
@@ -800,7 +922,7 @@ export const CreatePropertyView: React.FC = () => {
                           {lat.toFixed(5)}, {lng.toFixed(5)}
                         </span>
                       ) : (
-                        <span className="text-gray-400 italic">Pilih di peta atau gunakan Lokasi Saya</span>
+                        <span className="text-gray-400 italic">{t('properties.coordPlaceholder')}</span>
                       )}
                     </div>
                   </div>
@@ -809,7 +931,7 @@ export const CreatePropertyView: React.FC = () => {
                   <div ref={addressContainerRef} className="relative flex-1 flex flex-col">
                     <div className="flex items-center justify-between mb-1.5">
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider">
-                        Alamat Lengkap & Patokan <span className="text-rose-500">*</span>
+                        {t('properties.addressLabel')}
                       </label>
                       <Button
                         type="button"
@@ -818,14 +940,14 @@ export const CreatePropertyView: React.FC = () => {
                         onClick={handleUseCurrentLocation}
                         disabled={isLocating}
                         className="group h-7 px-2.5 rounded-lg text-xs font-semibold gap-1.5 bg-indigo-50/80 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/25 cursor-pointer shadow-2xs transition-all duration-150 active:scale-95 disabled:opacity-60"
-                        title="Deteksi Lokasi GPS Saya"
+                        title={t('properties.myLocationTitle')}
                       >
                         {isLocating ? (
                           <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-600 dark:text-indigo-400" />
                         ) : (
                           <LocateFixed className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-150" />
                         )}
-                        <span>{isLocating ? 'Mencari Lokasi...' : 'Lokasi Saya'}</span>
+                        <span>{isLocating ? t('properties.myLocationSearching') : t('properties.myLocationButton')}</span>
                       </Button>
                     </div>
 
@@ -837,7 +959,7 @@ export const CreatePropertyView: React.FC = () => {
                         onFocus={() => {
                           if (searchResults.length > 0) setShowDropdown(true);
                         }}
-                        placeholder="Ketik alamat lengkap atau landmark kost (cth. Jl. Ciumbuleuit No. 45, dekat kampus UNPAR)..."
+                        placeholder={t('properties.addressPlaceholder')}
                         className="w-full flex-1 min-h-[140px] p-3 pr-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed shadow-xs"
                       />
                       {isSearching && (
@@ -853,14 +975,14 @@ export const CreatePropertyView: React.FC = () => {
                         <div className="px-3.5 py-2 bg-gray-50/90 dark:bg-muted/60 text-xs text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-between border-b border-gray-100 dark:border-border/60">
                           <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400">
                             <Search className="w-3.5 h-3.5" />
-                            <span>Saran Alamat Ditemukan ({searchResults.length})</span>
+                            <span>{t('properties.addressSuggestionHeader', { count: searchResults.length })}</span>
                           </span>
                           <button
                             type="button"
                             onClick={() => setShowDropdown(false)}
                             className="text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer text-xs flex items-center gap-1 hover:underline"
                           >
-                            ✕ Tutup
+                            {t('properties.closeSuggestion')}
                           </button>
                         </div>
                         {searchResults.map((item, idx) => (
@@ -895,9 +1017,9 @@ export const CreatePropertyView: React.FC = () => {
                   <div className="p-3.5 bg-indigo-50/70 dark:bg-indigo-950/30 rounded-xl border border-indigo-100/80 dark:border-indigo-900/40 text-xs text-indigo-900 dark:text-indigo-300 leading-relaxed flex items-start gap-2.5 shrink-0">
                     <MapPin className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-semibold mb-0.5">Sinkronisasi Peta Otomatis</p>
+                      <p className="font-semibold mb-0.5">{t('properties.syncNoticeTitle')}</p>
                       <p className="text-[11px] text-indigo-700/90 dark:text-indigo-300/80">
-                        Memilih saran pencarian atau menggeser pin di sebelah kanan akan otomatis memperbarui koordinat dan detail alamat.
+                        {t('properties.syncNoticeDesc')}
                       </p>
                     </div>
                   </div>
@@ -921,17 +1043,17 @@ export const CreatePropertyView: React.FC = () => {
             <Button
               type="button"
               variant="outline"
-              onClick={() => router.push('/properties')}
+              onClick={handleCancel}
               className="rounded-xl px-5 h-11 cursor-pointer"
             >
-              Batal
+              {t('common.cancel')}
             </Button>
             <Button
               type="submit"
               disabled={submitting}
               className="rounded-xl px-8 h-11 shadow-md shadow-indigo-500/20 font-semibold cursor-pointer"
             >
-              {submitting ? 'Menyimpan Properti...' : 'Simpan Properti'}
+              {submitting ? t('properties.submitSaving') : t('properties.submitButton')}
             </Button>
           </div>
         </form>

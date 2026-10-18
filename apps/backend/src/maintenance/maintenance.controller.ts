@@ -6,6 +6,7 @@ import {
   Param,
   Query,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { MaintenanceService } from './maintenance.service';
 import { CreateMaintenanceDto } from './dto/create-maintenance.dto';
@@ -51,7 +52,7 @@ export class MaintenanceController {
 
   @Get('room/:roomId/history')
   async findRoomHistory(
-    @Param('roomId') roomId: string,
+    @Param('roomId', new ParseUUIDPipe({ version: '4' })) roomId: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
   ) {
@@ -68,7 +69,7 @@ export class MaintenanceController {
 
   @Get(':id')
   async findOne(
-    @Param('id') ticketId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) ticketId: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
   ) {
@@ -86,7 +87,7 @@ export class MaintenanceController {
   @Post(':id/assign')
   @Roles('OWNER', 'ADMIN')
   async assignTechnician(
-    @Param('id') ticketId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) ticketId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: AssignTechnicianDto,
@@ -107,7 +108,7 @@ export class MaintenanceController {
   @Post(':id/start')
   @Roles('TECHNICIAN', 'ADMIN')
   async startWork(
-    @Param('id') ticketId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) ticketId: string,
     @CurrentUser('id') technicianId: string,
     @CurrentUser('role') role: string,
   ) {
@@ -117,7 +118,7 @@ export class MaintenanceController {
   @Post(':id/resolve')
   @Roles('TECHNICIAN', 'ADMIN')
   async resolveWork(
-    @Param('id') ticketId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) ticketId: string,
     @CurrentUser('id') technicianId: string,
     @CurrentUser('role') role: string,
     @Body() dto: ResolveWorkDto,
@@ -138,7 +139,7 @@ export class MaintenanceController {
   @Post(':id/close')
   @Roles('OWNER', 'ADMIN')
   async closeTicket(
-    @Param('id') ticketId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) ticketId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
   ) {

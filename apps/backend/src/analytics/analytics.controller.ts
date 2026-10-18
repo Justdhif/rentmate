@@ -23,6 +23,19 @@ export class AnalyticsController {
     };
   }
 
+  @Get('comprehensive')
+  @Roles('OWNER', 'ADMIN')
+  async getComprehensive(
+    @CurrentUser('id') ownerId: string,
+    @CurrentUser('role') role: string,
+  ) {
+    const data = await this.analyticsService.getComprehensiveAnalytics(ownerId, role);
+    return {
+      success: true,
+      data,
+    };
+  }
+
   @Get('revenue')
   @Roles('OWNER', 'ADMIN')
   async getRevenue(

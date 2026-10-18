@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { AlertCircle } from 'lucide-react';
 import { MaintenanceTicket } from './MaintenanceTicketCard';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface AssignTechnicianModalProps {
   isOpen: boolean;
@@ -33,11 +34,13 @@ export const AssignTechnicianModal: React.FC<AssignTechnicianModalProps> = ({
   submitting,
   submitError,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-gray-200 dark:border-border">
         <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10">
-          <DialogTitle className="text-lg font-semibold">Tugaskan Teknisi Perbaikan</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">{t('maintenance.assignModalTitle')}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="p-6 space-y-4">
@@ -49,26 +52,29 @@ export const AssignTechnicianModal: React.FC<AssignTechnicianModalProps> = ({
           )}
 
           <div>
-            <p className="text-xs text-gray-500 dark:text-muted-foreground mb-1">Tiket Keluhan:</p>
+            <p className="text-xs text-gray-500 dark:text-muted-foreground mb-1">{t('maintenance.assignTicketLabel')}</p>
             <p className="font-semibold text-gray-900 dark:text-foreground text-sm">
-              {selectedTicket?.title} (Kamar {selectedTicket?.room?.roomNumber})
+              {t('maintenance.assignTicketDisplay', {
+                title: selectedTicket?.title || '',
+                roomNumber: selectedTicket?.room?.roomNumber || '-',
+              })}
             </p>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-              Email Teknisi / Tukang
+              {t('maintenance.assignEmailLabel')}
             </label>
             <Input
               type="email"
               required
               value={techEmail}
               onChange={(e) => setTechEmail(e.target.value)}
-              placeholder="teknisi@email.com"
+              placeholder={t('maintenance.assignEmailPlaceholder')}
               className="h-10 rounded-xl"
             />
             <p className="text-[11px] text-gray-400 dark:text-muted-foreground mt-1.5">
-              Email teknisi yang terdaftar di akun RentMate dengan peran TEKNISI / OWNER.
+              {t('maintenance.assignEmailNote')}
             </p>
           </div>
 
@@ -79,14 +85,14 @@ export const AssignTechnicianModal: React.FC<AssignTechnicianModalProps> = ({
               onClick={() => onOpenChange(false)}
               className="rounded-xl"
             >
-              Batal
+              {t('common.cancel')}
             </Button>
             <Button
               type="submit"
               disabled={submitting}
               className="rounded-xl shadow-xs"
             >
-              {submitting ? 'Menugaskan...' : 'Kirim Penugasan'}
+              {submitting ? t('maintenance.assignSubmitSaving') : t('maintenance.assignSubmitButton')}
             </Button>
           </div>
         </form>

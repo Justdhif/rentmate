@@ -4,9 +4,10 @@ import { MaintenanceController } from './maintenance.controller';
 import { RoomsModule } from '../rooms/rooms.module';
 import { PropertiesModule } from '../properties/properties.module';
 import { UsersModule } from '../users/users.module';
+import { AnalyticsModule } from '../analytics/analytics.module';
 
 @Module({
-  imports: [RoomsModule, PropertiesModule, UsersModule],
+  imports: [RoomsModule, PropertiesModule, UsersModule, AnalyticsModule],
   controllers: [MaintenanceController],
   providers: [MaintenanceService],
   exports: [MaintenanceService],

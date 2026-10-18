@@ -2,7 +2,10 @@ import {
   Injectable,
   ConflictException,
   UnauthorizedException,
+  BadRequestException,
+  NotFoundException,
   Inject,
+  Logger,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -11,23 +14,26 @@ import * as crypto from 'crypto';
 import { OAuth2Client } from 'google-auth-library';
 import { eq } from 'drizzle-orm';
 import { DRIZZLE } from '../database/database.provider';
+import type { DrizzleDB } from '../database/database.provider';
 import * as schema from '../database/schema';
 import { UsersService } from '../users/users.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { GoogleAuthDto } from './dto/google-auth.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 import { JwtPayload } from './strategies/jwt.strategy';
 import { CloudinaryService } from '../common/cloudinary/cloudinary.service';
 import { AvatarHelper } from '../common/helpers/avatar.helper';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
   private googleClient: OAuth2Client;
 
   constructor(
     @Inject(DRIZZLE)
-    private db: any,
+    private db: DrizzleDB,
     private usersService: UsersService,
     private jwtService: JwtService,
     private configService: ConfigService,
@@ -49,31 +55,20 @@ export class AuthService {
       });
       payload = ticket.getPayload();
     } catch (err: any) {
-      // Fallback untuk environment dev jika audience belum diatur spesifik
-      const isDev = this.configService.get<string>('NODE_ENV') !== 'production';
-      if (isDev) {
-        try {
-          const decoded: any = this.jwtService.decode(dto.idToken);
-          if (decoded && decoded.email) {
-            payload = {
-              email: decoded.email,
-              name: decoded.name || decoded.email.split('@')[0],
-              picture: decoded.picture,
-              sub: decoded.sub || decoded.user_id || `dev_google_${Date.now()}`,
-            };
-          }
-        } catch {}
-      }
+      this.logger.error(`Google token verification failed: ${err.message}`);
+      throw new UnauthorizedException(
+        'Verifikasi akun Google gagal. Token tidak valid atau telah kedaluwarsa.',
+      );
+    }
 
-      if (!payload || !payload.email) {
-        throw new UnauthorizedException(
-          'Verifikasi akun Google gagal. Token tidak valid atau telah kedaluwarsa.',
-        );
-      }
+    if (!payload || !payload.email) {
+      throw new UnauthorizedException(
+        'Verifikasi akun Google gagal. Informasi akun tidak ditemukan.',
+      );
     }
 
     const email = payload.email.toLowerCase().trim();
-    const existingUser = await this.usersService.findByEmail(email);
+    const existingUser = await this.usersService.findByEmail(email, true);
 
     // Upload foto profil Google ke Cloudinary jika tersedia, fallback ke DiceBear
     let googleAvatarUrl: string | null = null;
@@ -155,26 +150,34 @@ export class AuthService {
     const randomPassword = crypto.randomUUID();
     const passwordHash = await bcrypt.hash(randomPassword, 10);
 
-    const [newUser] = await this.db
-      .insert(schema.users)
-      .values({
-        email,
-        passwordHash,
-        role: dto.role,
-        isVerified: true,
-        provider: 'google',
-        providerId: payload.sub,
-      })
-      .returning();
+    const { newUser, profile } = await this.db.transaction(
+      async (tx: any) => {
+        const [createdUser] = await tx
+          .insert(schema.users)
+          .values({
+            email,
+            passwordHash,
+            role: dto.role,
+            isVerified: true,
+            provider: 'google',
+            providerId: payload.sub,
+          })
+          .returning();
 
-    const [profile] = await this.db
-      .insert(schema.userProfiles)
-      .values({
-        userId: newUser.id,
-        fullName: payload.name || email.split('@')[0],
-        avatarUrl: googleAvatarUrl || AvatarHelper.generateDefaultAvatar(newUser.id),
-      })
-      .returning();
+        const [createdProfile] = await tx
+          .insert(schema.userProfiles)
+          .values({
+            userId: createdUser.id,
+            fullName: payload.name || email.split('@')[0],
+            avatarUrl:
+              googleAvatarUrl ||
+              AvatarHelper.generateDefaultAvatar(createdUser.id),
+          })
+          .returning();
+
+        return { newUser: createdUser, profile: createdProfile };
+      },
+    );
 
     const tokens = await this.generateTokens(
       newUser.id,
@@ -208,27 +211,33 @@ export class AuthService {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(dto.password, saltRounds);
 
-    const [newUser] = await this.db
-      .insert(schema.users)
-      .values({
-        email: dto.email.toLowerCase().trim(),
-        passwordHash,
-        role: dto.role,
-        isVerified: false,
-        provider: 'local',
-      })
-      .returning();
+    const defaultAvatar = AvatarHelper.generateDefaultAvatar(dto.email);
 
-    const defaultAvatar = AvatarHelper.generateDefaultAvatar(newUser.id);
+    const { newUser, profile } = await this.db.transaction(
+      async (tx: any) => {
+        const [createdUser] = await tx
+          .insert(schema.users)
+          .values({
+            email: dto.email.toLowerCase().trim(),
+            passwordHash,
+            role: dto.role,
+            isVerified: false,
+            provider: 'local',
+          })
+          .returning();
 
-    const [profile] = await this.db
-      .insert(schema.userProfiles)
-      .values({
-        userId: newUser.id,
-        fullName: dto.fullName,
-        avatarUrl: defaultAvatar,
-      })
-      .returning();
+        const [createdProfile] = await tx
+          .insert(schema.userProfiles)
+          .values({
+            userId: createdUser.id,
+            fullName: dto.fullName,
+            avatarUrl: defaultAvatar,
+          })
+          .returning();
+
+        return { newUser: createdUser, profile: createdProfile };
+      },
+    );
 
     const tokens = await this.generateTokens(newUser.id, newUser.email, newUser.role);
     await this.updateRefreshToken(newUser.id, tokens.refreshToken);
@@ -247,7 +256,7 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    const user = await this.usersService.findByEmail(dto.email);
+    const user = await this.usersService.findByEmail(dto.email, true);
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
@@ -273,9 +282,7 @@ export class AuthService {
     let payload: JwtPayload;
     try {
       payload = await this.jwtService.verifyAsync(dto.refreshToken, {
-        secret:
-          this.configService.get<string>('JWT_REFRESH_SECRET') ||
-          'default_refresh_secret',
+        secret: this.getJwtRefreshSecret(),
       });
     } catch {
       throw new UnauthorizedException('Invalid or expired refresh token');
@@ -313,19 +320,77 @@ export class AuthService {
     return { success: true, message: 'Logged out successfully' };
   }
 
+  async changePassword(userId: string, dto: ChangePasswordDto) {
+    const user = await this.db.query.users.findFirst({
+      where: eq(schema.users.id, userId),
+    });
+
+    if (!user) {
+      throw new NotFoundException('Pengguna tidak ditemukan');
+    }
+
+    if (user.passwordHash) {
+      const isMatch = await bcrypt.compare(dto.currentPassword, user.passwordHash);
+      if (!isMatch) {
+        throw new UnauthorizedException('Kata sandi saat ini tidak valid');
+      }
+    }
+
+    if (dto.currentPassword === dto.newPassword) {
+      throw new BadRequestException(
+        'Kata sandi baru tidak boleh sama dengan kata sandi saat ini',
+      );
+    }
+
+    const newPasswordHash = await bcrypt.hash(dto.newPassword, 10);
+
+    await this.db
+      .update(schema.users)
+      .set({
+        passwordHash: newPasswordHash,
+        refreshTokenHash: null, // Invalidate all refresh tokens to enforce fresh authentication on other devices
+        updatedAt: new Date(),
+      })
+      .where(eq(schema.users.id, userId));
+
+    return {
+      success: true,
+      message: 'Kata sandi berhasil diperbarui. Sesi perangkat lain telah dinonaktifkan.',
+    };
+  }
+
+  private getJwtSecret(): string {
+    const secret = this.configService.get<string>('JWT_SECRET');
+    const isProd = this.configService.get<string>('NODE_ENV') === 'production';
+    if ((!secret || secret === 'default_secret') && isProd) {
+      throw new Error(
+        'FATAL: JWT_SECRET environment variable is missing or insecure in production!',
+      );
+    }
+    return secret || 'default_secret';
+  }
+
+  private getJwtRefreshSecret(): string {
+    const secret = this.configService.get<string>('JWT_REFRESH_SECRET');
+    const isProd = this.configService.get<string>('NODE_ENV') === 'production';
+    if ((!secret || secret === 'default_refresh_secret') && isProd) {
+      throw new Error(
+        'FATAL: JWT_REFRESH_SECRET environment variable is missing or insecure in production!',
+      );
+    }
+    return secret || 'default_refresh_secret';
+  }
+
   private async generateTokens(userId: string, email: string, role: string) {
     const payload: JwtPayload = { sub: userId, email, role };
 
     const [accessToken, refreshToken] = await Promise.all([
       this.jwtService.signAsync(payload, {
-        secret:
-          this.configService.get<string>('JWT_SECRET') || 'default_secret',
+        secret: this.getJwtSecret(),
         expiresIn: (this.configService.get<string>('JWT_EXPIRATION') || '1h') as any,
       }),
       this.jwtService.signAsync(payload, {
-        secret:
-          this.configService.get<string>('JWT_REFRESH_SECRET') ||
-          'default_refresh_secret',
+        secret: this.getJwtRefreshSecret(),
         expiresIn: (this.configService.get<string>('JWT_REFRESH_EXPIRATION') || '30d') as any,
       }),
     ]);

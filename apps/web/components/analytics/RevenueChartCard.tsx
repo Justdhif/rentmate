@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { TrendingUp } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 import {
   ResponsiveContainer,
   BarChart,
@@ -21,6 +22,8 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
   revenueData,
   formatCurrency,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Card className="lg:col-span-2 rounded-2xl overflow-hidden border-gray-100 dark:border-border shadow-xs flex flex-col relative bg-card">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-violet-500" />
@@ -29,10 +32,10 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
           <div>
             <CardTitle className="font-bold text-foreground text-base flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-indigo-500" />
-              Tren Pendapatan Bulanan
+              {t('analytics.revenueTitle')}
             </CardTitle>
             <p className="text-xs text-muted-foreground mt-0.5">
-              Data riwayat omset terverifikasi lunas
+              {t('analytics.revenueSub')}
             </p>
           </div>
         </div>
@@ -40,7 +43,7 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
       <CardContent className="p-6 pt-4 flex-1">
         {revenueData.length === 0 ? (
           <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
-            Belum ada data pendapatan historis.
+            {t('analytics.revenueEmpty')}
           </div>
         ) : (
           <div className="h-72 w-full pt-4">
@@ -54,7 +57,7 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
                   tickFormatter={(val) => `Rp${val / 1000000}M`}
                 />
                 <Tooltip
-                  formatter={(val: any) => [formatCurrency(Number(val)), 'Pendapatan']}
+                  formatter={(val: any) => [formatCurrency(Number(val)), t('analytics.revenueTooltip')]}
                   contentStyle={{
                     backgroundColor: 'rgba(255, 255, 255, 0.95)',
                     borderRadius: '12px',

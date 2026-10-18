@@ -4,13 +4,14 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUrl,
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class ResolveWorkDto {
   @IsString()
-  @IsNotEmpty({ message: 'Work summary is required' })
+  @IsNotEmpty({ message: 'Ringkasan pekerjaan (workSummary) wajib diisi' })
   workSummary: string;
 
   @IsOptional()
@@ -20,11 +21,14 @@ export class ResolveWorkDto {
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  @Min(0)
+  @Min(0, { message: 'Biaya aktual tidak boleh bernilai negatif' })
   actualCost?: number;
 
   @IsOptional()
   @IsArray()
-  @IsString({ each: true })
+  @IsUrl(
+    { require_tld: false },
+    { each: true, message: 'Setiap foto bukti pengerjaan harus berupa format URL valid' },
+  )
   photos?: string[];
 }

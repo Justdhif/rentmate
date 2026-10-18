@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Building2, CreditCard, Wrench } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface AuthBannerProps {
   title?: string;
@@ -9,59 +10,63 @@ interface AuthBannerProps {
 }
 
 export const AuthBanner: React.FC<AuthBannerProps> = ({
-  title = 'Kelola Kost Anda Lebih Cerdas',
-  subtitle = 'Platform modern untuk memudahkan manajemen properti, penagihan, dan komunikasi dengan penghuni dalam satu aplikasi.',
+  title,
+  subtitle,
 }) => {
+  const { t } = useTranslation();
+  const bannerTitle = title || t('auth.bannerDefaultTitle');
+  const bannerSubtitle = subtitle || t('auth.bannerDefaultSubtitle');
+
   return (
-    <div className="hidden lg:flex w-[55%] bg-gradient-to-br from-indigo-600 via-violet-600 to-purple-700 p-12 items-center justify-center relative overflow-hidden">
+    <div className="hidden lg:flex w-[55%] bg-gradient-to-br from-indigo-600 via-indigo-700 to-slate-900 dark:from-slate-950 dark:via-indigo-950/40 dark:to-slate-950 dark:border-l dark:border-slate-800/80 p-12 items-center justify-center relative overflow-hidden transition-colors">
       {/* Decorative background shapes */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-20 pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-white blur-[120px]" />
-        <div className="absolute top-[60%] -right-[20%] w-[60%] h-[60%] rounded-full bg-indigo-300 blur-[100px]" />
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay bg-dot-pattern" />
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden opacity-25 dark:opacity-40 pointer-events-none">
+        <div className="absolute -top-[20%] -left-[10%] w-[70%] h-[70%] rounded-full bg-white/40 dark:bg-indigo-600/20 blur-[120px]" />
+        <div className="absolute top-[60%] -right-[20%] w-[60%] h-[60%] rounded-full bg-indigo-300/40 dark:bg-indigo-500/15 blur-[120px]" />
+        <div className="absolute inset-0 opacity-20 dark:opacity-10 mix-blend-overlay bg-dot-pattern" />
       </div>
 
       <div className="relative z-10 w-full max-w-xl text-white">
         <div className="animate-slide-up">
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight">
-            {title}
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6 leading-tight dark:text-transparent dark:bg-clip-text dark:bg-gradient-to-r dark:from-white dark:via-slate-100 dark:to-indigo-200">
+            {bannerTitle}
           </h2>
-          <p className="text-lg md:text-xl text-indigo-100 mb-12 leading-relaxed">
-            {subtitle}
+          <p className="text-lg md:text-xl text-indigo-100 dark:text-slate-400 mb-12 leading-relaxed">
+            {bannerSubtitle}
           </p>
         </div>
 
         <div className="space-y-8 animate-stagger-1">
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
-              <Building2 className="w-6 h-6 text-white" />
+            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 dark:bg-indigo-500/10 flex items-center justify-center backdrop-blur-sm border border-white/20 dark:border-indigo-500/20 text-white dark:text-indigo-400 shadow-sm">
+              <Building2 className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-1">Manajemen Properti Mudah</h3>
-              <p className="text-indigo-100/80 text-sm">
-                Kelola banyak properti dan kamar dengan tampilan visual yang intuitif.
+              <h3 className="text-lg font-semibold mb-1 text-white dark:text-slate-100">{t('auth.bannerFeature1Title')}</h3>
+              <p className="text-indigo-100/80 dark:text-slate-400 text-sm leading-relaxed">
+                {t('auth.bannerFeature1Desc')}
               </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
-              <CreditCard className="w-6 h-6 text-white" />
+            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 dark:bg-indigo-500/10 flex items-center justify-center backdrop-blur-sm border border-white/20 dark:border-indigo-500/20 text-white dark:text-indigo-400 shadow-sm">
+              <CreditCard className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-1">Penagihan Otomatis</h3>
-              <p className="text-indigo-100/80 text-sm">
-                Sistem tagihan terintegrasi untuk pembayaran yang lebih lancar dan tepat waktu.
+              <h3 className="text-lg font-semibold mb-1 text-white dark:text-slate-100">{t('auth.bannerFeature2Title')}</h3>
+              <p className="text-indigo-100/80 dark:text-slate-400 text-sm leading-relaxed">
+                {t('auth.bannerFeature2Desc')}
               </p>
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center backdrop-blur-sm border border-white/20">
-              <Wrench className="w-6 h-6 text-white" />
+            <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/10 dark:bg-indigo-500/10 flex items-center justify-center backdrop-blur-sm border border-white/20 dark:border-indigo-500/20 text-white dark:text-indigo-400 shadow-sm">
+              <Wrench className="w-6 h-6" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-1">Laporan Kerusakan</h3>
-              <p className="text-indigo-100/80 text-sm">
-                Penghuni dapat melaporkan perbaikan langsung dari aplikasi ke pengelola.
+              <h3 className="text-lg font-semibold mb-1 text-white dark:text-slate-100">{t('auth.bannerFeature3Title')}</h3>
+              <p className="text-indigo-100/80 dark:text-slate-400 text-sm leading-relaxed">
+                {t('auth.bannerFeature3Desc')}
               </p>
             </div>
           </div>

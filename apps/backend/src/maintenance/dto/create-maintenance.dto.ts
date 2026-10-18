@@ -5,6 +5,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+  IsUrl,
   MinLength,
 } from 'class-validator';
 
@@ -38,5 +39,6 @@ export class CreateMaintenanceDto {
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
+  @IsUrl({}, { each: true, message: 'Each photo must be a valid URL' })
   photos?: string[];
 }

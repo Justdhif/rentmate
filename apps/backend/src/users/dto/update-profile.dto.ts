@@ -1,4 +1,11 @@
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import {
+  IsOptional,
+  IsString,
+  MaxLength,
+  IsDateString,
+  Matches,
+  IsIn,
+} from 'class-validator';
 
 export class UpdateProfileDto {
   @IsOptional()
@@ -18,14 +25,26 @@ export class UpdateProfileDto {
   @IsOptional()
   @IsString()
   @MaxLength(30)
+  @Matches(/^(\+62|62|0)[0-9]{8,15}$/, {
+    message:
+      'Format nomor telepon tidak valid. Gunakan format standar (contoh: 08123456789 atau +628123456789)',
+  })
   phoneNumber?: string;
 
   @IsOptional()
-  @IsString()
+  @IsDateString(
+    {},
+    {
+      message:
+        'Format tanggal lahir harus berupa format tanggal ISO yang valid (YYYY-MM-DD)',
+    },
+  )
   birthDate?: string;
 
   @IsOptional()
   @IsString()
-  @MaxLength(20)
+  @IsIn(['MALE', 'FEMALE', 'OTHER'], {
+    message: 'Gender harus bernilai MALE, FEMALE, atau OTHER',
+  })
   gender?: string;
 }

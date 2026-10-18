@@ -96,12 +96,26 @@ export class MidtransService {
     grossAmount: string,
     signatureKey: string,
   ): boolean {
+    if (!this.serverKey || !signatureKey) {
+      this.logger.warn(
+        `Midtrans signature verification failed: Missing serverKey or signatureKey`,
+      );
+      return false;
+    }
+
     const raw = `${orderId}${statusCode}${grossAmount}${this.serverKey}`;
     const calculatedHash = crypto
       .createHash('sha512')
       .update(raw)
       .digest('hex');
 
-    return calculatedHash.toLowerCase() === signatureKey.toLowerCase();
+    const calculatedBuf = Buffer.from(calculatedHash.toLowerCase(), 'utf8');
+    const providedBuf = Buffer.from(signatureKey.toLowerCase(), 'utf8');
+
+    if (calculatedBuf.length !== providedBuf.length) {
+      return false;
+    }
+
+    return crypto.timingSafeEqual(calculatedBuf, providedBuf);
   }
 }

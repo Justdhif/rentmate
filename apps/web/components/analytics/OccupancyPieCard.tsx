@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PieChart as PieChartIcon } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 import {
   ResponsiveContainer,
   PieChart,
@@ -23,22 +24,24 @@ export const OccupancyPieCard: React.FC<OccupancyPieCardProps> = ({
   occupancyPieData,
   totalRooms,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Card className="rounded-2xl overflow-hidden border-gray-100 dark:border-border shadow-xs flex flex-col relative bg-card">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
       <CardHeader className="p-6 pb-2">
         <CardTitle className="font-bold text-foreground text-base flex items-center gap-2">
           <PieChartIcon className="w-4 h-4 text-emerald-500" />
-          Komposisi Hunian
+          {t('analytics.occupancyTitle')}
         </CardTitle>
         <p className="text-xs text-muted-foreground mt-0.5">
-          {totalRooms} Kamar Terdaftar
+          {t('analytics.occupancyRoomCount', { count: totalRooms })}
         </p>
       </CardHeader>
       <CardContent className="p-6 pt-4 flex-1 flex flex-col justify-center">
         {totalRooms === 0 ? (
           <div className="h-64 flex items-center justify-center text-sm text-muted-foreground">
-            Belum ada unit kamar.
+            {t('analytics.occupancyEmpty')}
           </div>
         ) : (
           <div className="h-64 w-full">

@@ -7,6 +7,7 @@ import {
   Body,
   Param,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
@@ -50,7 +51,7 @@ export class PropertiesController {
 
   @Get(':id')
   async findOne(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
   ) {
@@ -64,7 +65,7 @@ export class PropertiesController {
   @Patch(':id')
   @Roles('OWNER', 'ADMIN')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: UpdatePropertyDto,
@@ -80,7 +81,7 @@ export class PropertiesController {
   @Delete(':id')
   @Roles('OWNER', 'ADMIN')
   async remove(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
   ) {

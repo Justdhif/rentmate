@@ -1,65 +1,100 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Users, Home, Wallet } from 'lucide-react';
+import { Users, DoorClosed, Banknote, TrendingUp } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface TenantStatsProps {
   activeCount: number;
+  totalRooms?: number;
+  occupiedRooms?: number;
   totalRevenue: number;
   formatCurrency: (val?: number) => string;
 }
 
 export const TenantStats: React.FC<TenantStatsProps> = ({
   activeCount,
+  totalRooms = 0,
+  occupiedRooms,
   totalRevenue,
   formatCurrency,
 }) => {
+  const { t } = useTranslation();
+
+  const total = totalRooms;
+  const occupied = occupiedRooms !== undefined ? occupiedRooms : activeCount;
+  const occupancyPercent = total > 0 ? Math.round((occupied / total) * 100) : 100;
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 animate-slide-up">
-      <Card className="rounded-2xl border border-gray-100 dark:border-border shadow-xs bg-white dark:bg-card">
-        <CardContent className="p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
-            <Users className="w-6 h-6" />
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+      {/* 1. Penghuni Aktif (Blue Theme - matching Dashboard) */}
+      <div className="rounded-2xl p-5 border border-blue-100/90 dark:border-blue-900/40 bg-blue-50/40 dark:bg-blue-950/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-2xs">
+            <Users className="w-5 h-5" />
           </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-muted-foreground font-medium">
-              Penghuni Aktif
-            </p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-foreground">{activeCount}</p>
+          <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+            {t('tenants.statActive', { defaultValue: 'Penghuni Aktif' })}
+          </span>
+        </div>
+        <div className="mt-4">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-foreground tracking-tight">
+            {activeCount}
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-xs text-slate-500 dark:text-muted-foreground mt-1">
+            {t('tenants.statActiveDesc', { defaultValue: 'Penyewa dengan kontrak aktif' })}
+          </p>
+        </div>
+      </div>
 
-      <Card className="rounded-2xl border border-gray-100 dark:border-border shadow-xs bg-white dark:bg-card">
-        <CardContent className="p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
-            <Home className="w-6 h-6" />
+      {/* 2. Kamar Terisi (Emerald Theme - matching Dashboard) */}
+      <div className="rounded-2xl p-5 border border-emerald-100/90 dark:border-emerald-900/40 bg-emerald-50/40 dark:bg-emerald-950/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 shadow-2xs">
+            <DoorClosed className="w-5 h-5" />
           </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-muted-foreground font-medium">
-              Kamar Terisi
-            </p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-foreground">{activeCount}</p>
+          <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+            {t('tenants.statOccupied', { defaultValue: 'Kamar Terisi' })}
+          </span>
+        </div>
+        <div className="mt-4">
+          <div className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-foreground tracking-tight">
+            {occupied}
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-xs text-slate-500 dark:text-muted-foreground mt-1">
+            {total > 0
+              ? t('tenants.statOccupiedDesc', {
+                  percent: occupancyPercent,
+                  defaultValue: `${occupancyPercent}% tingkat okupansi`,
+                })
+              : t('tenants.statOccupiedFallback', { defaultValue: 'Unit kamar yang ditempati' })}
+          </p>
+        </div>
+      </div>
 
-      <Card className="rounded-2xl border border-gray-100 dark:border-border shadow-xs bg-white dark:bg-card">
-        <CardContent className="p-5 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center shrink-0">
-            <Wallet className="w-6 h-6" />
+      {/* 3. Total Sewa / Bulan (Purple Theme - matching Dashboard) */}
+      <div className="rounded-2xl p-5 border border-purple-100/90 dark:border-purple-900/40 bg-purple-50/40 dark:bg-purple-950/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-900/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 shadow-2xs">
+            <Banknote className="w-5 h-5" />
           </div>
-          <div>
-            <p className="text-sm text-gray-500 dark:text-muted-foreground font-medium">
-              Total Sewa/bulan
-            </p>
-            <p className="text-2xl font-bold text-gray-900 dark:text-foreground">
-              {formatCurrency(totalRevenue)}
-            </p>
+          <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+            {t('tenants.statRevenue', { defaultValue: 'Total Sewa/bulan' })}
+          </span>
+        </div>
+        <div className="mt-4">
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-foreground tracking-tight truncate">
+            {formatCurrency(totalRevenue)}
           </div>
-        </CardContent>
-      </Card>
+          <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
+            <TrendingUp className="w-3.5 h-3.5" />
+            <span>
+              {t('tenants.statRevenueDesc', { defaultValue: 'Estimasi perputaran sewa' })}
+            </span>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
+

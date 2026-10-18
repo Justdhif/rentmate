@@ -15,9 +15,13 @@ const geistMono = Geist_Mono({
 import { cookies } from "next/headers";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import type { Locale } from "@/contexts/LanguageContext";
 import NextTopLoader from "nextjs-toploader";
 import { GlobalSplashManager } from "@/components/ui/GlobalSplashManager";
 import { Toaster } from "@/components/ui/sonner";
+import { ConfirmProvider } from "@/contexts/ConfirmContext";
+import { FavoritesProvider } from "@/contexts/FavoritesContext";
 
 export const metadata: Metadata = {
   title: "RentMate - Smart Kost Management Platform",
@@ -33,10 +37,12 @@ export default async function RootLayout({
   const themeCookie = cookieStore.get("rentmate_theme")?.value;
   const isDark = themeCookie === "dark";
   const initialTheme = (themeCookie as "light" | "dark" | "system") || "system";
+  const localeCookie = cookieStore.get("rentmate_locale")?.value;
+  const initialLocale: Locale = (localeCookie === "en" ? "en" : "id");
 
   return (
     <html
-      lang="id"
+      lang={initialLocale}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased ${
@@ -56,10 +62,16 @@ export default async function RootLayout({
           shadow="0 0 12px #4f46e5, 0 0 6px #6366f1"
         />
         <ThemeProvider initialTheme={initialTheme}>
-          <AuthProvider>
-            <GlobalSplashManager>{children}</GlobalSplashManager>
-          </AuthProvider>
-          <Toaster />
+          <LanguageProvider initialLocale={initialLocale}>
+            <ConfirmProvider>
+              <AuthProvider>
+                <FavoritesProvider>
+                  <GlobalSplashManager>{children}</GlobalSplashManager>
+                </FavoritesProvider>
+              </AuthProvider>
+              <Toaster />
+            </ConfirmProvider>
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

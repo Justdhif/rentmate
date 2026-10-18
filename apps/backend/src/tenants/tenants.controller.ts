@@ -5,9 +5,12 @@ import {
   Body,
   Param,
   UseGuards,
+  BadRequestException,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { TenantsService } from './tenants.service';
 import { AssignRoomDto } from './dto/assign-room.dto';
+import { AssignTenantDirectDto } from './dto/assign-tenant-direct.dto';
 import { UnassignRoomDto } from './dto/unassign-room.dto';
 import { InviteTenantDto } from './dto/invite-tenant.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
@@ -23,7 +26,7 @@ export class TenantsController {
   @Post('rooms/:id/assign')
   @Roles('OWNER', 'ADMIN')
   async assignRoom(
-    @Param('id') roomId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) roomId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: AssignRoomDto,
@@ -46,18 +49,26 @@ export class TenantsController {
   async assignTenantDirect(
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
-    @Body() dto: any,
+    @Body() dto: AssignTenantDirectDto,
   ) {
+    const targetEmail = dto.email || dto.tenantEmail;
+    if (!targetEmail) {
+      throw new BadRequestException('Tenant email is required');
+    }
+
     const roomId = dto.roomId;
+    const rentAmount = dto.rentAmount ?? dto.monthlyRent;
+
     const result = await this.tenantsService.assignRoom(
       roomId,
       ownerId,
       role,
       {
-        tenantEmail: dto.email || dto.tenantEmail,
+        tenantEmail: targetEmail,
         startDate: dto.startDate || new Date().toISOString().split('T')[0],
         endDate: dto.endDate,
-        monthlyRent: dto.rentAmount ? Number(dto.rentAmount) : undefined,
+        monthlyRent: rentAmount !== undefined ? Number(rentAmount) : undefined,
+        notes: dto.notes,
       },
     );
     return {
@@ -70,7 +81,7 @@ export class TenantsController {
   @Post('rooms/:id/unassign')
   @Roles('OWNER', 'ADMIN')
   async unassignRoom(
-    @Param('id') roomId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) roomId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: UnassignRoomDto,
@@ -81,7 +92,7 @@ export class TenantsController {
   @Post('tenants/:id/unassign')
   @Roles('OWNER', 'ADMIN')
   async unassignTenant(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: UnassignRoomDto,
@@ -125,7 +136,7 @@ export class TenantsController {
   @Get('tenants/:id')
   @Roles('OWNER', 'ADMIN')
   async findTenantById(
-    @Param('id') tenantId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) tenantId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
   ) {

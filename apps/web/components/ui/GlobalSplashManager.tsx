@@ -2,12 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from '@/contexts/LanguageContext';
 import { SplashScreen } from './SplashScreen';
 
 export const GlobalSplashManager: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const { isLoading } = useAuth();
+  const { t } = useTranslation();
   const [showSplash, setShowSplash] = useState(true);
   const [isFading, setIsFading] = useState(false);
 
@@ -29,7 +31,7 @@ export const GlobalSplashManager: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <>
-      {showSplash && <SplashScreen isFading={isFading} message="Menyiapkan data aplikasi..." />}
+      {showSplash && <SplashScreen isFading={isFading} message={t('splash.preparingData')} />}
       {children}
     </>
   );

@@ -6,7 +6,7 @@ export const paymentInvoices = pgTable('payment_invoices', {
   id: uuid('id').defaultRandom().primaryKey(),
   paymentId: uuid('payment_id')
     .notNull()
-    .references(() => payments.id, { onDelete: 'cascade' })
+    .references(() => payments.id, { onDelete: 'restrict' })
     .unique(),
   invoiceNumber: varchar('invoice_number', { length: 100 }).notNull().unique(),
   invoiceUrl: text('invoice_url'),

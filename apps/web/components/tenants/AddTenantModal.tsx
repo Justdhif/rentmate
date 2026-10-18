@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { DatePicker } from '@/components/ui/date-picker';
 import {
   Select,
   SelectContent,
@@ -17,6 +18,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface AddTenantModalProps {
   isOpen: boolean;
@@ -44,11 +46,13 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
   submitting,
   submitError,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-gray-200 dark:border-border">
         <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10">
-          <DialogTitle className="text-lg font-semibold">Tetapkan Penghuni Baru</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">{t('tenants.modalTitle')}</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={onSubmit} className="p-6 space-y-4">
@@ -61,24 +65,24 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-              Email Akun Penyewa
+              {t('tenants.modalEmailLabel')}
             </label>
             <Input
               type="email"
               required
               value={formData.tenantEmail}
               onChange={(e) => setFormData({ ...formData, tenantEmail: e.target.value })}
-              placeholder="penyewa@email.com"
+              placeholder={t('tenants.modalEmailPlaceholder')}
               className="h-10 rounded-xl"
             />
             <p className="text-[11px] text-gray-400 dark:text-muted-foreground mt-1.5">
-              Penyewa harus terdaftar di RentMate dengan email ini.
+              {t('tenants.modalEmailNote')}
             </p>
           </div>
 
           <div>
             <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-              Pilih Kamar Tersedia
+              {t('tenants.modalRoomLabel')}
             </label>
             <Select
               value={formData.roomId}
@@ -92,12 +96,16 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
               }}
             >
               <SelectTrigger className="w-full h-10 rounded-xl">
-                <SelectValue placeholder="Pilih kamar yang tersedia" />
+                <SelectValue placeholder={t('tenants.modalRoomPlaceholder')} />
               </SelectTrigger>
               <SelectContent>
                 {availableRooms.map((r) => (
                   <SelectItem key={r.id} value={r.id}>
-                    {r.property?.name || 'Kost'} - Kamar {r.roomNumber} ({r.type})
+                    {t('tenants.modalRoomOption', {
+                      property: r.property?.name || t('tenants.propertyFallback'),
+                      roomNumber: r.roomNumber,
+                      type: r.type,
+                    })}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -107,7 +115,7 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Tarif Sewa/bln (Rp)
+                {t('tenants.modalRateLabel')}
               </label>
               <Input
                 type="number"
@@ -121,14 +129,15 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Tanggal Masuk
+                {t('tenants.modalDateLabel')}
               </label>
-              <Input
-                type="date"
-                required
+              <DatePicker
                 value={formData.startDate}
-                onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                className="h-10 rounded-xl"
+                onChange={(val) => setFormData({ ...formData, startDate: val })}
+                placeholder={t('tenants.modalDateLabel')}
+                clearLabel={t('common.clear', { defaultValue: 'Clear' })}
+                todayLabel={t('common.today', { defaultValue: 'Today' })}
+                required
               />
             </div>
           </div>
@@ -140,14 +149,14 @@ export const AddTenantModal: React.FC<AddTenantModalProps> = ({
               onClick={() => onOpenChange(false)}
               className="rounded-xl"
             >
-              Batal
+              {t('common.cancel')}
             </Button>
             <Button
               type="submit"
               disabled={submitting}
               className="rounded-xl shadow-xs"
             >
-              {submitting ? 'Menyimpan...' : 'Tetapkan Kamar'}
+              {submitting ? t('tenants.modalSubmitSaving') : t('tenants.modalSubmitButton')}
             </Button>
           </div>
         </form>

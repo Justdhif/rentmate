@@ -5,12 +5,15 @@ import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Building2, DoorClosed, ArrowRight } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface DashboardPropertiesProps {
   properties: any[];
 }
 
 export const DashboardProperties: React.FC<DashboardPropertiesProps> = ({ properties }) => {
+  const { t } = useTranslation();
+
   return (
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs bg-white dark:bg-card overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between pb-4 border-b border-slate-100 dark:border-border/50">
@@ -19,7 +22,7 @@ export const DashboardProperties: React.FC<DashboardPropertiesProps> = ({ proper
             <Building2 className="w-4 h-4" />
           </div>
           <CardTitle className="text-base font-bold text-slate-900 dark:text-foreground">
-            Properti Kost Anda
+            {t('dashboard.propertiesTitle')}
           </CardTitle>
         </div>
         <Button
@@ -28,7 +31,7 @@ export const DashboardProperties: React.FC<DashboardPropertiesProps> = ({ proper
           size="sm"
           className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
         >
-          <Link href="/properties">Kelola Properti</Link>
+          <Link href="/properties">{t('dashboard.propertiesManage')}</Link>
         </Button>
       </CardHeader>
       <CardContent className="pt-6">
@@ -38,13 +41,13 @@ export const DashboardProperties: React.FC<DashboardPropertiesProps> = ({ proper
               <Building2 className="w-7 h-7" />
             </div>
             <p className="font-bold text-slate-900 dark:text-foreground text-base">
-              Belum Ada Properti Terdaftar
+              {t('dashboard.propertiesEmptyTitle')}
             </p>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-muted-foreground mt-1.5 max-w-sm">
-              Mulai kelola bisnis kost Anda dengan mendaftarkan properti dan kamar pertama Anda untuk melihat statistik.
+              {t('dashboard.propertiesEmptyDesc')}
             </p>
             <Button asChild className="mt-5 rounded-xl font-medium shadow-xs" size="sm">
-              <Link href="/properties">+ Tambah Properti Pertama</Link>
+              <Link href="/properties">{t('dashboard.propertiesAddFirst')}</Link>
             </Button>
           </div>
         ) : (
@@ -64,20 +67,20 @@ export const DashboardProperties: React.FC<DashboardPropertiesProps> = ({ proper
                     </p>
                   </div>
                   <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider uppercase bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800 shrink-0">
-                    {prop.type || 'CAMPUR'}
+                    {prop.type || t('dashboard.propertiesFallbackType')}
                   </span>
                 </div>
 
                 <div className="mt-auto pt-4 border-t border-slate-100 dark:border-border/50 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-1.5 text-slate-500 dark:text-muted-foreground">
                     <DoorClosed className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                    <span>{prop.rooms?.length ?? 0} Kamar</span>
+                    <span>{t('dashboard.propertiesRoomCount', { count: prop.rooms?.length ?? 0 })}</span>
                   </div>
                   <Link
                     href={`/rooms?propertyId=${prop.id}`}
                     className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline inline-flex items-center gap-1"
                   >
-                    Lihat Kamar <ArrowRight className="w-3.5 h-3.5" />
+                    {t('dashboard.propertiesViewRooms')}<ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
               </div>

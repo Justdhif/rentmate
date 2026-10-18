@@ -2,6 +2,8 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import Script from 'next/script';
+import { useTranslation } from '@/contexts/LanguageContext';
+import { useTheme } from '@/contexts/ThemeContext';
 
 interface GoogleSignInButtonProps {
   onSuccess: (idToken: string) => void;
@@ -20,6 +22,8 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
   onSuccess,
   onError,
 }) => {
+  const { t } = useTranslation();
+  const { resolvedTheme } = useTheme();
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [initFailed, setInitFailed] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -51,7 +55,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
           if (response?.credential) {
             callbackRef.current(response.credential);
           } else {
-            errorCallbackRef.current?.('Tidak ada kredensial yang diterima dari Google.');
+            errorCallbackRef.current?.(t('auth.googleCredentialError'));
           }
         },
         auto_select: false,
@@ -65,7 +69,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       setInitFailed(true);
       return false;
     }
-  }, [clientId]);
+  }, [clientId, t]);
 
   const renderGoogleButton = useCallback((targetWidth: number) => {
     if (!window.google?.accounts?.id || !googleBtnRef.current) return;
@@ -74,12 +78,15 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
     if (!initialized) return;
 
     try {
+      // Clear previous button content to cleanly re-render on theme change
+      googleBtnRef.current.innerHTML = '';
+
       // Google renderButton width range is 200 - 400 px
       const btnWidth = Math.min(Math.max(Math.floor(targetWidth), 200), 400);
       lastWidthRef.current = btnWidth;
 
       window.google.accounts.id.renderButton(googleBtnRef.current, {
-        theme: 'outline',
+        theme: resolvedTheme === 'dark' ? 'filled_black' : 'outline',
         size: 'large',
         type: 'standard',
         text: 'continue_with',
@@ -91,7 +98,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
       console.error('Failed to render Google Sign In button:', err);
       setInitFailed(true);
     }
-  }, [ensureInitialized]);
+  }, [ensureInitialized, resolvedTheme]);
 
   const updateButtonDimensions = useCallback(() => {
     if (!containerRef.current) return;
@@ -109,7 +116,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
     if (scriptLoaded) {
       updateButtonDimensions();
     }
-  }, [scriptLoaded, updateButtonDimensions]);
+  }, [scriptLoaded, resolvedTheme, updateButtonDimensions]);
 
   // Dynamic ResizeObserver to adapt to mobile screens, orientations, and window resizing
   useEffect(() => {
@@ -147,7 +154,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
 
       <div
         ref={containerRef}
-        className="w-full flex justify-center items-center min-h-[44px] overflow-hidden"
+        className="w-full flex justify-center items-center min-h-[44px] overflow-hidden rounded-xl"
       >
         <div
           ref={googleBtnRef}
@@ -157,7 +164,7 @@ export const GoogleSignInButton: React.FC<GoogleSignInButtonProps> = ({
 
       {initFailed && (
         <p className="text-xs text-rose-500 text-center mt-2">
-          Gagal memuat tombol Google. Pastikan Client ID valid dan domain diizinkan di Google Cloud Console.
+          {t('auth.googleInitError')}
         </p>
       )}
     </div>

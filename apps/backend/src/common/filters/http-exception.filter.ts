@@ -4,14 +4,18 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
+  private readonly logger = new Logger(HttpExceptionFilter.name);
+
   catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
+    const request = ctx.getRequest<Request>();
 
     let status = HttpStatus.INTERNAL_SERVER_ERROR;
     let message = 'Internal server error';
@@ -36,7 +40,19 @@ export class HttpExceptionFilter implements ExceptionFilter {
         }
       }
     } else if (exception instanceof Error) {
-      message = exception.message;
+      this.logger.error(
+        `[${request?.method || 'UNKNOWN'}] ${request?.url || ''} - Unhandled Exception: ${exception.message}`,
+        exception.stack,
+      );
+
+      // In production, do not leak raw database/system error messages
+      if (process.env.NODE_ENV === 'production') {
+        message = 'An unexpected internal server error occurred';
+      } else {
+        message = exception.message;
+      }
+    } else {
+      this.logger.error(`Unknown exception: ${JSON.stringify(exception)}`);
     }
 
     response.status(status).json({

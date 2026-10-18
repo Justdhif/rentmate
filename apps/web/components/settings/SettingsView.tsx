@@ -4,16 +4,17 @@ import React, { useState } from 'react';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTranslation } from '@/contexts/LanguageContext';
 import { api } from '@/lib/api';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { ProfileSettingsForm } from './ProfileSettingsForm';
 import { ThemeSettingsCard } from './ThemeSettingsCard';
-import { SystemIntegrationCard } from './SystemIntegrationCard';
-import { AccountSecurityCard } from './AccountSecurityCard';
+import { LanguageSwitcherCard } from './LanguageSwitcherCard';
 import { toast } from 'sonner';
 
 export const SettingsView: React.FC = () => {
   const { user, refreshUser } = useAuth();
+  const { t } = useTranslation();
   const [fullName, setFullName] = useState(user?.profile?.fullName || '');
   const [phoneNumber, setPhoneNumber] = useState(user?.profile?.phoneNumber || '');
   const [avatarUrl, setAvatarUrl] = useState(user?.profile?.avatarUrl || '');
@@ -44,12 +45,12 @@ export const SettingsView: React.FC = () => {
       });
 
       if (res.success) {
-        setSuccessMsg('Profil berhasil diperbarui!');
-        toast.success('Profil berhasil diperbarui!');
+        setSuccessMsg(t('settings.profileUpdateSuccess'));
+        toast.success(t('settings.profileUpdateSuccess'));
         await refreshUser();
       }
     } catch (err: any) {
-      const msg = err.message || 'Gagal memperbarui profil';
+      const msg = err.message || t('settings.profileUpdateFailed');
       setErrorMsg(msg);
       toast.error(msg);
     } finally {
@@ -61,8 +62,8 @@ export const SettingsView: React.FC = () => {
     <AppLayout>
       <div className="w-full space-y-6 sm:space-y-8 animate-fade-in">
         <PageHeader
-          title="Pengaturan Akun"
-          description="Kelola profil pemilik kost, kredensial akses, preferensi tampilan, dan status integrasi."
+          title={t('settings.pageTitle')}
+          description={t('settings.pageDesc')}
         />
 
         {successMsg && (
@@ -96,11 +97,10 @@ export const SettingsView: React.FC = () => {
             />
           </div>
 
-          {/* Supporting Right Column: Theme, Security & Integrations */}
+          {/* Supporting Right Column: Theme & Language */}
           <div className="lg:col-span-5 xl:col-span-4 space-y-6">
             <ThemeSettingsCard />
-            <AccountSecurityCard user={user} />
-            <SystemIntegrationCard />
+            <LanguageSwitcherCard />
           </div>
         </div>
       </div>

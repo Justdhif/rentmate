@@ -3,32 +3,34 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useTranslation } from '@/contexts/LanguageContext';
 import { Sun, Moon, Laptop, Check } from 'lucide-react';
 
 export const ThemeSettingsCard: React.FC = () => {
   const { theme, setTheme } = useTheme();
+  const { t } = useTranslation();
 
   const themeOptions = [
     {
       id: 'light',
-      label: 'Mode Terang',
-      description: 'Tampilan bersih dan cerah di siang hari',
+      label: t('settings.themeLight'),
+      description: t('settings.themeLightDesc'),
       icon: Sun,
       iconColor: 'text-amber-500',
       bgColor: 'bg-amber-500/10',
     },
     {
       id: 'dark',
-      label: 'Mode Gelap',
-      description: 'Mengurangi kelelahan mata di malam hari',
+      label: t('settings.themeDark'),
+      description: t('settings.themeDarkDesc'),
       icon: Moon,
       iconColor: 'text-indigo-500',
       bgColor: 'bg-indigo-500/10',
     },
     {
       id: 'system',
-      label: 'Ikuti Sistem',
-      description: 'Menyesuaikan otomatis dengan OS perangkat',
+      label: t('settings.themeSystem'),
+      description: t('settings.themeSystemDesc'),
       icon: Laptop,
       iconColor: 'text-slate-500 dark:text-slate-400',
       bgColor: 'bg-slate-500/10',
@@ -41,10 +43,10 @@ export const ThemeSettingsCard: React.FC = () => {
         <div>
           <h4 className="text-sm font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
             <Sun className="w-4 h-4 text-primary" />
-            Preferensi Tampilan & Tema
+            {t('settings.themeTitle')}
           </h4>
           <p className="text-xs text-muted-foreground mt-1">
-            Pilihan tema disimpan otomatis sehingga preferensi Anda selalu diingat.
+            {t('settings.themeDesc')}
           </p>
         </div>
 

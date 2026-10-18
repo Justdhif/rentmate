@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { DoorClosed, Wrench, Sparkles } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { DoorClosed, Wrench } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface OperationalStatsCardProps {
   occupancyData: any;
@@ -15,6 +16,13 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
   maintenanceStats,
   formatCurrency,
 }) => {
+  const { t } = useTranslation();
+
+  const occupancyRate =
+    typeof occupancyData?.occupancyRate === 'number'
+      ? occupancyData.occupancyRate
+      : parseFloat(occupancyData?.overallOccupancyRate || '0') || 0;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {/* Okupansi Rate Card */}
@@ -24,19 +32,19 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
             <DoorClosed className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="font-bold text-foreground text-base">Persentase Hunian</h4>
-            <p className="text-xs text-muted-foreground">Kapasitas terisi saat ini</p>
+            <h4 className="font-bold text-foreground text-base">{t('analytics.occupancyPercentTitle')}</h4>
+            <p className="text-xs text-muted-foreground">{t('analytics.occupancyPercentSub')}</p>
           </div>
         </div>
 
         <div className="text-3xl font-extrabold text-foreground mb-3">
-          {occupancyData?.occupancyRate || 0}%
+          {occupancyRate}%
         </div>
 
         <div className="w-full bg-slate-100 dark:bg-muted/40 rounded-full h-2.5 overflow-hidden">
           <div
             className="bg-gradient-to-r from-indigo-500 to-violet-600 h-full rounded-full transition-all duration-700"
-            style={{ width: `${Math.min(occupancyData?.occupancyRate || 0, 100)}%` }}
+            style={{ width: `${Math.min(occupancyRate, 100)}%` }}
           />
         </div>
       </Card>
@@ -48,8 +56,8 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
             <Wrench className="w-5 h-5" />
           </div>
           <div>
-            <h4 className="font-bold text-foreground text-base">Biaya Perbaikan</h4>
-            <p className="text-xs text-muted-foreground">Total pengeluaran operasional</p>
+            <h4 className="font-bold text-foreground text-base">{t('analytics.maintenanceCostTitle')}</h4>
+            <p className="text-xs text-muted-foreground">{t('analytics.maintenanceCostSub')}</p>
           </div>
         </div>
 
@@ -58,7 +66,7 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
         </div>
 
         <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <span>{maintenanceStats?.totalResolved || 0} perbaikan terselesaikan</span>
+          <span>{t('analytics.maintenanceCostFooter', { count: maintenanceStats?.totalResolved || 0 })}</span>
         </div>
       </Card>
     </div>

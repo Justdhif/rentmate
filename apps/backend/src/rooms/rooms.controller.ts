@@ -8,9 +8,11 @@ import {
   Param,
   Query,
   UseGuards,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { RoomsService } from './rooms.service';
-import { CreateRoomDto } from './dto/create-room.dto';
+import { CreateRoomDto, RoomStatus } from './dto/create-room.dto';
+import { CreateDirectRoomDto } from './dto/create-direct-room.dto';
 import { UpdateRoomDto } from './dto/update-room.dto';
 import { RoomQueryDto } from './dto/room-query.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
@@ -45,7 +47,7 @@ export class RoomsController {
   async createDirect(
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
-    @Body() dto: any,
+    @Body() dto: CreateDirectRoomDto,
   ) {
     const propertyId = dto.propertyId;
     const room = await this.roomsService.create(propertyId, ownerId, role, {
@@ -53,7 +55,7 @@ export class RoomsController {
       floor: dto.floor ? Number(dto.floor) : 1,
       roomType: dto.type || dto.roomType || 'STANDARD',
       price: Number(dto.monthlyPrice ?? dto.price ?? 0),
-      status: dto.status || 'AVAILABLE',
+      status: dto.status || RoomStatus.AVAILABLE,
       description: dto.description,
       facilities: dto.facilities || [],
       photos: dto.photos || [],
@@ -68,7 +70,7 @@ export class RoomsController {
   @Post('properties/:propertyId/rooms')
   @Roles('OWNER', 'ADMIN')
   async create(
-    @Param('propertyId') propertyId: string,
+    @Param('propertyId', new ParseUUIDPipe({ version: '4' })) propertyId: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: CreateRoomDto,
@@ -83,7 +85,7 @@ export class RoomsController {
 
   @Get('properties/:propertyId/rooms')
   async findAllByProperty(
-    @Param('propertyId') propertyId: string,
+    @Param('propertyId', new ParseUUIDPipe({ version: '4' })) propertyId: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
     @Query() query: RoomQueryDto,
@@ -102,7 +104,7 @@ export class RoomsController {
 
   @Get('rooms/:id')
   async findOne(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
   ) {
@@ -116,7 +118,7 @@ export class RoomsController {
   @Patch('rooms/:id')
   @Roles('OWNER', 'ADMIN')
   async update(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
     @Body() dto: UpdateRoomDto,
@@ -132,7 +134,7 @@ export class RoomsController {
   @Delete('rooms/:id')
   @Roles('OWNER', 'ADMIN')
   async remove(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') ownerId: string,
     @CurrentUser('role') role: string,
   ) {

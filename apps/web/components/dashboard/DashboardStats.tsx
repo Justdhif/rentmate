@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { DoorClosed, TrendingUp, Wallet, Wrench, ArrowUpRight, Activity, Clock } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 export interface OverviewStats {
   propertiesCount: number;
@@ -20,13 +21,15 @@ interface DashboardStatsProps {
 }
 
 export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCurrency }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {/* Card 1: Okupansi */}
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs hover:shadow-md transition-all bg-white dark:bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
-            Okupansi Kamar
+            {t('dashboard.occupancyTitle')}
           </CardTitle>
           <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100/80 dark:border-indigo-900/40 flex items-center justify-center">
             <DoorClosed className="w-5 h-5" />
@@ -38,7 +41,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
               {stats?.occupiedRoomsCount ?? 0}
             </span>
             <span className="text-xs text-slate-500 dark:text-muted-foreground font-medium">
-              / {stats?.roomsCount ?? 0} Kamar
+              {t('dashboard.occupancyRooms', { count: stats?.roomsCount ?? 0 })}
             </span>
           </div>
           <div className="mt-4 flex items-center justify-between text-xs">
@@ -59,7 +62,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs hover:shadow-md transition-all bg-white dark:bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
-            Estimasi Omset / Bln
+            {t('dashboard.revenueEstTitle')}
           </CardTitle>
           <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-100/80 dark:border-emerald-900/40 flex items-center justify-center">
             <TrendingUp className="w-5 h-5" />
@@ -71,9 +74,9 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
           </div>
           <div className="mt-4 flex items-center gap-1.5 text-xs text-slate-500 dark:text-muted-foreground">
             <span className="inline-flex items-center text-emerald-700 dark:text-emerald-300 font-semibold bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200/60 dark:border-emerald-800/60 px-2 py-0.5 rounded-full text-[11px]">
-              <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" /> Aktif
+              <ArrowUpRight className="w-3.5 h-3.5 mr-0.5" /> {t('dashboard.revenueEstBadge')}
             </span>
-            <span>dari kamar tersewa</span>
+            <span>{t('dashboard.revenueEstSub')}</span>
           </div>
         </CardContent>
       </Card>
@@ -82,7 +85,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs hover:shadow-md transition-all bg-white dark:bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
-            Total Uang Masuk
+            {t('dashboard.totalIncomeTitle')}
           </CardTitle>
           <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-100/80 dark:border-blue-900/40 flex items-center justify-center">
             <Wallet className="w-5 h-5" />
@@ -94,9 +97,9 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
           </div>
           <div className="mt-4 flex items-center gap-1.5 text-xs text-slate-500 dark:text-muted-foreground">
             <span className="inline-flex items-center text-blue-700 dark:text-blue-300 font-semibold bg-blue-50 dark:bg-blue-950/50 border border-blue-200/60 dark:border-blue-800/60 px-2 py-0.5 rounded-full text-[11px]">
-              <Activity className="w-3.5 h-3.5 mr-0.5" /> Real-time
+              <Activity className="w-3.5 h-3.5 mr-0.5" /> {t('dashboard.totalIncomeBadge')}
             </span>
-            <span>Midtrans & Tunai</span>
+            <span>{t('dashboard.totalIncomeSub')}</span>
           </div>
         </CardContent>
       </Card>
@@ -105,7 +108,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs hover:shadow-md transition-all bg-white dark:bg-card">
         <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
-            Perbaikan Aktif
+            {t('dashboard.maintenanceTitle')}
           </CardTitle>
           <div className="w-10 h-10 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-100/80 dark:border-amber-900/40 flex items-center justify-center">
             <Wrench className="w-5 h-5" />
@@ -117,14 +120,14 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
               {stats?.pendingMaintenanceCount ?? 0}
             </span>
             <span className="text-xs text-slate-500 dark:text-muted-foreground font-medium">
-              Tiket
+              {t('dashboard.maintenanceCount')}
             </span>
           </div>
           <div className="mt-4 flex items-center gap-1.5 text-xs text-slate-500 dark:text-muted-foreground">
             <span className="inline-flex items-center text-amber-700 dark:text-amber-300 font-semibold bg-amber-50 dark:bg-amber-950/50 border border-amber-200/60 dark:border-amber-800/60 px-2 py-0.5 rounded-full text-[11px]">
-              <Clock className="w-3.5 h-3.5 mr-0.5" /> Pending
+              <Clock className="w-3.5 h-3.5 mr-0.5" /> {t('dashboard.maintenanceBadge')}
             </span>
-            <span>Perlu ditugaskan</span>
+            <span>{t('dashboard.maintenanceSub')}</span>
           </div>
         </CardContent>
       </Card>

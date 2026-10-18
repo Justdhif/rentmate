@@ -1,6 +1,7 @@
 import { IsOptional, IsString } from 'class-validator';
+import { PageOptionsDto } from '../../common/dto/pagination.dto';
 
-export class MaintenanceQueryDto {
+export class MaintenanceQueryDto extends PageOptionsDto {
   @IsOptional()
   @IsString()
   status?: string;

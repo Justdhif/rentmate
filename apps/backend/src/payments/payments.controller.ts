@@ -8,10 +8,13 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  ParseUUIDPipe,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { PaymentsService } from './payments.service';
 import { CreateBillDto } from './dto/create-bill.dto';
 import { MidtransWebhookDto } from './dto/midtrans-webhook.dto';
+import { PageOptionsDto } from '../common/dto/pagination.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
@@ -41,7 +44,7 @@ export class PaymentsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles('TENANT')
   async checkout(
-    @Param('id') paymentId: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) paymentId: string,
     @CurrentUser('id') tenantId: string,
   ) {
     const snapData = await this.paymentsService.checkout(paymentId, tenantId);
@@ -52,6 +55,7 @@ export class PaymentsController {
     };
   }
 
+  @Throttle({ default: { limit: 30, ttl: 60000 } })
   @Post('webhook')
   @HttpCode(HttpStatus.OK)
   async handleWebhook(@Body() dto: MidtransWebhookDto) {
@@ -64,11 +68,13 @@ export class PaymentsController {
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
     @Query('status') status?: string,
+    @Query() pageOptions?: PageOptionsDto,
   ) {
     const paymentList = await this.paymentsService.findAll(
       userId,
       role,
       status,
+      pageOptions,
     );
     return {
       success: true,
@@ -79,13 +85,29 @@ export class PaymentsController {
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   async findOne(
-    @Param('id') id: string,
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
     @CurrentUser('id') userId: string,
     @CurrentUser('role') role: string,
   ) {
     const payment = await this.paymentsService.findOne(id, userId, role);
     return {
       success: true,
+      data: payment,
+    };
+  }
+
+  @Post(':id/mark-paid')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('OWNER', 'ADMIN')
+  async markPaid(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @CurrentUser('id') ownerId: string,
+    @CurrentUser('role') role: string,
+  ) {
+    const payment = await this.paymentsService.markPaid(id, ownerId, role);
+    return {
+      success: true,
+      message: 'Payment marked as PAID successfully',
       data: payment,
     };
   }

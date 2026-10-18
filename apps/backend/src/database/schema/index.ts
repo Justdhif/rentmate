@@ -8,3 +8,6 @@ export * from './payments.schema';
 export * from './payment-invoices.schema';
 export * from './maintenance-requests.schema';
 export * from './maintenance-attachments.schema';
+export * from './favorites.schema';
+export * from './reviews.schema';
+export * from './ai-conversations.schema';

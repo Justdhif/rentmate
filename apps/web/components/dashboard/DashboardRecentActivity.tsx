@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Wrench, Wallet, CheckCircle2, Clock } from 'lucide-react';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface DashboardRecentActivityProps {
   recentMaintenance: any[];
@@ -18,6 +19,8 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
   recentPayments,
   formatCurrency,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
       {/* Maintenance Tickets */}
@@ -28,7 +31,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
               <Wrench className="w-4 h-4" />
             </div>
             <CardTitle className="text-base font-bold text-slate-900 dark:text-foreground">
-              Tiket Maintenance
+              {t('dashboard.maintenanceCardTitle')}
             </CardTitle>
           </div>
           <Button
@@ -37,7 +40,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
             size="sm"
             className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
           >
-            <Link href="/maintenance">Lihat Semua</Link>
+            <Link href="/maintenance">{t('common.viewAll')}</Link>
           </Button>
         </CardHeader>
         <CardContent className="pt-4">
@@ -46,7 +49,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
               <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/40 flex items-center justify-center mb-3">
                 <CheckCircle2 className="w-6 h-6 text-emerald-500" />
               </div>
-              Tidak ada perbaikan tertunda. Semua fasilitas aman!
+              {t('dashboard.maintenanceEmpty')}
             </div>
           ) : (
             <div className="space-y-3">
@@ -62,7 +65,10 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
                         {m.title}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-muted-foreground mt-0.5">
-                        Kamar {m.room?.roomNumber || '-'}  Kategori: {m.category || 'GENERAL'}
+                        {t('dashboard.maintenanceTicketInfo', {
+                          roomNumber: m.room?.roomNumber || '-',
+                          category: m.category || 'GENERAL',
+                        })}
                       </p>
                     </div>
                   </div>
@@ -82,7 +88,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
               <Wallet className="w-4 h-4" />
             </div>
             <CardTitle className="text-base font-bold text-slate-900 dark:text-foreground">
-              Riwayat Pembayaran
+              {t('dashboard.paymentsCardTitle')}
             </CardTitle>
           </div>
           <Button
@@ -91,7 +97,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
             size="sm"
             className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
           >
-            <Link href="/payments">Lihat Semua</Link>
+            <Link href="/payments">{t('common.viewAll')}</Link>
           </Button>
         </CardHeader>
         <CardContent className="pt-4">
@@ -100,7 +106,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
               <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-muted/40 flex items-center justify-center mb-3">
                 <Clock className="w-6 h-6 text-slate-400" />
               </div>
-              Belum ada riwayat transaksi pembayaran.
+              {t('dashboard.paymentsEmpty')}
             </div>
           ) : (
             <div className="space-y-3">
@@ -116,7 +122,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
                         {p.invoice?.invoiceNumber || p.orderId}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-muted-foreground mt-0.5">
-                        {p.paymentMethod || 'SNAP_MIDTRANS'}  {formatCurrency(Number(p.amount))}
+                        {p.paymentMethod || 'SNAP_MIDTRANS'} • {formatCurrency(Number(p.amount))}
                       </p>
                     </div>
                   </div>

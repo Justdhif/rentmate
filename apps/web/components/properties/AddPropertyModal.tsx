@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select';
 import { AlertCircle } from 'lucide-react';
 import { ImageGalleryUploader } from '@/components/common/ImageGalleryUploader';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 interface AddPropertyModalProps {
   isOpen: boolean;
@@ -58,11 +59,13 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
   submitting,
   submitError,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto p-0 bg-white dark:bg-card border-gray-200 dark:border-border">
         <DialogHeader className="px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/10 sticky top-0 z-20">
-          <DialogTitle className="text-lg font-semibold">Tambah Properti Baru</DialogTitle>
+          <DialogTitle className="text-lg font-semibold">{t('properties.modalTitle')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit} className="p-6 space-y-5">
           {submitError && (
@@ -75,14 +78,14 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
           <div className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Nama Kost / Properti
+                {t('properties.modalNameLabel')}
               </label>
               <Input
                 type="text"
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="cth. Kost Pondok Indah Harmoni"
+                placeholder={t('properties.modalNamePlaceholder')}
                 className="h-10 rounded-xl"
               />
             </div>
@@ -90,33 +93,33 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                  Tipe Kost
+                  {t('properties.typeLabel')}
                 </label>
                 <Select
                   value={formData.type}
                   onValueChange={(val) => setFormData({ ...formData, type: val })}
                 >
                   <SelectTrigger className="w-full h-10 rounded-xl">
-                    <SelectValue placeholder="Pilih tipe kost" />
+                    <SelectValue placeholder={t('properties.modalTypePlaceholder')} />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="CAMPUR">Campur</SelectItem>
-                    <SelectItem value="PUTRA">Khusus Putra</SelectItem>
-                    <SelectItem value="PUTRI">Khusus Putri</SelectItem>
+                    <SelectItem value="CAMPUR">{t('properties.modalTypeMixed')}</SelectItem>
+                    <SelectItem value="PUTRA">{t('properties.modalTypeMale')}</SelectItem>
+                    <SelectItem value="PUTRI">{t('properties.modalTypeFemale')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
                 <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                  Kota
+                  {t('properties.modalCityLabel')}
                 </label>
                 <Input
                   type="text"
                   required
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  placeholder="cth. Bandung"
+                  placeholder={t('properties.modalCityPlaceholder')}
                   className="h-10 rounded-xl"
                 />
               </div>
@@ -124,27 +127,27 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Alamat Lengkap
+                {t('properties.modalAddressLabel')}
               </label>
               <textarea
                 required
                 rows={2}
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                placeholder="Jl. Ciumbuleuit No. 45"
+                placeholder={t('properties.modalAddressPlaceholder')}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
               />
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-gray-700 dark:text-foreground uppercase tracking-wider mb-2">
-                Deskripsi Singkat (Opsional)
+                {t('properties.modalDescLabel')}
               </label>
               <textarea
                 rows={2}
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                placeholder="Fasilitas umum, akses lokasi, atau ketentuan kost..."
+                placeholder={t('properties.modalDescPlaceholder')}
                 className="w-full px-3.5 py-2 rounded-xl border border-gray-200 dark:border-border bg-white dark:bg-background text-gray-900 dark:text-foreground text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
               />
             </div>
@@ -154,8 +157,8 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
                 images={formData.photos || []}
                 onChange={(photos) => setFormData({ ...formData, photos })}
                 type="property"
-                title="Foto & Galeri Properti"
-                description="Tambahkan foto bangunan atau fasilitas kost. Foto pertama menjadi cover utama."
+                title={t('properties.photoSectionTitle')}
+                description={t('properties.photoSectionDesc')}
               />
             </div>
           </div>
@@ -167,14 +170,14 @@ export const AddPropertyModal: React.FC<AddPropertyModalProps> = ({
               onClick={() => onOpenChange(false)}
               className="rounded-xl"
             >
-              Batal
+              {t('common.cancel')}
             </Button>
             <Button
               type="submit"
               disabled={submitting}
               className="rounded-xl shadow-xs"
             >
-              {submitting ? 'Menyimpan...' : 'Simpan Properti'}
+              {submitting ? t('properties.modalSubmitSaving') : t('properties.modalSubmitButton')}
             </Button>
           </div>
         </form>

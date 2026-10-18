@@ -2,10 +2,15 @@ import {
   Controller,
   Get,
   Patch,
+  Post,
   Body,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from './users.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
@@ -40,6 +45,41 @@ export class UsersController {
       success: true,
       message: 'Profile updated successfully',
       data: updatedProfile,
+    };
+  }
+
+  @Post('profile/avatar')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: { fileSize: 5 * 1024 * 1024 }, // Max 5MB
+      fileFilter: (_req, file, callback) => {
+        if (!file.mimetype.match(/\/(jpg|jpeg|png|webp|gif)$/i)) {
+          return callback(
+            new BadRequestException(
+              'Format file tidak didukung. Harap unggah gambar JPG, PNG, WEBP, atau GIF.',
+            ),
+            false,
+          );
+        }
+        callback(null, true);
+      },
+    }),
+  )
+  async uploadAvatar(
+    @CurrentUser('id') userId: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    if (!file) {
+      throw new BadRequestException('File gambar wajib diunggah');
+    }
+
+    const avatarUrl = await this.usersService.uploadAvatar(userId, file);
+    return {
+      success: true,
+      message: 'Foto profil berhasil diperbarui',
+      data: {
+        avatarUrl,
+      },
     };
   }
 

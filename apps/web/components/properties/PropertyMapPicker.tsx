@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { reverseGeocodeCoords } from '@/lib/location';
 import { cn } from '@/lib/utils';
+import { useTranslation } from '@/contexts/LanguageContext';
 
 export interface LocationData {
   lat: number;
@@ -37,6 +38,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
   showSearchBar = false,
   className,
 }) => {
+  const { t } = useTranslation();
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<any>(null);
   const markerRef = useRef<any>(null);
@@ -176,7 +178,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
     onLocationSelect({
       lat,
       lng,
-      address: `Titik [${lat.toFixed(5)}, ${lng.toFixed(5)}]`,
+      address: t('properties.mapFallbackAddress', { lat: lat.toFixed(5), lng: lng.toFixed(5) }),
     });
     setIsGeocoding(false);
   };
@@ -233,7 +235,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
   // Geolocation: "Gunakan Lokasi Saya"
   const handleUseCurrentLocation = () => {
     if (!navigator.geolocation) {
-      toast.warning('Browser Anda tidak mendukung deteksi lokasi (Geolocation).');
+      toast.warning(t('properties.mapGeoNotSupported'));
       return;
     }
 
@@ -244,12 +246,12 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
         const { latitude, longitude } = position.coords;
         flyToCoords(latitude, longitude, 17);
         handlePositionChange(latitude, longitude);
-        toast.success('Lokasi saat ini berhasil ditemukan!');
+        toast.success(t('properties.mapGeoSuccess'));
       },
       (error) => {
         setIsLocatingUser(false);
         console.warn('Geolocation denied or failed:', error.message);
-        toast.error('Gagal mendeteksi lokasi saat ini. Pastikan izin lokasi telah diaktifkan.');
+        toast.error(t('properties.mapGeoFailed'));
       },
       { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -311,7 +313,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
                   handleSearch();
                 }
               }}
-              placeholder="Cari lokasi, jalan, atau landmark kost..."
+              placeholder={t('properties.mapSearchPlaceholder')}
               className="pr-10 h-10 rounded-xl bg-white dark:bg-card shadow-xs text-xs sm:text-sm border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
             />
             <button
@@ -353,14 +355,16 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
             onClick={handleUseCurrentLocation}
             disabled={isLocatingUser}
             className="group h-10 px-3.5 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border shadow-xs text-xs font-semibold shrink-0 flex items-center gap-1.5 cursor-pointer hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-400 text-gray-700 dark:text-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-60"
-            title="Gunakan Lokasi GPS Saya"
+            title={t('properties.mapGpsButton')}
           >
             {isLocatingUser ? (
               <Loader2 className="w-4 h-4 animate-spin text-indigo-600 dark:text-indigo-400" />
             ) : (
               <LocateFixed className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-150" />
             )}
-            <span className="hidden sm:inline">{isLocatingUser ? 'Mencari Lokasi...' : 'Lokasi Saya'}</span>
+            <span className="hidden sm:inline">
+              {isLocatingUser ? t('properties.myLocationSearching') : t('properties.myLocationButton')}
+            </span>
           </Button>
         </div>
       )}
@@ -379,7 +383,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
             <>
               <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-600" />
               <span className="text-gray-600 dark:text-gray-300 font-medium">
-                Mengambil alamat titik...
+                {t('properties.mapGeocoding')}
               </span>
             </>
           ) : (
@@ -394,7 +398,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
 
         {/* Helper Hint */}
         <div className="absolute top-3 right-3 z-[400] bg-black/70 text-white text-[10px] px-2.5 py-1 rounded-lg backdrop-blur-xs pointer-events-none hidden sm:block">
-          Klik atau geser pin untuk menentukan titik tepat
+          {t('properties.mapOverlayHint')}
         </div>
       </div>
     </div>

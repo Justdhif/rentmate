@@ -27,6 +27,8 @@ import { properties } from './properties.schema';
 import { roomAssignments } from './room-assignments.schema';
 import { payments } from './payments.schema';
 import { maintenanceRequests } from './maintenance-requests.schema';
+import { favorites } from './favorites.schema';
+import { reviews } from './reviews.schema';
 
 export const usersRelations = relations(users, ({ one, many }) => ({
   profile: one(userProfiles, {
@@ -36,6 +38,8 @@ export const usersRelations = relations(users, ({ one, many }) => ({
   properties: many(properties),
   assignments: many(roomAssignments),
   payments: many(payments),
+  favorites: many(favorites),
+  reviews: many(reviews),
   tenantMaintenanceRequests: many(maintenanceRequests, {
     relationName: 'tenant_requests',
   }),

@@ -1,4 +1,9 @@
-import { Injectable, Logger, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  Logger,
+  BadRequestException,
+  GatewayTimeoutException,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 export interface ChatMessage {
@@ -46,29 +51,40 @@ export class GroqService {
       bodyPayload.max_tokens = options.maxTokens;
     }
 
-    const response = await fetch(this.apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.apiKey}`,
-      },
-      body: JSON.stringify(bodyPayload),
-    });
+    try {
+      const response = await fetch(this.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${this.apiKey}`,
+        },
+        body: JSON.stringify(bodyPayload),
+        signal: AbortSignal.timeout(30000), // 30 seconds timeout guard
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (!response.ok) {
-      this.logger.error('Groq API Error:', data);
-      throw new BadRequestException(
-        data.error?.message || 'Failed to get response from Groq AI',
-      );
+      if (!response.ok) {
+        this.logger.error('Groq API Error:', data);
+        throw new BadRequestException(
+          data.error?.message || 'Failed to get response from Groq AI',
+        );
+      }
+
+      const content = data.choices?.[0]?.message?.content;
+      if (!content) {
+        throw new BadRequestException('Empty response from Groq AI');
+      }
+
+      return content;
+    } catch (err: any) {
+      if (err.name === 'TimeoutError' || err.name === 'AbortError') {
+        this.logger.error('Groq API call timed out after 30 seconds');
+        throw new GatewayTimeoutException(
+          'Permintaan AI melebihi batas waktu (30 detik). Silakan coba beberapa saat lagi.',
+        );
+      }
+      throw err;
     }
-
-    const content = data.choices?.[0]?.message?.content;
-    if (!content) {
-      throw new BadRequestException('Empty response from Groq AI');
-    }
-
-    return content;
   }
 }
