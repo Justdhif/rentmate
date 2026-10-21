@@ -121,7 +121,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card h-full flex flex-col justify-between">
       <CardHeader className="p-5 pb-2 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-blue-500" />
+          <BarChart3 className="w-4 h-4 text-[#E11D48]" />
           <span>{t('dashboard.revenueChartTitle')}</span>
         </CardTitle>
 
@@ -202,12 +202,12 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
                 tickFormatter={(val) => `${Math.round(val / 1000000)} ${t('dashboard.currencyMillionSuffix')}`}
               />
               <Tooltip
-                cursor={{ fill: 'rgba(59, 130, 246, 0.08)' }}
+                cursor={{ fill: 'rgba(225, 29, 72, 0.08)' }}
                 content={<CustomTooltip />}
               />
               <Bar
                 dataKey="amount"
-                fill="#60A5FA"
+                fill="#E11D48"
                 radius={[6, 6, 0, 0]}
                 maxBarSize={44}
               />

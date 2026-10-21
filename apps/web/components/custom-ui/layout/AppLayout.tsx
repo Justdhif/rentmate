@@ -87,14 +87,14 @@ export const AppLayout: React.FC<AppLayoutProps> = ({
       <Sidebar />
       <SidebarInset
         className={cn(
-          'flex flex-col min-w-0 flex-1 bg-slate-100 dark:bg-background',
+          'flex flex-col min-w-0 flex-1 bg-[#FFF1F2] dark:bg-[#18181B]',
           noPadding && 'h-screen overflow-hidden'
         )}
       >
         <Header title={title} subtitle={subtitle} breadcrumbs={breadcrumbs} />
         <main
           className={cn(
-            'flex-1 bg-slate-100 dark:bg-background',
+            'flex-1 bg-[#FFF1F2] dark:bg-[#18181B]',
             noPadding
               ? 'p-0 overflow-hidden flex flex-col h-[calc(100vh-4rem)] min-h-0'
               : 'p-5 md:p-6 lg:p-8'

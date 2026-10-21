@@ -57,7 +57,7 @@ const ActiveScoopTop: React.FC = () => (
   >
     <svg
       viewBox="0 0 20 20"
-      className="w-full h-full text-slate-100 dark:text-background fill-current"
+      className="w-full h-full text-[#FFF1F2] dark:text-[#18181B] fill-current"
     >
       <path d="M20 0 V20 H0 A20 20 0 0 0 20 0 Z" />
     </svg>
@@ -71,7 +71,7 @@ const ActiveScoopBottom: React.FC = () => (
   >
     <svg
       viewBox="0 0 20 20"
-      className="w-full h-full text-slate-100 dark:text-background fill-current"
+      className="w-full h-full text-[#FFF1F2] dark:text-[#18181B] fill-current"
     >
       <path d="M20 20 V0 H0 A20 20 0 0 1 20 20 Z" />
     </svg>
@@ -211,14 +211,14 @@ export const Sidebar: React.FC = () => {
       {/* Brand Header */}
       <SidebarHeader className="h-16 border-b border-slate-200/80 dark:border-border/60 justify-center px-4 group-data-[collapsible=icon]:px-0">
         <Link href={user ? getRoleRedirectPath(user.role) : '/'} className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
-          <div className="w-9 h-9 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-indigo-600/20 shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-[#E11D48] hover:bg-[#BE123C] flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-[#E11D48]/20 shrink-0 transition-colors">
             R
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden overflow-hidden">
             <span className="font-bold text-slate-900 dark:text-foreground text-base tracking-tight leading-tight">
               {t('nav.brand')}
             </span>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-indigo-600 dark:text-indigo-400">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-[#E11D48]">
               {t('nav.brandSub')}
             </span>
           </div>
@@ -250,19 +250,19 @@ export const Sidebar: React.FC = () => {
                         tooltip={item.name}
                         className={
                           isActive
-                            ? 'h-10 relative z-10 w-full !bg-slate-100 dark:!bg-background data-[active=true]:!bg-slate-100 dark:data-[active=true]:!bg-background hover:!bg-slate-100 dark:hover:!bg-background text-indigo-600 dark:text-indigo-400 font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
-                            : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200 transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
+                            ? 'h-10 relative z-10 w-full !bg-[#FFF1F2] dark:!bg-[#18181B] data-[active=true]:!bg-[#FFF1F2] dark:data-[active=true]:!bg-[#18181B] hover:!bg-[#FFF1F2] dark:hover:!bg-[#18181B] text-[#E11D48] dark:text-[#E11D48] font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
+                            : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-[#FFF1F2]/60 dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
                         }
                       >
                         <Link href={item.href} className="flex items-center gap-2.5 w-full group-data-[collapsible=icon]:justify-center">
-                          <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`} />
+                          <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-[#E11D48]' : 'text-slate-400 dark:text-slate-500'}`} />
                           <span className="flex-1 text-xs truncate group-data-[collapsible=icon]:hidden">{item.name}</span>
                           {item.badge && (
                             <Badge
                               size="sm"
-                              className="group-data-[collapsible=icon]:hidden gap-1 text-[10px] font-bold uppercase tracking-wider py-0 px-2 bg-indigo-100 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800"
+                              className="group-data-[collapsible=icon]:hidden gap-1 text-[10px] font-bold uppercase tracking-wider py-0 px-2 bg-[#FFF1F2] text-[#BE123C] dark:bg-[#BE123C]/20 dark:text-[#FECDD3] border-[#FECDD3] dark:border-[#BE123C]/40"
                             >
-                              <Sparkles className="w-2.5 h-2.5" />
+                              <Sparkles className="w-2.5 h-2.5 text-[#E11D48]" />
                               {item.badge}
                             </Badge>
                           )}
@@ -293,12 +293,12 @@ export const Sidebar: React.FC = () => {
                       tooltip={item.name}
                       className={
                         isActive
-                          ? 'h-10 relative z-10 w-full !bg-slate-100 dark:!bg-background data-[active=true]:!bg-slate-100 dark:data-[active=true]:!bg-background hover:!bg-slate-100 dark:hover:!bg-background text-indigo-600 dark:text-indigo-400 font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
-                          : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-200 transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
+                          ? 'h-10 relative z-10 w-full !bg-[#FFF1F2] dark:!bg-[#18181B] data-[active=true]:!bg-[#FFF1F2] dark:data-[active=true]:!bg-[#18181B] hover:!bg-[#FFF1F2] dark:hover:!bg-[#18181B] text-[#E11D48] dark:text-[#E11D48] font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
+                          : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-[#FFF1F2]/60 dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
                       }
                     >
                       <Link href={item.href} className="flex items-center gap-2.5 w-full group-data-[collapsible=icon]:justify-center">
-                        <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-slate-500'}`} />
+                        <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-[#E11D48]' : 'text-slate-400 dark:text-slate-500'}`} />
                         <span className="flex-1 text-xs truncate group-data-[collapsible=icon]:hidden">{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -313,9 +313,9 @@ export const Sidebar: React.FC = () => {
       {/* Footer with AI Status & Complete User Profile */}
       <SidebarFooter className="p-3 border-t border-slate-200/80 dark:border-border/60 space-y-2.5">
         {/* Clean AI Status Banner (Hidden on icon collapse) */}
-        <div className="group-data-[collapsible=icon]:hidden p-3 bg-slate-50 dark:bg-muted/20 rounded-xl border border-slate-200/70 dark:border-border/50 text-xs">
+        <div className="group-data-[collapsible=icon]:hidden p-3 bg-[#FFF1F2]/60 dark:bg-[#27272A]/50 rounded-xl border border-[#FECDD3] dark:border-border/50 text-xs">
           <p className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <Sparkles className="w-3.5 h-3.5 text-[#E11D48] shrink-0" />
             {t('nav.aiStatusTitle')}
           </p>
           <p className="text-slate-500 dark:text-muted-foreground mt-1 leading-relaxed text-[11px]">
@@ -326,12 +326,12 @@ export const Sidebar: React.FC = () => {
         {/* User Profile Card with Dropdown Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100/80 dark:hover:bg-accent transition-colors cursor-pointer text-left outline-none group-data-[collapsible=icon]:justify-center">
+            <button className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-[#FFF1F2]/80 dark:hover:bg-[#27272A] transition-colors cursor-pointer text-left outline-none group-data-[collapsible=icon]:justify-center">
               <Avatar className="w-8 h-8 shrink-0">
                 {user?.profile?.avatarUrl && (
                   <AvatarImage src={user.profile.avatarUrl} alt={fullName} />
                 )}
-                <AvatarFallback className="bg-indigo-600 text-white font-bold text-xs shadow-xs">
+                <AvatarFallback className="bg-[#E11D48] text-white font-bold text-xs shadow-xs">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -340,7 +340,7 @@ export const Sidebar: React.FC = () => {
                   {fullName}
                 </p>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800">
+                  <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#FFF1F2] text-[#BE123C] dark:bg-[#BE123C]/20 dark:text-[#FECDD3] border border-[#FECDD3] dark:border-[#BE123C]/40">
                     {user?.role === 'USER' ? 'Pencari Kos' : user?.role || t('nav.userFallbackRole')}
                   </span>
                   <span className="text-[10px] text-slate-400 truncate">
@@ -361,7 +361,7 @@ export const Sidebar: React.FC = () => {
                 {user?.profile?.avatarUrl && (
                   <AvatarImage src={user.profile.avatarUrl} alt={fullName} />
                 )}
-                <AvatarFallback className="bg-indigo-600 text-white font-bold text-xs shadow-xs">
+                <AvatarFallback className="bg-[#E11D48] text-white font-bold text-xs shadow-xs">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -380,9 +380,9 @@ export const Sidebar: React.FC = () => {
             <DropdownMenuItem asChild>
               <Link
                 href="/"
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
               >
-                <Compass className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                <Compass className="w-4 h-4 text-[#E11D48] shrink-0" />
                 <span>Jelajahi Marketplace</span>
               </Link>
             </DropdownMenuItem>
@@ -400,7 +400,7 @@ export const Sidebar: React.FC = () => {
                     ? '/admin/settings'
                     : '/user/dashboard'
                 }
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
               >
                 <User className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0" />
                 <span>{t('nav.menuProfile')}</span>
@@ -420,7 +420,7 @@ export const Sidebar: React.FC = () => {
                     ? '/admin/settings'
                     : '/user/dashboard'
                 }
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
               >
                 <Settings className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0" />
                 <span>{t('nav.menuSettings')}</span>
@@ -429,7 +429,7 @@ export const Sidebar: React.FC = () => {
 
             <DropdownMenuItem
               onClick={toggleTheme}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/80 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors"
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
             >
               {resolvedTheme === 'dark' ? (
                 <>
@@ -438,7 +438,7 @@ export const Sidebar: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <Moon className="w-4 h-4 text-indigo-500 dark:text-indigo-400 shrink-0" />
+                  <Moon className="w-4 h-4 text-[#E11D48] shrink-0" />
                   <span>{t('nav.menuDarkMode')}</span>
                 </>
               )}
@@ -448,9 +448,9 @@ export const Sidebar: React.FC = () => {
 
             <DropdownMenuItem
               onClick={handleLogout}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 hover:text-rose-700 dark:hover:text-rose-300 focus:bg-rose-50 dark:focus:bg-rose-950/40 focus:text-rose-700 dark:focus:text-rose-300 cursor-pointer transition-colors"
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-[#E11D48] dark:text-[#FECDD3] hover:bg-[#FFF1F2] dark:hover:bg-[#BE123C]/20 hover:text-[#BE123C] dark:hover:text-[#FFF1F2] focus:bg-[#FFF1F2] focus:text-[#BE123C] cursor-pointer transition-colors"
             >
-              <LogOut className="w-4 h-4 text-rose-500 dark:text-rose-400 shrink-0" />
+              <LogOut className="w-4 h-4 text-[#E11D48] shrink-0" />
               <span>{t('nav.menuLogout')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
