@@ -14,9 +14,14 @@ export const databaseProviders = [
       const connectionString = configService.get<string>('DATABASE_URL')!;
       const poolMax = Number(configService.get<string>('DATABASE_POOL_MAX') || 20);
       const isDev = configService.get<string>('NODE_ENV') !== 'production';
+      const requiresSsl =
+        connectionString.includes('sslmode=require') ||
+        connectionString.includes('neon.tech') ||
+        connectionString.includes('supabase.co') ||
+        !isDev;
 
       const client = postgres(connectionString, {
-        ssl: isDev ? undefined : 'require',
+        ssl: requiresSsl ? 'require' : undefined,
         max: poolMax,
       });
       return drizzle(client, { schema });
