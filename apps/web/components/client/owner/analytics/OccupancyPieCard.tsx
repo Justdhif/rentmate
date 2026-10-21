@@ -62,10 +62,10 @@ export const OccupancyPieCard: React.FC<OccupancyPieCardProps> = ({
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    backgroundColor: 'var(--card)',
                     borderRadius: '12px',
                     boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid var(--border)',
                     fontSize: '12px',
                   }}
                 />

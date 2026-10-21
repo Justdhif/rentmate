@@ -51,7 +51,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <NextTopLoader
-          color="#4f46e5"
+          color="#E11D48"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}
@@ -59,7 +59,7 @@ export default async function RootLayout({
           showSpinner={false}
           easing="ease"
           speed={200}
-          shadow="0 0 12px #4f46e5, 0 0 6px #6366f1"
+          shadow="0 0 12px #E11D48, 0 0 6px #BE123C"
         />
         <ThemeProvider initialTheme={initialTheme}>
           <LanguageProvider initialLocale={initialLocale}>

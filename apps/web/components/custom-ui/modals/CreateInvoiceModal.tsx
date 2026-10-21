@@ -54,7 +54,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-slate-200 dark:border-border rounded-2xl shadow-xl">
         <DialogHeader className="px-6 py-4 border-b border-slate-100 dark:border-border/60 bg-slate-50/60 dark:bg-muted/20 flex flex-row items-center gap-3 space-y-0">
-          <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose- text-rose- dark:text-rose- flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-secondary text-secondary-foreground flex items-center justify-center shrink-0">
             <Receipt className="w-5 h-5" />
           </div>
           <div>
@@ -69,7 +69,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
 
         <form onSubmit={onSubmit} className="p-6 space-y-4 text-xs">
           {submitError && (
-            <div className="p-3 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 rounded-xl text-xs text-rose-700 dark:text-rose-400 flex items-center gap-2">
+            <div className="p-3 bg-primary50 dark:bg-primary950/40 border border-border200 dark:border-border800 rounded-xl text-xs text-primary700 dark:text-primary400 flex items-center gap-2">
               <AlertCircle className="w-4 h-4 shrink-0" />
               <span>{submitError}</span>
             </div>
@@ -195,7 +195,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
             <Button
               type="submit"
               disabled={submitting}
-              className="h-9 px-4 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer"
             >
               {submitting
                 ? t('payments.modalSubmitSaving', { defaultValue: 'Menyimpan...' })

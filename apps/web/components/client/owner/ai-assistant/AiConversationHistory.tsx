@@ -120,7 +120,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
     const p = (priority || 'INFO').toUpperCase();
     if (p === 'HIGH' || p === 'ACTION_REQUIRED') {
       return (
-        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200/60 dark:border-rose-800/40 shrink-0">
+        <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-primary50 text-primary600 dark:bg-primary950/40 dark:text-primary400 border border-border200/60 dark:border-border800/40 shrink-0">
           HIGH
         </span>
       );
@@ -133,7 +133,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
       );
     }
     return (
-      <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border border-rose-/60 dark:border-rose-/40 shrink-0">
+      <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-secondary text-secondary-foreground border border-border shrink-0">
         INFO
       </span>
     );
@@ -213,7 +213,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
           <Button
             onClick={onNewConversation}
             size="icon"
-            className="h-9 w-9 shrink-0 rounded-xl bg-rose-600 hover:bg-rose-700 text-white shadow-xs transition-all cursor-pointer"
+            className="h-9 w-9 shrink-0 rounded-xl bg-primary600 hover:bg-primary/90700 text-white shadow-xs transition-all cursor-pointer"
             title="Percakapan Baru"
           >
             <Plus className="w-4 h-4" />
@@ -227,7 +227,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari percakapan..."
-              className="w-full h-9 pl-8 pr-7 text-xs bg-white dark:bg-muted/20 border border-slate-200/80 dark:border-border/60 rounded-xl placeholder:text-slate-400 dark:placeholder:text-muted-foreground focus:outline-hidden focus:border-rose-500 focus:ring-1 focus:ring-rose-500/20 text-slate-800 dark:text-slate-100 transition-all shadow-2xs"
+              className="w-full h-9 pl-8 pr-7 text-xs bg-white dark:bg-muted/20 border border-slate-200/80 dark:border-border/60 rounded-xl placeholder:text-slate-400 dark:placeholder:text-muted-foreground focus:outline-hidden focus:border-border500 focus:ring-1 focus:ring-rose-500/20 text-slate-800 dark:text-slate-100 transition-all shadow-2xs"
             />
             {searchQuery && (
               <button
@@ -252,7 +252,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
             title={showInsights ? 'Sembunyikan Smart Insights' : 'Tampilkan Smart Insights'}
           >
             <Lightbulb className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 group-hover:text-primary600 dark:group-hover:text-primary400 transition-colors">
               Smart Insights
             </span>
             <ChevronDown
@@ -284,24 +284,24 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                       `Tolong jelaskan lebih lanjut mengenai rekomendasi: "${item.title}". ${item.description} Apa langkah solutif yang perlu saya ambil?`
                     )
                   }
-                  className="shrink-0 w-[215px] p-2.5 rounded-xl bg-white dark:bg-card border border-slate-200/80 dark:border-border/60 hover:border-rose-400 dark:hover:border-rose-600 transition-all cursor-pointer shadow-2xs group flex flex-col justify-between"
+                  className="shrink-0 w-[215px] p-2.5 rounded-xl bg-white dark:bg-card border border-slate-200/80 dark:border-border/60 hover:border-border400 dark:hover:border-border600 transition-all cursor-pointer shadow-2xs group flex flex-col justify-between"
                   title="Klik untuk menanyakan rekomendasi ini ke AI"
                 >
                   <div>
                     <div className="flex items-center justify-between gap-1 mb-1">
-                      <span className="text-[9px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400 truncate">
+                      <span className="text-[9px] font-bold uppercase tracking-wider text-primary600 dark:text-primary400 truncate">
                         {item.category}
                       </span>
                       {getPriorityBadge(item.priority)}
                     </div>
-                    <h5 className="font-bold text-xs text-slate-800 dark:text-slate-100 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors line-clamp-1 leading-snug">
+                    <h5 className="font-bold text-xs text-slate-800 dark:text-slate-100 group-hover:text-primary600 dark:group-hover:text-primary400 transition-colors line-clamp-1 leading-snug">
                       {item.title}
                     </h5>
                     <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   </div>
-                  <div className="flex items-center justify-end text-[10px] text-rose-600 dark:text-rose-400 font-medium mt-2 gap-1 opacity-80 group-hover:opacity-100">
+                  <div className="flex items-center justify-end text-[10px] text-primary600 dark:text-primary400 font-medium mt-2 gap-1 opacity-80 group-hover:opacity-100">
                     <span>Tanya AI</span>
                     <ArrowRight className="w-3 h-3" />
                   </div>
@@ -343,7 +343,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                   return (
                     <div
                       key={conv.id}
-                      className="p-1.5 px-2 rounded-xl bg-white dark:bg-card border border-rose-400 dark:border-rose-600 shadow-xs flex items-center gap-1.5"
+                      className="p-1.5 px-2 rounded-xl bg-white dark:bg-card border border-border400 dark:border-border600 shadow-xs flex items-center gap-1.5"
                     >
                       <input
                         type="text"
@@ -380,7 +380,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                     onClick={() => onSelectConversation(conv.id)}
                     className={`group relative flex items-center justify-between p-2.5 px-3 rounded-xl text-xs transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-rose-50/90 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 font-semibold border border-rose-200/80 dark:border-rose-800/60 shadow-2xs'
+                        ? 'bg-primary50/90 dark:bg-primary950/40 text-primary700 dark:text-primary300 font-semibold border border-border200/80 dark:border-border800/60 shadow-2xs'
                         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100/80 dark:hover:bg-muted/20 border border-transparent'
                     }`}
                     title={conv.title}
@@ -389,7 +389,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                       <MessageSquare
                         className={`w-3.5 h-3.5 shrink-0 ${
                           isActive
-                            ? 'text-rose-600 dark:text-rose-400'
+                            ? 'text-primary600 dark:text-primary400'
                             : 'text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300'
                         }`}
                       />
@@ -401,7 +401,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                       <button
                         type="button"
                         onClick={(e) => handleStartRename(conv, e)}
-                        className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-100/50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="p-1 rounded-md text-slate-400 hover:text-primary600 hover:bg-primary/90100/50 dark:hover:bg-primary/90950/40 transition-colors"
                         title="Ubah judul percakapan"
                       >
                         <Pencil className="w-3 h-3" />
@@ -409,7 +409,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                       <button
                         type="button"
                         onClick={(e) => handleDelete(conv.id, e)}
-                        className="p-1 rounded-md text-slate-400 hover:text-rose-600 hover:bg-rose-100/50 dark:hover:bg-rose-950/40 transition-colors"
+                        className="p-1 rounded-md text-slate-400 hover:text-primary600 hover:bg-primary/90100/50 dark:hover:bg-primary/90950/40 transition-colors"
                         title="Hapus percakapan"
                       >
                         <Trash2 className="w-3 h-3" />
@@ -426,7 +426,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
       {/* 4. Footer with Clear History & Groq LLM branding */}
       <div className="p-3 px-3.5 border-t border-slate-200/70 dark:border-border/60 flex items-center justify-between text-[11px] text-slate-400 dark:text-muted-foreground shrink-0 bg-slate-50/50 dark:bg-card/40">
         <div className="flex items-center gap-1.5 truncate">
-          <Bot className="w-3.5 h-3.5 text-rose-500 shrink-0" />
+          <Bot className="w-3.5 h-3.5 text-primary500 shrink-0" />
           <span className="truncate font-medium">{conversations.length} Percakapan</span>
         </div>
 
@@ -438,7 +438,7 @@ export const AiConversationHistory: React.FC<AiConversationHistoryProps> = ({
                 toast.info('Semua riwayat percakapan telah dibersihkan.');
               }
             }}
-            className="text-[11px] text-slate-400 hover:text-rose-600 transition-colors cursor-pointer"
+            className="text-[11px] text-slate-400 hover:text-primary600 transition-colors cursor-pointer"
             title="Bersihkan semua percakapan"
           >
             Hapus Semua

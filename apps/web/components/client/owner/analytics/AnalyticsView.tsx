@@ -175,7 +175,7 @@ export const AnalyticsView: React.FC = () => {
   const paymentPieData = [
     { name: 'Lunas', value: paymentStatus.paidCount, color: '#10B981' },
     { name: 'Pending', value: paymentStatus.pendingCount, color: '#F59E0B' },
-    { name: 'Terlambat', value: paymentStatus.overdueCount || 0, color: '#EF4444' },
+    { name: 'Terlambat', value: paymentStatus.overdueCount || 0, color: '#BE123C' },
   ].filter((p) => p.value > 0);
 
   const activities = data?.recentActivities || [];
@@ -231,13 +231,13 @@ export const AnalyticsView: React.FC = () => {
         );
       case 'TENANT':
         return (
-          <div className="w-8 h-8 rounded-lg bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-secondary text-secondary-foreground flex items-center justify-center shrink-0">
             <UserPlus className="w-4 h-4" />
           </div>
         );
       case 'MAINTENANCE':
         return (
-          <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-primary50 dark:bg-primary950/40 text-primary600 dark:text-primary400 flex items-center justify-center shrink-0">
             <Wrench className="w-4 h-4" />
           </div>
         );
@@ -261,7 +261,7 @@ export const AnalyticsView: React.FC = () => {
     }
     if (statusType === 'info' || status === 'Aktif') {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border border-rose-/60 dark:border-rose-/40">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-secondary text-secondary-foreground border border-border">
           {status}
         </span>
       );
@@ -303,7 +303,7 @@ export const AnalyticsView: React.FC = () => {
 
         {isLoading ? (
           <div className="py-24 flex flex-col items-center justify-center gap-3">
-            <div className="w-9 h-9 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
+            <div className="w-9 h-9 border-3 border-primary border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-muted-foreground animate-pulse">Memuat analitik properti...</p>
           </div>
         ) : (
@@ -314,7 +314,7 @@ export const AnalyticsView: React.FC = () => {
               <Card className="rounded-2xl border-slate-100 dark:border-border shadow-xs bg-card hover:shadow-md transition-shadow overflow-hidden p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-rose-/10 text-rose- dark:bg-rose-/20 dark:text-rose- flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0">
                       <Wallet className="w-5 h-5" />
                     </div>
                     <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -334,7 +334,7 @@ export const AnalyticsView: React.FC = () => {
                 <div className="mt-4 pt-2 -mx-2 -mb-2">
                   <MiniSparkline
                     data={summary.totalRevenue.sparkline}
-                    color="#3B82F6"
+                    color="#E11D48"
                     gradientId="sparkline-revenue"
                   />
                 </div>
@@ -374,7 +374,7 @@ export const AnalyticsView: React.FC = () => {
               <Card className="rounded-2xl border-slate-100 dark:border-border shadow-xs bg-card hover:shadow-md transition-shadow overflow-hidden p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-rose-/10 text-rose- dark:bg-rose-/20 dark:text-rose- flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0">
                       <Users className="w-5 h-5" />
                     </div>
                     <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -394,7 +394,7 @@ export const AnalyticsView: React.FC = () => {
                 <div className="mt-4 pt-2 -mx-2 -mb-2">
                   <MiniSparkline
                     data={summary.activeTenants.sparkline}
-                    color="#8B5CF6"
+                    color="#BE123C"
                     gradientId="sparkline-tenants"
                   />
                 </div>
@@ -455,8 +455,8 @@ export const AnalyticsView: React.FC = () => {
                         >
                           <defs>
                             <linearGradient id="revenueTrendGrad" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="0%" stopColor="#3B82F6" stopOpacity={0.25} />
-                              <stop offset="100%" stopColor="#3B82F6" stopOpacity={0.0} />
+                              <stop offset="0%" stopColor="#E11D48" stopOpacity={0.25} />
+                              <stop offset="100%" stopColor="#E11D48" stopOpacity={0.0} />
                             </linearGradient>
                           </defs>
                           <XAxis
@@ -480,7 +480,7 @@ export const AnalyticsView: React.FC = () => {
                                     <div className="text-slate-400 font-medium">
                                       {pData.date || pData.label}
                                     </div>
-                                    <div className="text-rose- dark:text-rose- font-bold text-sm mt-0.5">
+                                    <div className="text-primary font-bold text-sm mt-0.5">
                                       {formatCurrency(Number(pData.revenue))}
                                     </div>
                                   </div>
@@ -492,18 +492,18 @@ export const AnalyticsView: React.FC = () => {
                           <Area
                             type="monotone"
                             dataKey="revenue"
-                            stroke="#3B82F6"
+                            stroke="#E11D48"
                             strokeWidth={2.5}
                             fill="url(#revenueTrendGrad)"
                             dot={{
                               r: 4,
-                              fill: '#3B82F6',
+                              fill: '#E11D48',
                               stroke: '#ffffff',
                               strokeWidth: 2,
                             }}
                             activeDot={{
                               r: 6,
-                              fill: '#3B82F6',
+                              fill: '#E11D48',
                               stroke: '#ffffff',
                               strokeWidth: 2.5,
                             }}
@@ -611,13 +611,13 @@ export const AnalyticsView: React.FC = () => {
                       {/* Chart Legend Top Right */}
                       <div className="flex items-center gap-3 shrink-0 text-xs font-medium">
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-rose-" />
+                          <span className="w-2 h-2 rounded-full bg-primary" />
                           <span className="text-slate-600 dark:text-slate-300 text-[11px]">
                             Pemasukan
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-rose-" />
+                          <span className="w-2 h-2 rounded-full bg-primary" />
                           <span className="text-slate-600 dark:text-slate-300 text-[11px]">
                             Pengeluaran
                           </span>
@@ -658,13 +658,13 @@ export const AnalyticsView: React.FC = () => {
                           />
                           <Bar
                             dataKey="income"
-                            fill="#3B82F6"
+                            fill="#E11D48"
                             radius={[6, 6, 0, 0]}
                             maxBarSize={16}
                           />
                           <Bar
                             dataKey="expense"
-                            fill="#A78BFA"
+                            fill="#BE123C"
                             radius={[6, 6, 0, 0]}
                             maxBarSize={16}
                           />
@@ -784,7 +784,7 @@ export const AnalyticsView: React.FC = () => {
                     </div>
                     <Link
                       href="/payments"
-                      className="text-xs font-semibold text-rose- dark:text-rose- hover:underline inline-flex items-center gap-1"
+                      className="text-xs font-semibold text-primary hover:underline inline-flex items-center gap-1"
                     >
                       Lihat Semua
                     </Link>

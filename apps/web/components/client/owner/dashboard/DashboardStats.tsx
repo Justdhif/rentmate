@@ -31,7 +31,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
             {t('dashboard.occupancyTitle')}
           </CardTitle>
-          <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border border-rose-100/80 dark:border-rose-900/40 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-primary50 dark:bg-primary950/40 text-primary600 dark:text-primary400 border border-border100/80 dark:border-border900/40 flex items-center justify-center">
             <DoorClosed className="w-5 h-5" />
           </div>
         </CardHeader>
@@ -47,11 +47,11 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
           <div className="mt-4 flex items-center justify-between text-xs">
             <div className="w-full bg-slate-100 dark:bg-muted/40 rounded-full h-2 mr-3 overflow-hidden">
               <div
-                className="bg-rose-600 h-full rounded-full transition-all duration-700 ease-out"
+                className="bg-primary600 h-full rounded-full transition-all duration-700 ease-out"
                 style={{ width: `${Math.min(stats?.occupancyRate ?? 0, 100)}%` }}
               />
             </div>
-            <span className="font-bold text-rose-600 dark:text-rose-400 shrink-0">
+            <span className="font-bold text-primary600 dark:text-primary400 shrink-0">
               {stats?.occupancyRate ?? 0}%
             </span>
           </div>
@@ -87,7 +87,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
           <CardTitle className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
             {t('dashboard.totalIncomeTitle')}
           </CardTitle>
-          <div className="w-10 h-10 rounded-xl bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- border border-rose-/80 dark:border-rose-/40 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-secondary text-secondary-foreground border border-border flex items-center justify-center">
             <Wallet className="w-5 h-5" />
           </div>
         </CardHeader>
@@ -96,7 +96,7 @@ export const DashboardStats: React.FC<DashboardStatsProps> = ({ stats, formatCur
             {formatCurrency(stats?.totalCollected ?? 0)}
           </div>
           <div className="mt-4 flex items-center gap-1.5 text-xs text-slate-500 dark:text-muted-foreground">
-            <span className="inline-flex items-center text-rose- dark:text-rose- font-semibold bg-rose- dark:bg-rose-/50 border border-rose-/60 dark:border-rose-/60 px-2 py-0.5 rounded-full text-[11px]">
+            <span className="inline-flex items-center text-primary font-semibold bg-primary dark:bg-secondary/50 border border-border px-2 py-0.5 rounded-full text-[11px]">
               <Activity className="w-3.5 h-3.5 mr-0.5" /> {t('dashboard.totalIncomeBadge')}
             </span>
             <span>{t('dashboard.totalIncomeSub')}</span>

@@ -228,7 +228,7 @@ function CreateRoomContent() {
 
         {/* Feedback Alerts */}
         {errorMsg && (
-          <div className="p-4 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-800 dark:text-rose-400 text-sm flex items-start gap-3 animate-slide-up shadow-xs">
+          <div className="p-4 rounded-2xl bg-primary50 dark:bg-primary500/10 border border-border200 dark:border-border500/20 text-primary800 dark:text-primary400 text-sm flex items-start gap-3 animate-slide-up shadow-xs">
             <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
             <span>{errorMsg}</span>
           </div>
@@ -249,7 +249,7 @@ function CreateRoomContent() {
               <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs bg-white dark:bg-card">
                 <CardContent className="p-6 space-y-5">
                   <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 dark:border-border/60">
-                    <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose-/10 text-rose- dark:text-rose- flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-xl bg-primary dark:bg-primary/10 text-primary flex items-center justify-center">
                       <DoorClosed className="w-5 h-5" />
                     </div>
                     <div>
@@ -380,7 +380,7 @@ function CreateRoomContent() {
                             onClick={() => setStatus(s.id as any)}
                             className={`py-2 px-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer text-center ${
                               status === s.id
-                                ? 'bg-rose- text-white border-rose- shadow-xs'
+                                ? 'bg-primary text-primary-foreground border-border shadow-xs'
                                 : 'bg-slate-50/80 dark:bg-muted/40 border-slate-200 dark:border-border text-slate-700 dark:text-slate-300 hover:bg-slate-100'
                             }`}
                           >
@@ -417,7 +417,7 @@ function CreateRoomContent() {
                         <label className="text-xs font-bold text-slate-700 dark:text-foreground uppercase tracking-wider">
                           {t('rooms.monthlyPriceLabel')} *
                         </label>
-                        <span className="text-sm font-extrabold text-rose- dark:text-rose-">
+                        <span className="text-sm font-extrabold text-primary">
                           {formatRupiah(monthlyPrice)} /bln
                         </span>
                       </div>
@@ -502,7 +502,7 @@ function CreateRoomContent() {
               <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-xs bg-white dark:bg-card">
                 <CardContent className="p-6 space-y-4">
                   <div className="flex items-center gap-2.5 pb-4 border-b border-slate-100 dark:border-border/60">
-                    <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose-/10 text-rose- dark:text-rose- flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-xl bg-primary dark:bg-primary/10 text-primary flex items-center justify-center">
                       <Sparkles className="w-5 h-5" />
                     </div>
                     <div>
@@ -526,14 +526,14 @@ function CreateRoomContent() {
                           onClick={() => handleToggleFacility(facility.name)}
                           className={`flex items-center gap-3 p-3 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
                             isSelected
-                              ? 'bg-rose-/80 dark:bg-rose-/40 border-rose- dark:border-rose- text-rose- dark:text-rose- shadow-xs ring-1 ring-rose-/30'
+                              ? 'bg-secondary text-secondary-foreground border-border shadow-xs ring-1 ring-primary/30'
                               : 'bg-slate-50/60 dark:bg-card border-slate-200 dark:border-border text-slate-700 dark:text-muted-foreground hover:border-slate-300 hover:bg-slate-100/60'
                           }`}
                         >
                           <div
                             className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                               isSelected
-                                ? 'bg-rose- text-white shadow-xs'
+                                ? 'bg-primary text-primary-foreground shadow-xs'
                                 : 'bg-slate-200/80 dark:bg-muted text-slate-600 dark:text-slate-400'
                             }`}
                           >
@@ -543,7 +543,7 @@ function CreateRoomContent() {
                             {facility.name}
                           </span>
                           {isSelected && (
-                            <div className="w-5 h-5 rounded-full bg-rose- text-white flex items-center justify-center shrink-0">
+                            <div className="w-5 h-5 rounded-full bg-primary text-primary-foreground flex items-center justify-center shrink-0">
                               <Check className="w-3 h-3 stroke-[2.5]" />
                             </div>
                           )}
@@ -569,7 +569,7 @@ function CreateRoomContent() {
             <Button
               type="submit"
               disabled={submitting || isLoadingProps}
-              className="h-11 px-8 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-md shadow-rose-/20 cursor-pointer gap-2"
+              className="h-11 px-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-md shadow-primary/20 cursor-pointer gap-2"
             >
               {submitting ? (
                 <>
@@ -595,7 +595,7 @@ export const CreateRoomView: React.FC = () => {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

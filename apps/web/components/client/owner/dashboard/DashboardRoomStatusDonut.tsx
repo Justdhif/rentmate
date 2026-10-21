@@ -24,8 +24,8 @@ export const DashboardRoomStatusDonut: React.FC<DashboardRoomStatusDonutProps> =
   const vacantPct = 100 - occupiedPct;
 
   const pieData = [
-    { name: t('dashboard.statusOccupied'), value: occupied, color: '#10B981' },
-    { name: t('dashboard.statusVacant'), value: vacant, color: '#E2E8F0' },
+    { name: t('dashboard.statusOccupied'), value: occupied, color: 'var(--success, #10B981)' },
+    { name: t('dashboard.statusVacant'), value: vacant, color: 'var(--muted)' },
   ];
 
   return (
@@ -58,9 +58,9 @@ export const DashboardRoomStatusDonut: React.FC<DashboardRoomStatusDonutProps> =
               <Tooltip
                 formatter={(val: any, name: any) => [`${val} ${t('dashboard.roomsUnit')}`, name]}
                 contentStyle={{
-                  backgroundColor: '#FFFFFF',
+                  backgroundColor: 'var(--card)',
                   borderRadius: '12px',
-                  border: '1px solid #E2E8F0',
+                  border: '1px solid var(--border)',
                   fontSize: '12px',
                 }}
               />

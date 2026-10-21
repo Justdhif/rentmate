@@ -2,36 +2,35 @@
 
 import React from "react";
 import { Search, CreditCard, Wrench, Sparkles } from "lucide-react";
+import { useTranslation } from "@/contexts/LanguageContext";
 
 export function FeaturesSection() {
+  const { t } = useTranslation();
+
   const features = [
     {
       icon: Search,
-      iconBg: "bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400",
-      title: "Ketersediaan Kamar Riil",
-      description:
-        "Status kamar kosong dan terisi selalu sinkron secara real-time langsung dengan sistem pemilik kos.",
+      iconBg: "bg-primary/10 text-primary",
+      title: t('home.feature1Title'),
+      description: t('home.feature1Desc'),
     },
     {
       icon: CreditCard,
-      iconBg: "bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400",
-      title: "Pembayaran Digital Otomatis",
-      description:
-        "Bayar sewa bulanan praktis via QRIS, Virtual Account, dan e-Wallet dengan konfirmasi instan.",
+      iconBg: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400",
+      title: t('home.feature2Title'),
+      description: t('home.feature2Desc'),
     },
     {
       icon: Wrench,
-      iconBg: "bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose-",
-      title: "Layanan Maintenance Terpadu",
-      description:
-        "Lampu mati atau AC rusak? Penghuni cukup buat laporan tiket di web dan teknisi segera menangani.",
+      iconBg: "bg-primary/10 text-primary",
+      title: t('home.feature3Title'),
+      description: t('home.feature3Desc'),
     },
     {
       icon: Sparkles,
-      iconBg: "bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose-",
-      title: "RentMate AI Assistant",
-      description:
-        "Rekomendasi kos pintar sesuai kebutuhan dan analitik okupansi otomatis untuk pemilik properti.",
+      iconBg: "bg-secondary text-secondary-foreground border border-border",
+      title: t('home.feature4Title'),
+      description: t('home.feature4Desc'),
     },
   ];
 
@@ -42,14 +41,14 @@ export function FeaturesSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-rose-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider">
-            Kenapa Memilih RentMate?
+          <span className="text-primary text-xs font-bold uppercase tracking-wider">
+            {t('home.featuresSectionTitle')}
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-foreground mt-2 tracking-tight">
-            Solusi Terpadu Pencari & Pemilik Kos
+            {t('home.featuresSectionHeading')}
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-muted-foreground mt-2">
-            Kami mendigitalkan seluruh siklus sewa kos mulai dari pencarian, tagihan digital, hingga perbaikan fasilitas.
+            {t('home.featuresSectionDesc')}
           </p>
         </div>
 

@@ -25,21 +25,21 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
       }`}
     >
       {/* Soft glowing background aura */}
-      <div className="absolute w-96 h-96 bg-rose-500/10 dark:bg-rose-500/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
+      <div className="absolute w-96 h-96 bg-primary500/10 dark:bg-primary500/20 rounded-full blur-3xl pointer-events-none animate-pulse" />
 
       <div className="relative flex flex-col items-center max-w-sm px-6 text-center animate-fade-in">
         {/* Animated Brand Logo Container */}
         <div className="relative mb-6">
           {/* Subtle Outer Glow Rings */}
-          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-rose-500/30 to-rose-/30 blur-lg animate-pulse" />
-          <div className="relative flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-rose-600 via-rose-500 to-rose- text-white font-black text-4xl shadow-2xl shadow-rose-500/30 animate-soft-pulse border border-white/20">
+          <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-primary500/30 to-primary/30 blur-lg animate-pulse" />
+          <div className="relative flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-primaryred via-primary to-crimson text-white font-black text-4xl shadow-2xl shadow-primary/20500/30 animate-soft-pulse border border-white/20">
             R
           </div>
         </div>
 
         {/* Brand Name & Tagline */}
         <h1 className="text-2xl font-bold tracking-tight text-foreground font-sans">
-          Rent<span className="text-rose-600 dark:text-rose-400">Mate</span>
+          Rent<span className="text-primary600 dark:text-primary400">Mate</span>
         </h1>
         <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-1 mb-8">
           {displaySubmessage}
@@ -47,7 +47,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({
 
         {/* Modern Shimmer Progress Bar */}
         <div className="w-52 h-1.5 bg-slate-200/70 dark:bg-slate-800 rounded-full overflow-hidden relative shadow-inner">
-          <div className="h-full w-1/2 bg-gradient-to-r from-rose-500 via-rose- to-rose-600 rounded-full animate-shimmer-bar" />
+          <div className="h-full w-1/2 bg-gradient-to-r from-primaryred via-crimson to-primary rounded-full animate-shimmer-bar" />
         </div>
 
         {/* Loading Message */}

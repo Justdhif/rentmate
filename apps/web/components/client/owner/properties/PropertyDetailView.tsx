@@ -564,7 +564,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
   if (isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[65vh] gap-4">
-        <div className="w-10 h-10 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
+        <div className="w-10 h-10 border-3 border-primary border-t-transparent rounded-full animate-spin" />
         <p className="text-sm text-slate-500 font-medium">
           {t('propertyDetail.loadingProperty')}
         </p>
@@ -575,7 +575,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
   if (!property) {
     return (
       <div className="max-w-xl mx-auto text-center py-20 px-4">
-        <div className="w-16 h-16 bg-rose-50 text-rose-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <div className="w-16 h-16 bg-primary50 text-primary500 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <DoorClosed className="w-8 h-8" />
         </div>
         <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-2">
@@ -659,7 +659,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                     size="sm"
                     className={`h-9 px-3.5 rounded-xl text-xs font-semibold gap-1.5 cursor-pointer transition-all ${
                       isPropertyFavorite(property.id)
-                        ? 'border-rose-200 dark:border-rose-900/50 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/60'
+                        ? 'border-border200 dark:border-border900/50 bg-primary50 dark:bg-primary950/40 text-primary600 dark:text-primary400 hover:bg-primary/90100 dark:hover:bg-primary/90900/60'
                         : 'border-slate-200 dark:border-border text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
                     }`}
                     onClick={() => togglePropertyFavorite(property.id, property.name)}
@@ -667,8 +667,8 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                     <Heart
                       className={`w-3.5 h-3.5 transition-colors ${
                         isPropertyFavorite(property.id)
-                          ? 'fill-rose-500 text-rose-500'
-                          : 'text-slate-500 hover:text-rose-500'
+                          ? 'fill-rose-500 text-primary500'
+                          : 'text-slate-500 hover:text-primary500'
                       }`}
                     />
                     <span>
@@ -681,7 +681,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9 px-3.5 rounded-xl border-rose- dark:border-rose-/60 text-rose- dark:text-rose- bg-rose-/50 hover:bg-rose-/80 dark:bg-rose-/40 text-xs font-semibold gap-1.5 cursor-pointer"
+                    className="h-9 px-3.5 rounded-xl border-border dark:border-border text-primary bg-secondary/50 hover:bg-primary/80 dark:bg-secondary/40 text-xs font-semibold gap-1.5 cursor-pointer"
                     onClick={() => router.push(`/properties/create?edit=${property.id}`)}
                   >
                     <Edit className="w-3.5 h-3.5" />
@@ -703,7 +703,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                         onClick={() => router.push(`/rooms?propertyId=${property.id}`)}
                         className="gap-2 cursor-pointer"
                       >
-                        <DoorClosed className="w-4 h-4 text-rose-" />
+                        <DoorClosed className="w-4 h-4 text-primary" />
                         <span>{t('properties.manageRooms')}</span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
@@ -790,7 +790,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
             onClick={() => setActiveTab('rooms')}
             className={`py-3 px-1 border-b-2 font-semibold text-sm transition-all cursor-pointer ${
               activeTab === 'rooms'
-                ? 'border-rose- text-rose- dark:text-rose-'
+                ? 'border-border text-primary'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -801,7 +801,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
             onClick={() => setActiveTab('detail')}
             className={`py-3 px-1 border-b-2 font-semibold text-sm transition-all cursor-pointer ${
               activeTab === 'detail'
-                ? 'border-rose- text-rose- dark:text-rose-'
+                ? 'border-border text-primary'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -812,7 +812,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
             onClick={() => setActiveTab('facilities')}
             className={`py-3 px-1 border-b-2 font-semibold text-sm transition-all cursor-pointer ${
               activeTab === 'facilities'
-                ? 'border-rose- text-rose- dark:text-rose-'
+                ? 'border-border text-primary'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -823,7 +823,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
             onClick={() => setActiveTab('reviews')}
             className={`py-3 px-1 border-b-2 font-semibold text-sm transition-all cursor-pointer ${
               activeTab === 'reviews'
-                ? 'border-rose- text-rose- dark:text-rose-'
+                ? 'border-border text-primary'
                 : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-slate-400 dark:hover:text-slate-200'
             }`}
           >
@@ -848,7 +848,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder={t('propertyDetail.searchPlaceholder')}
-                    className="pl-9.5 pr-8 h-10 rounded-xl bg-white dark:bg-card border-slate-200 dark:border-border text-xs sm:text-sm shadow-2xs focus-visible:ring-2 focus-visible:ring-rose-/20"
+                    className="pl-9.5 pr-8 h-10 rounded-xl bg-white dark:bg-card border-slate-200 dark:border-border text-xs sm:text-sm shadow-2xs focus-visible:ring-2 focus-visible:ring-primary/20"
                   />
                   {searchQuery && (
                     <button
@@ -943,7 +943,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                   <Button
                     asChild
                     size="sm"
-                    className="h-10 px-3.5 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer gap-1.5 shrink-0"
+                    className="h-10 px-3.5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer gap-1.5 shrink-0"
                   >
                     <Link href={`/rooms/create?propertyId=${property.id}`}>
                       <Plus className="w-3.5 h-3.5" />
@@ -996,7 +996,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                     return (
                       <div
                         key={room.id}
-                        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card overflow-hidden shadow-2xs hover:shadow-lg hover:border-rose- dark:hover:border-rose-/50 transition-all duration-300 flex flex-col justify-between group"
+                        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card overflow-hidden shadow-2xs hover:shadow-lg hover:border-primary transition-all duration-300 flex flex-col justify-between group"
                       >
                         <div>
                           {/* Room Photo Banner */}
@@ -1045,8 +1045,8 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                               <Heart
                                 className={`w-4 h-4 transition-colors ${
                                   isFav
-                                    ? 'fill-rose-500 text-rose-500'
-                                    : 'text-slate-600 dark:text-slate-300 hover:text-rose-500'
+                                    ? 'fill-rose-500 text-primary500'
+                                    : 'text-slate-600 dark:text-slate-300 hover:text-primary500'
                                 }`}
                               />
                             </button>
@@ -1055,7 +1055,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                           {/* Room Card Body */}
                           <div className="p-4 sm:p-4.5 space-y-2.5">
                             {/* Room Name */}
-                            <h3 className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-rose- dark:group-hover:text-rose- transition-colors">
+                            <h3 className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-primary transition-colors">
                               {room.roomNumber}
                             </h3>
 
@@ -1113,7 +1113,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                                 type="button"
                                 size="sm"
                                 onClick={() => setSelectedRoomRent(room)}
-                                className="flex-1 h-9 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs hover:shadow-md transition-all cursor-pointer"
+                                className="flex-1 h-9 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs hover:shadow-md transition-all cursor-pointer"
                               >
                                 {t('propertyDetail.rentNow')}
                               </Button>
@@ -1142,7 +1142,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               {/* Specifications Card */}
               <div className="bg-white dark:bg-card rounded-2xl border border-slate-200/80 dark:border-border/60 p-6 shadow-2xs space-y-4">
                 <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-border/60">
-                  <Building2 className="w-5 h-5 text-rose- dark:text-rose-" />
+                  <Building2 className="w-5 h-5 text-primary" />
                   <div>
                     <h3 className="font-bold text-slate-900 dark:text-white text-base">
                       {t('propertyDetail.detailSpecsTitle')}
@@ -1186,7 +1186,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               {/* Rules & Regulations Card */}
               <div className="bg-white dark:bg-card rounded-2xl border border-slate-200/80 dark:border-border/60 p-6 shadow-2xs space-y-4">
                 <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-border/60">
-                  <ShieldCheck className="w-5 h-5 text-rose- dark:text-rose-" />
+                  <ShieldCheck className="w-5 h-5 text-primary" />
                   <div>
                     <h3 className="font-bold text-slate-900 dark:text-white text-base">
                       {t('propertyDetail.rulesTitle')}
@@ -1211,7 +1211,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               {/* Deposit Policy Card */}
               <div className="bg-white dark:bg-card rounded-2xl border border-slate-200/80 dark:border-border/60 p-6 shadow-2xs space-y-4">
                 <div className="flex items-center gap-2.5 pb-3 border-b border-slate-100 dark:border-border/60">
-                  <Zap className="w-5 h-5 text-rose- dark:text-rose-" />
+                  <Zap className="w-5 h-5 text-primary" />
                   <div>
                     <h3 className="font-bold text-slate-900 dark:text-white text-base">
                       {t('propertyDetail.depositTitle')}
@@ -1223,8 +1223,8 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
-                  <div className="p-4 rounded-xl bg-rose-/50 dark:bg-rose-/30 border border-rose- dark:border-rose-/40">
-                    <h4 className="font-bold text-rose- dark:text-rose-">Deposit Jaminan</h4>
+                  <div className="p-4 rounded-xl bg-secondary/50 dark:bg-primary/30 border border-border dark:border-border">
+                    <h4 className="font-bold text-primary">Deposit Jaminan</h4>
                     <p className="text-slate-600 dark:text-slate-400 mt-1">
                       Deposit jaminan sebesar Rp 500.000 dibayarkan saat check-in dan akan dikembalikan 100% pada akhir masa sewa.
                     </p>
@@ -1266,7 +1266,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                               key={i}
                               className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-border/50 text-xs font-medium text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
                             >
-                              <IconComponent className="w-4 h-4 text-rose- shrink-0" />
+                              <IconComponent className="w-4 h-4 text-primary shrink-0" />
                               <span className="truncate">{item}</span>
                             </div>
                           );
@@ -1289,7 +1289,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                               key={i}
                               className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-border/50 text-xs font-medium text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
                             >
-                              <IconComponent className="w-4 h-4 text-rose- shrink-0" />
+                              <IconComponent className="w-4 h-4 text-primary shrink-0" />
                               <span className="truncate">{item}</span>
                             </div>
                           );
@@ -1312,7 +1312,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                               key={i}
                               className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-border/50 text-xs font-medium text-slate-700 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700 transition-colors"
                             >
-                              <IconComponent className="w-4 h-4 text-rose- shrink-0" />
+                              <IconComponent className="w-4 h-4 text-primary shrink-0" />
                               <span className="truncate">{item}</span>
                             </div>
                           );
@@ -1342,7 +1342,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                   <Button
                     type="button"
                     onClick={() => setIsReviewModalOpen(true)}
-                    className="rounded-xl px-4 h-9.5 text-xs font-semibold bg-rose- hover:bg-rose- text-white gap-2 shadow-xs cursor-pointer shrink-0"
+                    className="rounded-xl px-4 h-9.5 text-xs font-semibold bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shadow-xs cursor-pointer shrink-0"
                   >
                     <Edit className="w-3.5 h-3.5" />
                     <span>{t('propertyDetail.writeReview')}</span>
@@ -1455,7 +1455,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                         <div className="flex items-start justify-between gap-3">
                           {/* Reviewer Info */}
                           <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-rose-50 dark:bg-rose-950/60 border border-rose-200/60 dark:border-rose-800/40 text-rose-600 dark:text-rose-400 font-bold text-sm flex items-center justify-center overflow-hidden shrink-0">
+                            <div className="w-10 h-10 rounded-full bg-primary50 dark:bg-primary950/60 border border-border200/60 dark:border-border800/40 text-primary600 dark:text-primary400 font-bold text-sm flex items-center justify-center overflow-hidden shrink-0">
                               {rev.reviewer?.avatarUrl ? (
                                 <img
                                   src={rev.reviewer.avatarUrl}
@@ -1471,7 +1471,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                                 <span className="font-bold text-sm text-slate-900 dark:text-white">
                                   {rev.reviewer?.name}
                                 </span>
-                                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-rose- dark:bg-rose-/50 text-rose- dark:text-rose- border border-rose-/60 dark:border-rose-/40">
+                                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-primary dark:bg-secondary/50 text-primary border border-border dark:border-border">
                                   {t('propertyDetail.verifiedTenant')}
                                 </span>
                               </div>
@@ -1507,7 +1507,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                               <button
                                 type="button"
                                 onClick={() => handleDeleteReview(rev.id)}
-                                className="w-8 h-8 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 flex items-center justify-center transition-colors cursor-pointer"
+                                className="w-8 h-8 rounded-lg text-slate-400 hover:text-primary600 hover:bg-primary/9050 dark:hover:bg-primary/90950/40 flex items-center justify-center transition-colors cursor-pointer"
                                 title={t('propertyDetail.deleteReview')}
                               >
                                 <Trash2 className="w-4 h-4" />
@@ -1520,7 +1520,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                         {rev.roomNumber && (
                           <div className="mt-3">
                             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-border/40">
-                              <DoorClosed className="w-3.5 h-3.5 text-rose-" />
+                              <DoorClosed className="w-3.5 h-3.5 text-primary" />
                               <span>
                                 {t('rooms.roomNumber', {
                                   number: rev.roomNumber,
@@ -1557,7 +1557,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="text-xs font-semibold text-rose- hover:text-rose- dark:text-rose- hover:underline cursor-pointer"
+                className="text-xs font-semibold text-primary hover:text-primary hover:underline cursor-pointer"
               >
                 {t('propertyDetail.reset')}
               </button>
@@ -1653,11 +1653,11 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
 
             {/* Bottom Highlight Box: 12 kamar tersedia */}
             <div className="pt-2">
-              <div className="bg-rose-/80 dark:bg-rose-/40 rounded-xl p-3 flex items-center gap-3 border border-rose- dark:border-rose-/50">
-                <div className="w-8 h-8 rounded-lg bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0">
+              <div className="bg-primary/80 dark:bg-secondary/40 rounded-xl p-3 flex items-center gap-3 border border-border dark:border-border">
+                <div className="w-8 h-8 rounded-lg bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0">
                   <DoorClosed className="w-4 h-4" />
                 </div>
-                <span className="text-xs font-bold text-rose- dark:text-rose-">
+                <span className="text-xs font-bold text-primary">
                   {t('propertyDetail.roomsAvailableCount', { count: availableRoomsCount })}
                 </span>
               </div>
@@ -1667,7 +1667,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
           {/* Card 2: Butuh Bantuan? */}
           <div className="bg-white dark:bg-card rounded-2xl border border-slate-200/80 dark:border-border/60 p-5 shadow-2xs space-y-3.5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0">
+              <div className="w-10 h-10 rounded-full bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0">
                 <PhoneCall className="w-5 h-5" />
               </div>
               <div>
@@ -1684,7 +1684,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               type="button"
               variant="outline"
               onClick={() => setIsContactModalOpen(true)}
-              className="w-full h-9 rounded-xl border-rose- dark:border-rose-/60 text-rose- dark:text-rose- hover:bg-rose-/60 dark:hover:bg-rose-/40 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
+              className="w-full h-9 rounded-xl border-border dark:border-border text-primary hover:bg-primary/60 dark:hover:bg-secondary/40 text-xs font-semibold flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <span>{t('propertyDetail.contactUs')}</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -1725,7 +1725,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-900 rounded-xl">
                 <div>
                   <span className="text-[11px] text-slate-500">{t('propertyDetail.roomPrice')}</span>
-                  <p className="text-base font-extrabold text-rose- dark:text-rose-">
+                  <p className="text-base font-extrabold text-primary">
                     {formatRupiah(Number(selectedRoomDetail.price ?? selectedRoomDetail.monthlyPrice ?? 0))}{' '}
                     <span className="text-xs font-normal text-slate-500">{t('propertyDetail.perMonth')}</span>
                   </p>
@@ -1754,7 +1754,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                       const FacIcon = getFacilityIcon(fac);
                       return (
                         <div key={idx} className="flex items-center gap-2">
-                          <FacIcon className="w-3.5 h-3.5 text-rose- shrink-0" />
+                          <FacIcon className="w-3.5 h-3.5 text-primary shrink-0" />
                           <span className="truncate">{fac}</span>
                         </div>
                       );
@@ -1789,7 +1789,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                       setSelectedRoomRent(selectedRoomDetail);
                       setSelectedRoomDetail(null);
                     }}
-                    className="w-full rounded-xl bg-rose- hover:bg-rose- text-white font-semibold cursor-pointer"
+                    className="w-full rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold cursor-pointer"
                   >
                     {t('propertyDetail.rentNow')}
                   </Button>
@@ -1874,12 +1874,12 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                 />
               </div>
 
-              <div className="p-3.5 bg-rose-/70 dark:bg-rose-/40 border border-rose- dark:border-rose-/50 rounded-xl flex items-center justify-between">
+              <div className="p-3.5 bg-primary/70 dark:bg-secondary/40 border border-border dark:border-border rounded-xl flex items-center justify-between">
                 <div>
-                  <span className="text-[11px] text-rose- dark:text-rose- font-medium">
+                  <span className="text-[11px] text-primary font-medium">
                     {t('propertyDetail.estimatedTotal')}
                   </span>
-                  <p className="text-base font-extrabold text-rose- dark:text-rose-">
+                  <p className="text-base font-extrabold text-primary">
                     {formatRupiah(
                       Number(selectedRoomRent.price ?? selectedRoomRent.monthlyPrice ?? 0) * rentDuration
                     )}
@@ -1902,7 +1902,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                 <Button
                   type="submit"
                   disabled={isSubmittingRent}
-                  className="flex-1 rounded-xl h-10 bg-rose- hover:bg-rose- text-white font-semibold cursor-pointer"
+                  className="flex-1 rounded-xl h-10 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold cursor-pointer"
                 >
                   {isSubmittingRent ? t('common.saving') : t('propertyDetail.submitRentBtn')}
                 </Button>
@@ -1915,7 +1915,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
       {/* 6. MODAL: HUBUNGI KAMI */}
       <Dialog open={isContactModalOpen} onOpenChange={setIsContactModalOpen}>
         <DialogContent className="max-w-sm rounded-2xl p-6 text-center">
-          <div className="w-12 h-12 rounded-2xl bg-rose- dark:bg-rose- text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-3">
+          <div className="w-12 h-12 rounded-2xl bg-secondary text-secondary-foreground flex items-center justify-center mx-auto mb-3">
             <PhoneCall className="w-6 h-6" />
           </div>
           <DialogTitle className="text-base font-bold">
@@ -2053,7 +2053,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
                 placeholder={t('propertyDetail.commentPlaceholder')}
                 value={reviewComment}
                 onChange={(e) => setReviewComment(e.target.value)}
-                className="rounded-xl resize-none text-xs sm:text-sm bg-white dark:bg-card border-slate-200 dark:border-border focus-visible:ring-2 focus-visible:ring-rose-/20"
+                className="rounded-xl resize-none text-xs sm:text-sm bg-white dark:bg-card border-slate-200 dark:border-border focus-visible:ring-2 focus-visible:ring-primary/20"
               />
             </div>
 
@@ -2070,7 +2070,7 @@ export const PropertyDetailView: React.FC<PropertyDetailViewProps> = ({ property
               <Button
                 type="submit"
                 disabled={isSubmittingReview || !reviewComment.trim()}
-                className="rounded-xl text-xs font-semibold h-10 px-5 bg-rose- hover:bg-rose- text-white shadow-xs cursor-pointer"
+                className="rounded-xl text-xs font-semibold h-10 px-5 bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs cursor-pointer"
               >
                 {isSubmittingReview
                   ? t('propertyDetail.submittingReview')

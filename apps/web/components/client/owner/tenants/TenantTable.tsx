@@ -146,7 +146,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
   if (tenants.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-12 text-center shadow-2xs">
-        <div className="w-14 h-14 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center mx-auto mb-4">
           <Users className="w-7 h-7" />
         </div>
         <h3 className="font-bold text-slate-900 dark:text-foreground text-base">
@@ -218,7 +218,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                 <TableRow
                   key={item.id}
                   className={`hover:bg-slate-50/80 dark:hover:bg-muted/20 transition-colors ${
-                    isSelected ? 'bg-rose-/40 dark:bg-rose-/20' : ''
+                    isSelected ? 'bg-secondary/40 dark:bg-primary/20' : ''
                   }`}
                 >
                   {/* Checkbox Column */}
@@ -233,7 +233,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                   {/* Nama Tenant Column */}
                   <TableCell className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose- to-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-2xs shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-crimson600 text-white font-bold flex items-center justify-center text-xs shadow-2xs shrink-0">
                         {item.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
@@ -293,7 +293,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                           ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60'
                           : item.status === 'PENDING'
                           ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800/60'
-                          : 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200/80 dark:border-rose-800/60'
+                          : 'bg-primary50 dark:bg-primary950/50 text-primary600 dark:text-primary400 border border-border200/80 dark:border-border800/60'
                       }`}
                     >
                       {item.status === 'ACTIVE'
@@ -356,7 +356,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                             href="/rooms"
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <DoorClosed className="w-4 h-4 text-rose-" />
+                            <DoorClosed className="w-4 h-4 text-primary" />
                             <span>
                               {t('tenants.actionRoomDetail', {
                                 defaultValue: 'Kelola Kamar',
@@ -367,7 +367,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                         {item.isActive && (
                           <DropdownMenuItem
                             onClick={() => onUnassign(item.assignmentId || item.id, item.name)}
-                            className="text-rose-600 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-950/40 flex items-center gap-2 cursor-pointer"
+                            className="text-primary600 focus:text-primary600 focus:bg-primary50 dark:focus:bg-primary950/40 flex items-center gap-2 cursor-pointer"
                           >
                             <LogOut className="w-4 h-4" />
                             <span>
@@ -416,7 +416,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
               onClick={() => setCurrentPage(page)}
               className={`h-8 w-8 p-0 rounded-lg text-xs font-semibold cursor-pointer ${
                 page === validPage
-                  ? 'bg-rose- hover:bg-rose- text-white'
+                  ? 'bg-primary hover:bg-primary/90 text-primary-foreground'
                   : 'border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-50'
               }`}
             >

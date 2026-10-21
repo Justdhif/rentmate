@@ -314,7 +314,7 @@ export const PropertiesView: React.FC = () => {
               <div className="hidden sm:flex items-center gap-2">
                 <Badge
                   variant="outline"
-                  className="bg-rose- text-rose- dark:bg-rose-/10 dark:text-rose- border-rose- dark:border-rose-/20 text-xs font-semibold px-2.5 py-1 rounded-lg"
+                  className="bg-primary text-primary dark:bg-primary/10 dark:text-primary border-border dark:border-border text-xs font-semibold px-2.5 py-1 rounded-lg"
                 >
                   {t('properties.countBadge', { count: properties.length })}
                 </Badge>
@@ -327,7 +327,7 @@ export const PropertiesView: React.FC = () => {
               </div>
               <Button
                 asChild
-                className="h-9 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer gap-2"
+                className="h-9 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer gap-2"
               >
                 <Link href="/properties/create">
                   <Plus className="w-4 h-4" />
@@ -383,7 +383,7 @@ export const PropertiesView: React.FC = () => {
                     </span>
                   )}
                   {activeQuickType !== 'ALL' && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- border border-rose- dark:border-rose-/60">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-secondary text-secondary-foreground border border-border dark:border-border">
                       <span>
                         {activeQuickType === 'PUTRI'
                           ? t('properties.filterFemaleKost')
@@ -433,7 +433,7 @@ export const PropertiesView: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="text-xs font-semibold text-rose- dark:text-rose- hover:underline cursor-pointer ml-1"
+                    className="text-xs font-semibold text-primary hover:underline cursor-pointer ml-1"
                   >
                     {t('properties.resetFilters')}
                   </button>
@@ -443,7 +443,7 @@ export const PropertiesView: React.FC = () => {
 
             {isLoading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin mb-3" />
+                <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mb-3" />
                 <p className="text-xs text-slate-500 font-medium">
                   {t('properties.loadingDatabase')}
                 </p>

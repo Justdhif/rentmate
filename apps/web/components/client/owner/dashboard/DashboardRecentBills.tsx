@@ -39,7 +39,7 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
       status: 'OVERDUE',
       dateLabel: formatDateLabel(false, new Date('2026-09-10')),
       initial: 'R',
-      avatarBg: 'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+      avatarBg: 'bg-secondary text-secondary-foreground',
     },
     {
       id: '2',
@@ -69,7 +69,7 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
       status: 'PAID',
       dateLabel: formatDateLabel(true, new Date('2026-09-03')),
       initial: 'A',
-      avatarBg: 'bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400',
+      avatarBg: 'bg-primary100 text-primary600 dark:bg-primary950 dark:text-primary400',
     },
     {
       id: '5',
@@ -94,10 +94,10 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
             t('dashboard.tenantFallback', { number: idx + 1 });
           const initial = name.charAt(0).toUpperCase() || 'P';
           const colors = [
-            'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+            'bg-secondary text-secondary-foreground',
             'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
             'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
-            'bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400',
+            'bg-primary100 text-primary600 dark:bg-primary950 dark:text-primary400',
             'bg-teal-100 text-teal-600 dark:bg-teal-950 dark:text-teal-400',
           ];
 
@@ -121,12 +121,12 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card h-full flex flex-col justify-between">
       <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-          <Receipt className="w-4 h-4 text-rose-" />
+          <Receipt className="w-4 h-4 text-primary" />
           <span>{t('dashboard.recentBillsTitle')}</span>
         </CardTitle>
         <Link
           href="/payments"
-          className="text-xs font-semibold text-rose- dark:text-rose- hover:underline"
+          className="text-xs font-semibold text-primary hover:underline"
         >
           {t('common.viewAll')}
         </Link>
@@ -171,7 +171,7 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
                         <span>{bill.dateLabel}</span>
                       </span>
                     ) : (
-                      <span className="inline-flex items-center text-[10px] font-semibold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40 border border-rose-200/60 dark:border-rose-800/40 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center text-[10px] font-semibold text-primary600 dark:text-primary400 bg-primary50 dark:bg-primary950/40 border border-border200/60 dark:border-border800/40 px-2 py-0.5 rounded-full">
                         {bill.dateLabel}
                       </span>
                     )}

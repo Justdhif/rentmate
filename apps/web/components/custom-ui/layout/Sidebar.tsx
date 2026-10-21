@@ -57,7 +57,7 @@ const ActiveScoopTop: React.FC = () => (
   >
     <svg
       viewBox="0 0 20 20"
-      className="w-full h-full text-[#FFF1F2] dark:text-[#18181B] fill-current"
+      className="w-full h-full text-background fill-current"
     >
       <path d="M20 0 V20 H0 A20 20 0 0 0 20 0 Z" />
     </svg>
@@ -71,7 +71,7 @@ const ActiveScoopBottom: React.FC = () => (
   >
     <svg
       viewBox="0 0 20 20"
-      className="w-full h-full text-[#FFF1F2] dark:text-[#18181B] fill-current"
+      className="w-full h-full text-background fill-current"
     >
       <path d="M20 20 V0 H0 A20 20 0 0 1 20 20 Z" />
     </svg>
@@ -98,10 +98,10 @@ export const Sidebar: React.FC = () => {
     if (role === 'USER') {
       return [
         {
-          label: 'Menu Utama',
+          label: t('nav.sectionSeekerMain'),
           items: [
-            { name: 'Dashboard Pencari Kos', href: '/user/dashboard', icon: LayoutDashboard },
-            { name: 'Kos Favorit (Wishlist)', href: '/favorites', icon: Heart },
+            { name: t('nav.navSeekerDashboard'), href: '/user/dashboard', icon: LayoutDashboard },
+            { name: t('nav.navWishlist'), href: '/favorites', icon: Heart },
           ],
         },
       ];
@@ -110,17 +110,17 @@ export const Sidebar: React.FC = () => {
     if (role === 'TENANT') {
       return [
         {
-          label: 'Hunian Saya',
+          label: t('nav.sectionTenantHousing'),
           items: [
-            { name: 'Kamar Saya', href: '/tenant/dashboard', icon: Home },
-            { name: 'Kos Favorit', href: '/favorites', icon: Heart },
+            { name: t('nav.navTenantRoom'), href: '/tenant/dashboard', icon: Home },
+            { name: t('nav.navTenantFavorites'), href: '/favorites', icon: Heart },
           ],
         },
         {
-          label: 'Layanan Penghuni',
+          label: t('nav.sectionTenantServices'),
           items: [
-            { name: 'Tagihan & Pembayaran', href: '/tenant/payments', icon: CreditCard },
-            { name: 'Lapor Kerusakan', href: '/tenant/maintenance', icon: Wrench },
+            { name: t('nav.navTenantBills'), href: '/tenant/payments', icon: CreditCard },
+            { name: t('nav.navTenantMaintenance'), href: '/tenant/maintenance', icon: Wrench },
           ],
         },
       ];
@@ -129,10 +129,10 @@ export const Sidebar: React.FC = () => {
     if (role === 'TECHNICIAN') {
       return [
         {
-          label: 'Tugas & Pekerjaan',
+          label: t('nav.sectionTechTasks'),
           items: [
-            { name: 'Dashboard Teknisi', href: '/technician/dashboard', icon: LayoutDashboard },
-            { name: 'Tiket Maintenance', href: '/technician/maintenance', icon: Wrench },
+            { name: t('nav.navTechDashboard'), href: '/technician/dashboard', icon: LayoutDashboard },
+            { name: t('nav.navTechTickets'), href: '/technician/maintenance', icon: Wrench },
           ],
         },
       ];
@@ -141,12 +141,12 @@ export const Sidebar: React.FC = () => {
     if (role === 'ADMIN') {
       return [
         {
-          label: 'Superadmin Platform',
+          label: t('nav.sectionAdminPlatform'),
           items: [
-            { name: 'Overview Global', href: '/admin/dashboard', icon: LayoutDashboard },
-            { name: 'Kelola Pengguna', href: '/admin/users', icon: Users },
-            { name: 'Verifikasi Listing', href: '/admin/verifications', icon: Building2 },
-            { name: 'Laporan & Pengaduan', href: '/admin/reports', icon: Wrench },
+            { name: t('nav.navAdminOverview'), href: '/admin/dashboard', icon: LayoutDashboard },
+            { name: t('nav.navAdminUsers'), href: '/admin/users', icon: Users },
+            { name: t('nav.navAdminVerifications'), href: '/admin/verifications', icon: Building2 },
+            { name: t('nav.navAdminReports'), href: '/admin/reports', icon: Wrench },
           ],
         },
       ];
@@ -211,14 +211,14 @@ export const Sidebar: React.FC = () => {
       {/* Brand Header */}
       <SidebarHeader className="h-16 border-b border-slate-200/80 dark:border-border/60 justify-center px-4 group-data-[collapsible=icon]:px-0">
         <Link href={user ? getRoleRedirectPath(user.role) : '/'} className="flex items-center gap-3 group-data-[collapsible=icon]:justify-center">
-          <div className="w-9 h-9 rounded-xl bg-[#E11D48] hover:bg-[#BE123C] flex items-center justify-center text-white font-bold text-lg shadow-sm shadow-[#E11D48]/20 shrink-0 transition-colors">
+          <div className="w-9 h-9 rounded-xl bg-primary hover:bg-destructive flex items-center justify-center text-primary-foreground font-bold text-lg shadow-sm shadow-primary/20 shrink-0 transition-colors">
             R
           </div>
           <div className="flex flex-col group-data-[collapsible=icon]:hidden overflow-hidden">
             <span className="font-bold text-slate-900 dark:text-foreground text-base tracking-tight leading-tight">
               {t('nav.brand')}
             </span>
-            <span className="text-[10px] uppercase font-bold tracking-wider text-[#E11D48]">
+            <span className="text-[10px] uppercase font-bold tracking-wider text-primary">
               {t('nav.brandSub')}
             </span>
           </div>
@@ -250,19 +250,19 @@ export const Sidebar: React.FC = () => {
                         tooltip={item.name}
                         className={
                           isActive
-                            ? 'h-10 relative z-10 w-full !bg-[#FFF1F2] dark:!bg-[#18181B] data-[active=true]:!bg-[#FFF1F2] dark:data-[active=true]:!bg-[#18181B] hover:!bg-[#FFF1F2] dark:hover:!bg-[#18181B] text-[#E11D48] dark:text-[#E11D48] font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
-                            : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-[#FFF1F2]/60 dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
+                            ? 'h-10 relative z-10 w-full !bg-background data-[active=true]:!bg-background hover:!bg-background text-primary font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
+                            : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-secondary/60 dark:hover:bg-accent/40 hover:text-secondary-foreground dark:hover:text-primary transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
                         }
                       >
                         <Link href={item.href} className="flex items-center gap-2.5 w-full group-data-[collapsible=icon]:justify-center">
-                          <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-[#E11D48]' : 'text-slate-400 dark:text-slate-500'}`} />
+                          <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-primary' : 'text-slate-400 dark:text-slate-500'}`} />
                           <span className="flex-1 text-xs truncate group-data-[collapsible=icon]:hidden">{item.name}</span>
                           {item.badge && (
                             <Badge
                               size="sm"
-                              className="group-data-[collapsible=icon]:hidden gap-1 text-[10px] font-bold uppercase tracking-wider py-0 px-2 bg-[#FFF1F2] text-[#BE123C] dark:bg-[#BE123C]/20 dark:text-[#FECDD3] border-[#FECDD3] dark:border-[#BE123C]/40"
+                              className="group-data-[collapsible=icon]:hidden gap-1 text-[10px] font-bold uppercase tracking-wider py-0 px-2 bg-secondary text-secondary-foreground border-border"
                             >
-                              <Sparkles className="w-2.5 h-2.5 text-[#E11D48]" />
+                              <Sparkles className="w-2.5 h-2.5 text-primary" />
                               {item.badge}
                             </Badge>
                           )}
@@ -293,12 +293,12 @@ export const Sidebar: React.FC = () => {
                       tooltip={item.name}
                       className={
                         isActive
-                          ? 'h-10 relative z-10 w-full !bg-[#FFF1F2] dark:!bg-[#18181B] data-[active=true]:!bg-[#FFF1F2] dark:data-[active=true]:!bg-[#18181B] hover:!bg-[#FFF1F2] dark:hover:!bg-[#18181B] text-[#E11D48] dark:text-[#E11D48] font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
-                          : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-[#FFF1F2]/60 dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
+                          ? 'h-10 relative z-10 w-full !bg-background data-[active=true]:!bg-background hover:!bg-background text-primary font-bold rounded-l-2xl rounded-r-none pl-3.5 pr-3 group-data-[collapsible=icon]:pl-3.5 group-data-[collapsible=icon]:pr-1 transition-all shadow-none flex items-center'
+                          : 'h-10 text-slate-600 dark:text-slate-400 hover:bg-secondary/60 dark:hover:bg-accent/40 hover:text-secondary-foreground dark:hover:text-primary transition-colors mr-3 group-data-[collapsible=icon]:mr-2 rounded-xl px-3 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:justify-center'
                       }
                     >
                       <Link href={item.href} className="flex items-center gap-2.5 w-full group-data-[collapsible=icon]:justify-center">
-                        <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-[#E11D48]' : 'text-slate-400 dark:text-slate-500'}`} />
+                        <Icon className={`w-4 h-4 shrink-0 transition-colors ${isActive ? 'text-primary' : 'text-slate-400 dark:text-slate-500'}`} />
                         <span className="flex-1 text-xs truncate group-data-[collapsible=icon]:hidden">{item.name}</span>
                       </Link>
                     </SidebarMenuButton>
@@ -313,9 +313,9 @@ export const Sidebar: React.FC = () => {
       {/* Footer with AI Status & Complete User Profile */}
       <SidebarFooter className="p-3 border-t border-slate-200/80 dark:border-border/60 space-y-2.5">
         {/* Clean AI Status Banner (Hidden on icon collapse) */}
-        <div className="group-data-[collapsible=icon]:hidden p-3 bg-[#FFF1F2]/60 dark:bg-[#27272A]/50 rounded-xl border border-[#FECDD3] dark:border-border/50 text-xs">
+        <div className="group-data-[collapsible=icon]:hidden p-3 bg-secondary/60 rounded-xl border border-border text-xs">
           <p className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
-            <Sparkles className="w-3.5 h-3.5 text-[#E11D48] shrink-0" />
+            <Sparkles className="w-3.5 h-3.5 text-primary shrink-0" />
             {t('nav.aiStatusTitle')}
           </p>
           <p className="text-slate-500 dark:text-muted-foreground mt-1 leading-relaxed text-[11px]">
@@ -326,12 +326,12 @@ export const Sidebar: React.FC = () => {
         {/* User Profile Card with Dropdown Menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-[#FFF1F2]/80 dark:hover:bg-[#27272A] transition-colors cursor-pointer text-left outline-none group-data-[collapsible=icon]:justify-center">
+            <button className="w-full flex items-center gap-3 p-2 rounded-xl hover:bg-secondary/80 transition-colors cursor-pointer text-left outline-none group-data-[collapsible=icon]:justify-center">
               <Avatar className="w-8 h-8 shrink-0">
                 {user?.profile?.avatarUrl && (
                   <AvatarImage src={user.profile.avatarUrl} alt={fullName} />
                 )}
-                <AvatarFallback className="bg-[#E11D48] text-white font-bold text-xs shadow-xs">
+                <AvatarFallback className="bg-primary text-primary-foreground font-bold text-xs shadow-xs">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -340,8 +340,8 @@ export const Sidebar: React.FC = () => {
                   {fullName}
                 </p>
                 <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-[#FFF1F2] text-[#BE123C] dark:bg-[#BE123C]/20 dark:text-[#FECDD3] border border-[#FECDD3] dark:border-[#BE123C]/40">
-                    {user?.role === 'USER' ? 'Pencari Kos' : user?.role || t('nav.userFallbackRole')}
+                  <span className="inline-block text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.2 rounded bg-secondary text-secondary-foreground border border-border">
+                    {user?.role === 'USER' ? t('nav.userRoleSeeker') : user?.role || t('nav.userFallbackRole')}
                   </span>
                   <span className="text-[10px] text-slate-400 truncate">
                     {email}
@@ -354,14 +354,14 @@ export const Sidebar: React.FC = () => {
           <DropdownMenuContent
             align="end"
             side="top"
-            className="w-64 mb-2 p-1.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl"
+            className="w-64 mb-2 p-1.5 rounded-2xl bg-card border border-border shadow-xl"
           >
-            <div className="px-3 py-2.5 flex items-center gap-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 mb-1 border border-slate-100 dark:border-slate-800">
-              <Avatar className="w-9 h-9 shrink-0 ring-1 ring-slate-200 dark:ring-slate-700">
+            <div className="px-3 py-2.5 flex items-center gap-3 rounded-xl bg-muted/60 mb-1 border border-border/60">
+              <Avatar className="w-9 h-9 shrink-0 ring-1 ring-border">
                 {user?.profile?.avatarUrl && (
                   <AvatarImage src={user.profile.avatarUrl} alt={fullName} />
                 )}
-                <AvatarFallback className="bg-[#E11D48] text-white font-bold text-xs shadow-xs">
+                <AvatarFallback className="bg-primary text-primary-foreground font-bold text-xs shadow-xs">
                   {initials}
                 </AvatarFallback>
               </Avatar>
@@ -375,15 +375,15 @@ export const Sidebar: React.FC = () => {
               </div>
             </div>
 
-            <DropdownMenuSeparator className="my-1 bg-slate-100 dark:bg-slate-800" />
+            <DropdownMenuSeparator className="my-1 bg-border/60" />
 
             <DropdownMenuItem asChild>
               <Link
                 href="/"
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-secondary hover:text-secondary-foreground cursor-pointer transition-colors"
               >
-                <Compass className="w-4 h-4 text-[#E11D48] shrink-0" />
-                <span>Jelajahi Marketplace</span>
+                <Compass className="w-4 h-4 text-primary shrink-0" />
+                <span>{t('nav.exploreMarketplace')}</span>
               </Link>
             </DropdownMenuItem>
 
@@ -400,7 +400,7 @@ export const Sidebar: React.FC = () => {
                     ? '/admin/settings'
                     : '/user/dashboard'
                 }
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-secondary hover:text-secondary-foreground cursor-pointer transition-colors"
               >
                 <User className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0" />
                 <span>{t('nav.menuProfile')}</span>
@@ -420,7 +420,7 @@ export const Sidebar: React.FC = () => {
                     ? '/admin/settings'
                     : '/user/dashboard'
                 }
-                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
+                className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-secondary hover:text-secondary-foreground cursor-pointer transition-colors"
               >
                 <Settings className="w-4 h-4 text-slate-400 dark:text-slate-400 shrink-0" />
                 <span>{t('nav.menuSettings')}</span>
@@ -429,7 +429,7 @@ export const Sidebar: React.FC = () => {
 
             <DropdownMenuItem
               onClick={toggleTheme}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] hover:text-[#BE123C] dark:hover:text-[#FECDD3] cursor-pointer transition-colors"
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-secondary hover:text-secondary-foreground cursor-pointer transition-colors"
             >
               {resolvedTheme === 'dark' ? (
                 <>
@@ -438,19 +438,19 @@ export const Sidebar: React.FC = () => {
                 </>
               ) : (
                 <>
-                  <Moon className="w-4 h-4 text-[#E11D48] shrink-0" />
+                  <Moon className="w-4 h-4 text-primary shrink-0" />
                   <span>{t('nav.menuDarkMode')}</span>
                 </>
               )}
             </DropdownMenuItem>
 
-            <DropdownMenuSeparator className="my-1 bg-slate-100 dark:bg-slate-800" />
+            <DropdownMenuSeparator className="my-1 bg-border/60" />
 
             <DropdownMenuItem
               onClick={handleLogout}
-              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-[#E11D48] dark:text-[#FECDD3] hover:bg-[#FFF1F2] dark:hover:bg-[#BE123C]/20 hover:text-[#BE123C] dark:hover:text-[#FFF1F2] focus:bg-[#FFF1F2] focus:text-[#BE123C] cursor-pointer transition-colors"
+              className="flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-xs font-medium text-destructive hover:bg-destructive/10 hover:text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer transition-colors"
             >
-              <LogOut className="w-4 h-4 text-[#E11D48] shrink-0" />
+              <LogOut className="w-4 h-4 text-destructive shrink-0" />
               <span>{t('nav.menuLogout')}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>

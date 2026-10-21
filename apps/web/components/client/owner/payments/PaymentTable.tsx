@@ -153,7 +153,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
   if (payments.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-12 text-center shadow-2xs">
-        <div className="w-14 h-14 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center mx-auto mb-4">
           <Receipt className="w-7 h-7" />
         </div>
         <h3 className="font-bold text-slate-900 dark:text-foreground text-base">
@@ -244,9 +244,9 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
               const isPending = p.status === 'PENDING';
 
               const avatarBgColors = [
-                'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+                'bg-secondary text-secondary-foreground',
                 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
-                'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+                'bg-secondary text-secondary-foreground',
                 'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
               ];
               const avatarBg = avatarBgColors[idx % avatarBgColors.length];
@@ -267,7 +267,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
                 <TableRow
                   key={p.id}
                   className={`hover:bg-slate-50/80 dark:hover:bg-muted/20 transition-colors ${
-                    isSelected ? 'bg-rose-/40 dark:bg-rose-/20' : ''
+                    isSelected ? 'bg-secondary/40 dark:bg-primary/20' : ''
                   }`}
                 >
                   {/* Checkbox Column */}
@@ -368,7 +368,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
                           ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800/60'
                           : isPending
                           ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400 border border-amber-200/80 dark:border-amber-800/60'
-                          : 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 border border-rose-200/80 dark:border-rose-800/60'
+                          : 'bg-primary50 dark:bg-primary950/50 text-primary600 dark:text-primary400 border border-border200/80 dark:border-border800/60'
                       }`}
                     >
                       {isPaid
@@ -398,7 +398,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
                               href={p.snapRedirectUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 cursor-pointer font-medium text-rose- dark:text-rose-"
+                              className="flex items-center gap-2 cursor-pointer font-medium text-primary"
                             >
                               <ExternalLink className="w-4 h-4" />
                               <span>{t('payments.actionPaySnap', { defaultValue: 'Buka Link Bayar (Snap)' })}</span>
@@ -476,7 +476,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
               onClick={() => setCurrentPage(page)}
               className={`h-8 w-8 p-0 rounded-lg text-xs font-semibold cursor-pointer ${
                 page === validPage
-                  ? 'bg-rose- hover:bg-rose- text-white'
+                  ? 'bg-primary hover:bg-primary/90 text-primary-foreground'
                   : 'border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-50'
               }`}
             >

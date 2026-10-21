@@ -30,7 +30,7 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
   const chartData = [
     { name: t('payments.statusPaid', { defaultValue: 'Lunas' }), value: paidCount, color: '#10B981' },
     { name: t('payments.statusPending', { defaultValue: 'Menunggu' }), value: pendingCount, color: '#FBBF24' },
-    { name: t('payments.statusOther', { defaultValue: 'Lainnya / Gagal' }), value: otherCount, color: '#F43F5E' },
+    { name: t('payments.statusOther', { defaultValue: 'Lainnya / Gagal' }), value: otherCount, color: '#BE123C' },
   ].filter((item) => item.value > 0);
 
   const hasData = chartData.length > 0;
@@ -47,7 +47,7 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs overflow-hidden">
         <CardHeader className="p-5 pb-2">
           <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-            <Receipt className="w-4 h-4 text-rose- dark:text-rose-" />
+            <Receipt className="w-4 h-4 text-primary" />
             <span>{t('payments.summaryTitle', { defaultValue: 'Ringkasan Pembayaran' })}</span>
           </CardTitle>
         </CardHeader>
@@ -136,7 +136,7 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
 
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
+                  <span className="w-2.5 h-2.5 rounded-full bg-primary500" />
                   <span className="text-slate-600 dark:text-slate-300 font-medium">
                     {t('payments.statusFailed', { defaultValue: 'Gagal / Lainnya' })}
                   </span>
@@ -159,14 +159,14 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs overflow-hidden">
         <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between space-y-0">
           <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-            <Receipt className="w-4 h-4 text-rose- dark:text-rose-" />
+            <Receipt className="w-4 h-4 text-primary" />
             <span>{t('payments.recentPaymentsTitle', { defaultValue: 'Pembayaran Terbaru' })}</span>
           </CardTitle>
           {onViewAll && (
             <button
               type="button"
               onClick={onViewAll}
-              className="text-xs font-semibold text-rose- dark:text-rose- hover:underline cursor-pointer"
+              className="text-xs font-semibold text-primary hover:underline cursor-pointer"
             >
               {t('payments.viewAll', { defaultValue: 'Lihat Semua' })}
             </button>
@@ -191,9 +191,9 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
                 );
 
                 const avatarBgColors = [
-                  'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+                  'bg-secondary text-secondary-foreground',
                   'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
-                  'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
+                  'bg-secondary text-secondary-foreground',
                   'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
                 ];
                 const avatarBg = avatarBgColors[idx % avatarBgColors.length];
@@ -229,7 +229,7 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
                           ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400'
                           : p.status === 'PENDING'
                           ? 'bg-amber-50 dark:bg-amber-950/50 text-amber-600 dark:text-amber-400'
-                          : 'bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400'
+                          : 'bg-primary50 dark:bg-primary950/50 text-primary600 dark:text-primary400'
                       }`}
                     >
                       {isPaid
@@ -247,9 +247,9 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
       </Card>
 
       {/* Card 3: Butuh bantuan pembayaran? (Consistent with Dashboard Blue KPI Tint) */}
-      <div className="rounded-2xl p-5 border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all">
+      <div className="rounded-2xl p-5 border border-border bg-secondary/50 dark:bg-secondary/20 shadow-2xs hover:shadow-xs transition-all">
         <div className="flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0 shadow-2xs">
             <Headphones className="w-5 h-5" />
           </div>
           <div>
@@ -268,7 +268,7 @@ export const PaymentRightSidebar: React.FC<PaymentRightSidebarProps> = ({
           <Button
             asChild
             variant="outline"
-            className="w-full h-9 rounded-xl bg-white dark:bg-card border-rose-/80 dark:border-rose- text-rose- dark:text-rose- hover:bg-rose- hover:text-rose- text-xs font-semibold shadow-2xs cursor-pointer gap-2"
+            className="w-full h-9 rounded-xl bg-white dark:bg-card border-border dark:border-border text-primary hover:bg-primary/90 hover:text-primary text-xs font-semibold shadow-2xs cursor-pointer gap-2"
           >
             <a
               href="https://wa.me/6281234567890?text=Halo%20Admin%20RentMate,%20saya%20butuh%20bantuan%20terkait%20sistem%20pembayaran%20sewa."

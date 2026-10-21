@@ -21,13 +21,13 @@ export const MaintenanceStats: React.FC<MaintenanceStatsProps> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6 animate-slide-up">
       {/* 1. Total Tiket Laporan (Indigo / Blue Theme) */}
-      <Card className="rounded-2xl border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all p-5 flex flex-col justify-between">
+      <Card className="rounded-2xl border border-border bg-secondary/50 dark:bg-secondary/20 shadow-2xs hover:shadow-xs transition-all p-5 flex flex-col justify-between">
         <div>
           <div className="flex items-center justify-between mb-3">
-            <div className="w-10 h-10 rounded-2xl bg-rose-/10 dark:bg-rose-/20 text-rose- dark:text-rose- flex items-center justify-center shrink-0">
+            <div className="w-10 h-10 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0">
               <Wrench className="w-5 h-5" />
             </div>
-            <span className="text-[11px] font-semibold text-rose- dark:text-rose- bg-rose-/70 dark:bg-rose-/40 px-2.5 py-0.5 rounded-full">
+            <span className="text-[11px] font-semibold text-primary bg-primary/70 dark:bg-secondary/40 px-2.5 py-0.5 rounded-full">
               Semua Tiket
             </span>
           </div>
@@ -38,7 +38,7 @@ export const MaintenanceStats: React.FC<MaintenanceStatsProps> = ({
             {totalCount}
           </div>
         </div>
-        <div className="mt-3 pt-2.5 border-t border-rose-/80 dark:border-rose-/30 text-[11px] text-slate-500 dark:text-slate-400">
+        <div className="mt-3 pt-2.5 border-t border-border dark:border-border text-[11px] text-slate-500 dark:text-slate-400">
           Semua keluhan fasilitas tercatat
         </div>
       </Card>

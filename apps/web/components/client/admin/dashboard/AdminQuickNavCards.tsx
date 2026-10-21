@@ -13,8 +13,8 @@ export function AdminQuickNavCards() {
       href: "/properties",
       linkText: "Lihat Semua Properti Kos →",
       icon: Building2,
-      iconBg: "bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400",
-      linkColor: "text-rose-600",
+      iconBg: "bg-primary50 dark:bg-primary950/60 text-primary600 dark:text-primary400",
+      linkColor: "text-primary600",
     },
     {
       label: "Pengguna Platform",
@@ -22,8 +22,8 @@ export function AdminQuickNavCards() {
       href: "/tenants",
       linkText: "Daftar Seluruh User →",
       icon: Users,
-      iconBg: "bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose-",
-      linkColor: "text-rose-",
+      iconBg: "bg-primary/10 dark:bg-primary/20 text-primary",
+      linkColor: "text-primary",
     },
     {
       label: "Platform Intelligence",

@@ -49,11 +49,11 @@ export const Header: React.FC<HeaderProps> = () => {
           variant="outline"
           size="sm"
           asChild
-          className="h-9 px-3 rounded-xl border-slate-200/80 dark:border-border/60 hover:border-[#FECDD3] dark:hover:border-[#BE123C] hover:text-[#E11D48] dark:hover:text-[#FECDD3] font-medium text-xs gap-1.5 shadow-2xs cursor-pointer"
+          className="h-9 px-3 rounded-xl border-slate-200/80 dark:border-border/60 hover:border-primary/40 hover:text-primary font-medium text-xs gap-1.5 shadow-2xs cursor-pointer"
         >
           <Link href="/">
-            <Compass className="w-4 h-4 text-[#E11D48] shrink-0" />
-            <span className="hidden md:inline">Jelajahi Marketplace</span>
+            <Compass className="w-4 h-4 text-primary shrink-0" />
+            <span className="hidden md:inline">{t('nav.exploreMarketplace')}</span>
           </Link>
         </Button>
 
@@ -63,11 +63,11 @@ export const Header: React.FC<HeaderProps> = () => {
         <Button
           variant="ghost"
           size="icon"
-          className="relative text-slate-500 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-[#FFF1F2] dark:hover:bg-[#27272A] rounded-xl h-9 w-9"
+          className="relative text-slate-500 dark:text-muted-foreground hover:text-slate-900 dark:hover:text-foreground hover:bg-secondary rounded-xl h-9 w-9"
           title={t('nav.notifications')}
         >
           <Bell className="w-4 h-4" />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-[#E11D48] rounded-full ring-2 ring-white dark:ring-card" />
+          <span className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full ring-2 ring-white dark:ring-card" />
         </Button>
       </div>
     </header>

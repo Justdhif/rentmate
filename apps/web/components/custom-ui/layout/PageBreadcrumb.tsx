@@ -103,7 +103,7 @@ export const PageBreadcrumb: React.FC<PageBreadcrumbProps> = ({
                   <BreadcrumbLink asChild>
                     <Link
                       href={item.href || '#'}
-                      className="text-slate-500 hover:text-rose- dark:text-muted-foreground dark:hover:text-rose- transition-colors flex items-center gap-1.5"
+                      className="text-slate-500 hover:text-primary dark:text-muted-foreground dark:hover:text-primary transition-colors flex items-center gap-1.5"
                     >
                       {isFirst && <Home className="w-3.5 h-3.5" />}
                       <span>{item.label}</span>

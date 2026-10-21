@@ -25,42 +25,42 @@ import {
 
 export function HomeNavbar() {
   const { user, logout } = useAuth();
-  const { locale, setLocale } = useTranslation();
+  const { locale, setLocale, t } = useTranslation();
 
   const renderRoleDashboardButton = () => {
     if (!user) return null;
 
     const targetPath = getRoleRedirectPath(user.role);
-    let label = "Dashboard";
+    let label = t('nav.roleUserDashboard');
     let Icon: any = Building2;
 
     switch (user.role) {
       case "OWNER":
-        label = "Dashboard Pemilik";
+        label = t('nav.roleOwnerDashboard');
         Icon = Building2;
         break;
       case "TENANT":
-        label = "Kamar Saya";
+        label = t('nav.roleTenantDashboard');
         Icon = Home;
         break;
       case "TECHNICIAN":
-        label = "Pekerjaan Saya";
+        label = t('nav.roleTechDashboard');
         Icon = Wrench;
         break;
       case "ADMIN":
-        label = "Panel Admin";
+        label = t('nav.roleAdminDashboard');
         Icon = Shield;
         break;
       case "USER":
       default:
-        label = "Dashboard Saya";
+        label = t('nav.roleUserDashboard');
         Icon = User;
         break;
     }
 
     return (
       <Link href={targetPath}>
-        <Button className="h-10 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-md shadow-rose-600/20 gap-2 cursor-pointer transition">
+        <Button className="h-10 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold text-xs shadow-md shadow-primary/20 gap-2 cursor-pointer transition">
           <Icon className="w-4 h-4" />
           <span>{label}</span>
         </Button>
@@ -76,15 +76,15 @@ export function HomeNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-700 via-rose-600 to-rose-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-rose-600/25 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-red to-crimson flex items-center justify-center text-primary-foreground font-black text-xl shadow-md shadow-primary/25 group-hover:scale-105 transition-transform">
             R
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-slate-900 dark:text-foreground text-lg tracking-tight leading-tight">
               RentMate
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
-              Sewa & Manajemen Kos
+            <span className="text-[10px] font-bold uppercase tracking-wider text-primary">
+              {t('home.brandTagline')}
             </span>
           </div>
         </Link>
@@ -93,22 +93,22 @@ export function HomeNavbar() {
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-muted-foreground">
           <a
             href="#properties"
-            className="hover:text-rose-600 dark:hover:text-foreground transition-colors"
+            className="hover:text-primary dark:hover:text-foreground transition-colors"
           >
-            Jelajah Kos
+            {t('home.navProperties')}
           </a>
           <a
             href="#features"
-            className="hover:text-rose-600 dark:hover:text-foreground transition-colors"
+            className="hover:text-primary dark:hover:text-foreground transition-colors"
           >
-            Keunggulan
+            {t('home.navFeatures')}
           </a>
           <Link
             href="/register?role=OWNER"
-            className="text-rose-600 dark:text-rose-400 font-semibold hover:underline flex items-center gap-1"
+            className="text-primary font-semibold hover:underline flex items-center gap-1"
           >
             <Building2 className="w-3.5 h-3.5" />
-            <span>Daftarkan Kos Anda</span>
+            <span>{t('home.navRegisterOwner')}</span>
           </Link>
         </nav>
 
@@ -118,7 +118,7 @@ export function HomeNavbar() {
           <button
             onClick={() => setLocale(locale === "id" ? "en" : "id")}
             className="text-xs font-bold uppercase px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-border text-slate-600 dark:text-muted-foreground hover:bg-slate-100 dark:hover:bg-accent transition cursor-pointer"
-            title="Ganti Bahasa"
+            title={t('home.changeLanguage')}
           >
             {locale.toUpperCase()}
           </button>
@@ -135,14 +135,14 @@ export function HomeNavbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-2 outline-none cursor-pointer">
-                    <Avatar className="w-9 h-9 border border-rose-200 dark:border-border">
+                    <Avatar className="w-9 h-9 border border-border">
                       {user.profile?.avatarUrl && (
                         <AvatarImage
                           src={user.profile.avatarUrl}
                           alt={user.profile.fullName || user.email}
                         />
                       )}
-                      <AvatarFallback className="bg-rose-600 text-white font-bold text-xs">
+                      <AvatarFallback className="bg-primary text-primary-foreground font-bold text-xs">
                         {userInitials}
                       </AvatarFallback>
                     </Avatar>
@@ -150,16 +150,16 @@ export function HomeNavbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-56 p-2 rounded-2xl shadow-xl border-slate-100 dark:border-border"
+                  className="w-56 p-2 rounded-2xl shadow-xl border-slate-100 dark:border-border bg-card"
                 >
                   <div className="px-3 py-2">
                     <p className="text-xs font-bold text-slate-900 dark:text-foreground truncate">
-                      {user.profile?.fullName || "Pengguna"}
+                      {user.profile?.fullName || t('home.userFallback')}
                     </p>
                     <p className="text-[11px] text-slate-400 truncate">
                       {user.email}
                     </p>
-                    <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300">
+                    <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-secondary text-secondary-foreground border border-border">
                       {user.role}
                     </span>
                   </div>
@@ -169,7 +169,7 @@ export function HomeNavbar() {
                       href={getRoleRedirectPath(user.role)}
                       className="cursor-pointer text-xs"
                     >
-                      Ke Portal Role ({user.role})
+                      {t('home.toRolePortal')} ({user.role})
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
@@ -177,21 +177,21 @@ export function HomeNavbar() {
                       href="/favorites"
                       className="cursor-pointer text-xs"
                     >
-                      Kos Favorit Saya
+                      {t('home.myFavoriteKosts')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <Link href="/settings" className="cursor-pointer text-xs">
-                      Pengaturan Akun
+                      {t('home.accountSettings')}
                     </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => logout()}
-                    className="text-rose-600 dark:text-rose-400 cursor-pointer text-xs flex items-center gap-2"
+                    className="text-destructive cursor-pointer text-xs flex items-center gap-2 hover:bg-destructive/10"
                   >
                     <LogOut className="w-3.5 h-3.5" />
-                    <span>Keluar (Logout)</span>
+                    <span>{t('home.logout')}</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -204,15 +204,15 @@ export function HomeNavbar() {
                   size="sm"
                   className="rounded-xl text-xs font-semibold h-9 px-3.5 cursor-pointer"
                 >
-                  Masuk
+                  {t('home.login')}
                 </Button>
               </Link>
               <Link href="/register">
                 <Button
                   size="sm"
-                  className="rounded-xl text-xs font-semibold h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-600/25 cursor-pointer"
+                  className="rounded-xl text-xs font-semibold h-9 px-4 bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm shadow-primary/25 cursor-pointer"
                 >
-                  Daftar
+                  {t('home.register')}
                 </Button>
               </Link>
             </div>

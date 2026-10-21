@@ -103,7 +103,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
         <div className="rounded-xl border border-slate-700/80 bg-slate-900 text-white px-3.5 py-2.5 shadow-xl pointer-events-none">
           <p className="text-xs font-semibold text-slate-400">{label}</p>
           <p className="text-sm font-bold text-white mt-1 flex items-center gap-1.5">
-            <span className="text-rose- font-medium">{t('dashboard.revenueTooltip')}</span>
+            <span className="text-primary font-medium">{t('dashboard.revenueTooltip')}</span>
             <span>{formatCurrency(Number(val))}</span>
           </p>
         </div>
@@ -121,7 +121,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card h-full flex flex-col justify-between">
       <CardHeader className="p-5 pb-2 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-          <BarChart3 className="w-4 h-4 text-[#E11D48]" />
+          <BarChart3 className="w-4 h-4 text-primary" />
           <span>{t('dashboard.revenueChartTitle')}</span>
         </CardTitle>
 
@@ -144,7 +144,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
               onClick={() => setSelectedKostId('ALL')}
               className={`text-xs font-medium cursor-pointer rounded-lg px-2.5 py-2 flex items-center justify-between ${
                 selectedKostId === 'ALL'
-                  ? 'bg-rose- text-rose- dark:bg-rose-/50 dark:text-rose- font-semibold'
+                  ? 'bg-secondary text-secondary-foreground font-semibold'
                   : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-muted'
               }`}
             >
@@ -160,7 +160,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
                   onClick={() => setSelectedKostId(prop.id)}
                   className={`text-xs font-medium cursor-pointer rounded-lg px-2.5 py-2 flex items-center justify-between ${
                     isSelected
-                      ? 'bg-rose- text-rose- dark:bg-rose-/50 dark:text-rose- font-semibold'
+                      ? 'bg-secondary text-secondary-foreground font-semibold'
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-muted'
                   }`}
                 >
@@ -190,24 +190,24 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
             >
               <XAxis
                 dataKey="month"
-                tick={{ fontSize: 11, fill: '#64748B' }}
+                tick={{ fontSize: 11, fill: 'var(--muted-foreground)' }}
                 axisLine={false}
                 tickLine={false}
               />
               <YAxis
-                tick={{ fontSize: 10, fill: '#64748B' }}
+                tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
                 axisLine={false}
                 tickLine={false}
                 domain={[0, (dataMax: number) => Math.max(dataMax * 1.15, 12000000)]}
                 tickFormatter={(val) => `${Math.round(val / 1000000)} ${t('dashboard.currencyMillionSuffix')}`}
               />
               <Tooltip
-                cursor={{ fill: 'rgba(225, 29, 72, 0.08)' }}
+                cursor={{ fill: 'var(--accent)' }}
                 content={<CustomTooltip />}
               />
               <Bar
                 dataKey="amount"
-                fill="#E11D48"
+                fill="var(--primary)"
                 radius={[6, 6, 0, 0]}
                 maxBarSize={44}
               />

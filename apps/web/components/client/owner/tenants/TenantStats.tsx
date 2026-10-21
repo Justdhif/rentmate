@@ -28,9 +28,9 @@ export const TenantStats: React.FC<TenantStatsProps> = ({
   return (
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
       {/* 1. Penghuni Aktif (Blue Theme - matching Dashboard) */}
-      <div className="rounded-2xl p-5 border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+      <div className="rounded-2xl p-5 border border-border bg-secondary/50 dark:bg-secondary/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0 shadow-2xs">
             <Users className="w-5 h-5" />
           </div>
           <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
@@ -73,9 +73,9 @@ export const TenantStats: React.FC<TenantStatsProps> = ({
       </div>
 
       {/* 3. Total Sewa / Bulan (Purple Theme - matching Dashboard) */}
-      <div className="rounded-2xl p-5 border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+      <div className="rounded-2xl p-5 border border-border bg-secondary/50 dark:bg-secondary/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-primary/10 dark:bg-primary/20 text-primary flex items-center justify-center shrink-0 shadow-2xs">
             <Banknote className="w-5 h-5" />
           </div>
           <span className="text-xs font-medium text-slate-600 dark:text-slate-400">

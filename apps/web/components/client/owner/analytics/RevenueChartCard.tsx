@@ -66,7 +66,7 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
                     fontSize: '12px',
                   }}
                 />
-                <Bar dataKey="revenue" fill="#6366f1" radius={[8, 8, 0, 0]} barSize={32} />
+                <Bar dataKey="revenue" fill="var(--primary)" radius={[8, 8, 0, 0]} barSize={32} />
               </BarChart>
             </ResponsiveContainer>
           </div>

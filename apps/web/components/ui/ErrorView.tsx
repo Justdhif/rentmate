@@ -42,11 +42,11 @@ const ERROR_CONFIG: Record<
 > = {
   '404': {
     icon: FileQuestion,
-    color: 'text-rose-600 dark:text-rose-400',
-    bgGlow: 'bg-rose-500/10 dark:bg-rose-500/20',
-    badgeBg: 'bg-rose-50 dark:bg-rose-950/60',
-    badgeText: 'text-rose-700 dark:text-rose-300',
-    badgeBorder: 'border-rose-200 dark:border-rose-800/60',
+    color: 'text-primary600 dark:text-primary400',
+    bgGlow: 'bg-primary500/10 dark:bg-primary500/20',
+    badgeBg: 'bg-primary50 dark:bg-primary950/60',
+    badgeText: 'text-primary700 dark:text-primary300',
+    badgeBorder: 'border-border200 dark:border-border800/60',
   },
   '403': {
     icon: ShieldAlert,
@@ -58,27 +58,27 @@ const ERROR_CONFIG: Record<
   },
   '500': {
     icon: ServerCrash,
-    color: 'text-rose-600 dark:text-rose-400',
-    bgGlow: 'bg-rose-500/10 dark:bg-rose-500/20',
-    badgeBg: 'bg-rose-50 dark:bg-rose-950/60',
-    badgeText: 'text-rose-700 dark:text-rose-300',
-    badgeBorder: 'border-rose-200 dark:border-rose-800/60',
+    color: 'text-primary600 dark:text-primary400',
+    bgGlow: 'bg-primary500/10 dark:bg-primary500/20',
+    badgeBg: 'bg-primary50 dark:bg-primary950/60',
+    badgeText: 'text-primary700 dark:text-primary300',
+    badgeBorder: 'border-border200 dark:border-border800/60',
   },
   '502': {
     icon: WifiOff,
-    color: 'text-rose- dark:text-rose-',
-    bgGlow: 'bg-rose-/10 dark:bg-rose-/20',
-    badgeBg: 'bg-rose- dark:bg-rose-/60',
-    badgeText: 'text-rose- dark:text-rose-',
-    badgeBorder: 'border-rose- dark:border-rose-/60',
+    color: 'text-primary',
+    bgGlow: 'bg-primary/10 dark:bg-primary/20',
+    badgeBg: 'bg-primary dark:bg-secondary/60',
+    badgeText: 'text-primary',
+    badgeBorder: 'border-border dark:border-border',
   },
   '503': {
     icon: ClockAlert,
-    color: 'text-rose- dark:text-rose-',
-    bgGlow: 'bg-rose-/10 dark:bg-rose-/20',
-    badgeBg: 'bg-rose- dark:bg-rose-/60',
-    badgeText: 'text-rose- dark:text-rose-',
-    badgeBorder: 'border-rose- dark:border-rose-/60',
+    color: 'text-primary',
+    bgGlow: 'bg-primary/10 dark:bg-primary/20',
+    badgeBg: 'bg-primary dark:bg-secondary/60',
+    badgeText: 'text-primary',
+    badgeBorder: 'border-border dark:border-border',
   },
 };
 
@@ -119,7 +119,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
           href="/"
           className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-md border border-slate-200/60 dark:border-border/60 shadow-xs hover:border-slate-300 transition-colors"
         >
-          <div className="w-6 h-6 rounded-lg bg-rose-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+          <div className="w-6 h-6 rounded-lg bg-primary600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
             R
           </div>
           <span className="font-bold text-slate-800 dark:text-foreground text-sm tracking-tight">
@@ -158,7 +158,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             <Button
               onClick={reset}
               variant="default"
-              className="w-full sm:w-auto h-11 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-sm gap-2"
+              className="w-full sm:w-auto h-11 px-6 bg-primary600 hover:bg-primary/90700 text-white rounded-xl shadow-sm gap-2"
             >
               <RefreshCw className="w-4 h-4" />
               <span>{t('errors.tryAgain') || 'Coba Lagi'}</span>
@@ -167,7 +167,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             <Button
               asChild
               variant="default"
-              className="w-full sm:w-auto h-11 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-sm gap-2"
+              className="w-full sm:w-auto h-11 px-6 bg-primary600 hover:bg-primary/90700 text-white rounded-xl shadow-sm gap-2"
             >
               <Link href={dashboardPath}>
                 {user ? (
@@ -204,7 +204,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             Butuh bantuan teknis? Hubungi tim dukungan RentMate di{' '}
             <a
               href="mailto:support@rentmate.com"
-              className="text-rose-600 dark:text-rose-400 hover:underline font-medium"
+              className="text-primary600 dark:text-primary400 hover:underline font-medium"
             >
               support@rentmate.com
             </a>

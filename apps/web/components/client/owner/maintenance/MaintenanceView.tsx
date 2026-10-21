@@ -299,7 +299,7 @@ export const MaintenanceView: React.FC<MaintenanceViewProps> = ({ initialTaskId 
                 variant="ghost"
                 size="sm"
                 onClick={resetFilters}
-                className="h-10 px-3 rounded-xl text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/30 gap-1.5"
+                className="h-10 px-3 rounded-xl text-xs text-primary600 hover:text-primary700 hover:bg-primary/9050 dark:hover:bg-primary/90950/30 gap-1.5"
               >
                 <FilterX className="w-3.5 h-3.5" />
                 <span>Reset</span>
@@ -322,7 +322,7 @@ export const MaintenanceView: React.FC<MaintenanceViewProps> = ({ initialTaskId 
         {/* 3. Ticket Grid / Content */}
         {isLoading ? (
           <div className="py-24 flex flex-col items-center justify-center gap-3">
-            <div className="w-9 h-9 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
+            <div className="w-9 h-9 border-3 border-primary border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-muted-foreground animate-pulse">Memuat data tiket perbaikan...</p>
           </div>
         ) : tickets.length === 0 ? (

@@ -66,7 +66,7 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
     const p = priority.toUpperCase();
     if (p === 'HIGH') {
       return (
-        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200/60 dark:border-rose-800/40">
+        <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary50 text-primary600 dark:bg-primary950/40 dark:text-primary400 border border-border200/60 dark:border-border800/40">
           HIGH
         </span>
       );
@@ -79,7 +79,7 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border border-rose-/60 dark:border-rose-/40">
+      <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-secondary text-secondary-foreground border border-border">
         INFO
       </span>
     );
@@ -106,7 +106,7 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
             size="icon"
             onClick={onRefresh}
             disabled={loadingInsights}
-            className="h-8 w-8 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 cursor-pointer"
+            className="h-8 w-8 rounded-xl text-slate-400 hover:text-primary600 hover:bg-primary/9050 dark:hover:bg-slate-800 cursor-pointer"
             title="Muat ulang insight"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loadingInsights ? 'animate-spin' : ''}`} />
@@ -116,7 +116,7 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
         <CardContent className="p-4 sm:p-5 space-y-3">
           {loadingInsights ? (
             <div className="py-8 text-center text-xs text-slate-400">
-              <div className="w-5 h-5 border-2 border-rose-600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+              <div className="w-5 h-5 border-2 border-border600 border-t-transparent rounded-full animate-spin mx-auto mb-2" />
               <span>Menghitung metrik properti...</span>
             </div>
           ) : (
@@ -128,20 +128,20 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
                     `Tolong jelaskan lebih lanjut mengenai rekomendasi: "${item.title}". ${item.description} Apa langkah solutif yang perlu saya ambil?`
                   )
                 }
-                className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-muted/20 border border-slate-200/70 dark:border-border/50 hover:border-rose-300 dark:hover:border-rose-700/60 hover:bg-rose-50/30 dark:hover:bg-rose-950/20 transition-all cursor-pointer group shadow-2xs"
+                className="p-3.5 rounded-xl bg-slate-50/70 dark:bg-muted/20 border border-slate-200/70 dark:border-border/50 hover:border-border300 dark:hover:border-border700/60 hover:bg-primary/9050/30 dark:hover:bg-primary/90950/20 transition-all cursor-pointer group shadow-2xs"
                 title="Klik untuk menanyakan rekomendasi ini ke AI"
               >
                 <div className="flex items-center justify-between gap-2 mb-1.5">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-primary600 dark:text-primary400">
                     {item.category}
                   </span>
                   {getPriorityBadge(item.priority)}
                 </div>
                 <div className="flex items-start justify-between gap-2">
-                  <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors leading-snug">
+                  <h4 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white group-hover:text-primary600 dark:group-hover:text-primary400 transition-colors leading-snug">
                     {item.title}
                   </h4>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-600 transition-colors shrink-0 mt-0.5" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary600 transition-colors shrink-0 mt-0.5" />
                 </div>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed line-clamp-2">
                   {item.description}
@@ -155,7 +155,7 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
       {/* 2. Bottom Card: Prompt Cepat */}
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card p-4 sm:p-5">
         <div className="flex items-center gap-2 mb-3">
-          <div className="w-7 h-7 rounded-lg bg-rose-50 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
+          <div className="w-7 h-7 rounded-lg bg-primary50 dark:bg-primary950/50 text-primary600 dark:text-primary400 flex items-center justify-center shrink-0">
             <Zap className="w-3.5 h-3.5" />
           </div>
           <div>
@@ -172,9 +172,9 @@ export const AiInsightsSidebar: React.FC<AiInsightsSidebarProps> = ({
               key={i}
               type="button"
               onClick={() => onSelectPrompt(prompt)}
-              className="w-full text-left p-3 rounded-xl border border-slate-100 dark:border-border/60 bg-slate-50/60 dark:bg-muted/20 hover:bg-rose-50 dark:hover:bg-rose-950/30 hover:border-rose-200 dark:hover:border-rose-800 text-xs text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 transition-all cursor-pointer flex items-start gap-2 group shadow-2xs"
+              className="w-full text-left p-3 rounded-xl border border-slate-100 dark:border-border/60 bg-slate-50/60 dark:bg-muted/20 hover:bg-primary/9050 dark:hover:bg-primary/90950/30 hover:border-border200 dark:hover:border-border800 text-xs text-slate-600 dark:text-slate-300 hover:text-primary600 dark:hover:text-primary400 transition-all cursor-pointer flex items-start gap-2 group shadow-2xs"
             >
-              <MessageSquarePlus className="w-3.5 h-3.5 text-slate-400 group-hover:text-rose-600 dark:group-hover:text-rose-400 shrink-0 mt-0.5" />
+              <MessageSquarePlus className="w-3.5 h-3.5 text-slate-400 group-hover:text-primary600 dark:group-hover:text-primary400 shrink-0 mt-0.5" />
               <span className="leading-relaxed">{prompt}</span>
             </button>
           ))}

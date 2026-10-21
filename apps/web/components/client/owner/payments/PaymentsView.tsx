@@ -372,7 +372,7 @@ export const PaymentsView: React.FC = () => {
                 }
                 setIsModalOpen(true);
               }}
-              className="h-9 px-4 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer flex items-center gap-2"
+              className="h-9 px-4 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer flex items-center gap-2"
             >
               <Plus className="w-4 h-4" />
               <span>{t('payments.addButton', { defaultValue: 'Buat Tagihan Baru' })}</span>
@@ -419,28 +419,28 @@ export const PaymentsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.filterStatusAll', { defaultValue: 'Semua Status' })}</span>
-                  {filterStatus === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterStatus === 'ALL' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('PAID')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.statusPaid', { defaultValue: 'Lunas' })}</span>
-                  {filterStatus === 'PAID' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterStatus === 'PAID' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('PENDING')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.statusPending', { defaultValue: 'Menunggu' })}</span>
-                  {filterStatus === 'PENDING' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterStatus === 'PENDING' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('FAILED')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.statusFailed', { defaultValue: 'Gagal / Kedaluwarsa' })}</span>
-                  {filterStatus === 'FAILED' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterStatus === 'FAILED' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -466,7 +466,7 @@ export const PaymentsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.filterKostAll', { defaultValue: 'Semua Kost' })}</span>
-                  {filterProperty === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterProperty === 'ALL' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
                 {availableProperties.map((prop) => (
                   <DropdownMenuItem
@@ -475,7 +475,7 @@ export const PaymentsView: React.FC = () => {
                     className="cursor-pointer flex items-center justify-between"
                   >
                     <span className="truncate">{prop}</span>
-                    {filterProperty === prop && <Check className="w-3.5 h-3.5 text-rose-" />}
+                    {filterProperty === prop && <Check className="w-3.5 h-3.5 text-primary" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -502,7 +502,7 @@ export const PaymentsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('payments.filterMethodAll', { defaultValue: 'Semua Metode' })}</span>
-                  {filterMethod === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
+                  {filterMethod === 'ALL' && <Check className="w-3.5 h-3.5 text-primary" />}
                 </DropdownMenuItem>
                 {availableMethods.map((m) => (
                   <DropdownMenuItem
@@ -511,7 +511,7 @@ export const PaymentsView: React.FC = () => {
                     className="cursor-pointer flex items-center justify-between"
                   >
                     <span>{m}</span>
-                    {filterMethod === m && <Check className="w-3.5 h-3.5 text-rose-" />}
+                    {filterMethod === m && <Check className="w-3.5 h-3.5 text-primary" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -540,7 +540,7 @@ export const PaymentsView: React.FC = () => {
           <div className="lg:col-span-8 xl:col-span-9">
             {isLoading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin mb-3" />
+                <div className="w-8 h-8 border-3 border-primary border-t-transparent rounded-full animate-spin mb-3" />
                 <p className="text-xs text-slate-500 font-medium">
                   Memuat data pembayaran...
                 </p>
@@ -548,7 +548,7 @@ export const PaymentsView: React.FC = () => {
             ) : normalizedPayments.length === 0 ? (
               /* Fallback Empty State (Ketika data pembayaran masih kosong) */
               <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-14 text-center shadow-2xs">
-                <div className="w-16 h-16 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 rounded-full bg-secondary text-secondary-foreground flex items-center justify-center mx-auto mb-4">
                   <Receipt className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-slate-900 dark:text-foreground text-lg">
@@ -573,7 +573,7 @@ export const PaymentsView: React.FC = () => {
                     }
                     setIsModalOpen(true);
                   }}
-                  className="mt-6 h-10 px-5 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-sm cursor-pointer inline-flex items-center gap-2"
+                  className="mt-6 h-10 px-5 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-sm cursor-pointer inline-flex items-center gap-2"
                 >
                   <Plus className="w-4 h-4" />
                   <span>{t('payments.addButton', { defaultValue: 'Buat Tagihan Baru' })}</span>

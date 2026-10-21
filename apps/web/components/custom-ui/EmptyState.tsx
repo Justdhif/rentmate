@@ -39,12 +39,12 @@ export interface EmptyStateProps {
 
 const colorStyles: Record<EmptyStateColor, { bg: string; icon: string }> = {
   rose: {
-    bg: 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50',
-    icon: 'text-rose-600 dark:text-rose-400',
+    bg: 'bg-primary50 dark:bg-primary950/40 border-border200 dark:border-border900/50',
+    icon: 'text-primary600 dark:text-primary400',
   },
   crimson: {
-    bg: 'bg-rose-100 dark:bg-rose-950/60 border-rose-200 dark:border-rose-900/60',
-    icon: 'text-rose-700 dark:text-rose-300',
+    bg: 'bg-primary100 dark:bg-primary950/60 border-border200 dark:border-border900/60',
+    icon: 'text-primary700 dark:text-primary300',
   },
   amber: {
     bg: 'bg-amber-50 dark:bg-amber-950/40 border-amber-100 dark:border-amber-900/50',
@@ -118,7 +118,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     const buttonVariant = actionObj.variant || (isPrimary ? 'default' : 'outline');
 
     const defaultBtnClass = isPrimary
-      ? 'rounded-xl text-xs font-semibold px-4 h-9.5 bg-rose- hover:bg-rose- text-white shadow-xs gap-1.5 cursor-pointer'
+      ? 'rounded-xl text-xs font-semibold px-4 h-9.5 bg-primary hover:bg-primary/90 text-primary-foreground shadow-xs gap-1.5 cursor-pointer'
       : 'rounded-xl text-xs font-semibold px-4 h-9.5 border-slate-200 dark:border-border text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 gap-1.5 cursor-pointer';
 
     const appliedClass = actionObj.className || defaultBtnClass;

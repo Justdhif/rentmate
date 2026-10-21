@@ -110,7 +110,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
     statusBadgeLabel = t('rooms.statusOccupied');
   } else if (room.status === 'MAINTENANCE') {
     statusBadgeClasses =
-      'bg-rose-50 text-rose-700 dark:bg-rose-950/80 dark:text-rose-300 border border-rose-200/80 dark:border-rose-800/60';
+      'bg-primary50 text-primary700 dark:bg-primary950/80 dark:text-primary300 border border-border200/80 dark:border-border800/60';
     statusBadgeLabel = t('rooms.statusMaintenance');
   }
 
@@ -120,7 +120,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
   return (
     <>
       <div
-        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs hover:shadow-lg hover:border-rose- dark:hover:border-rose-/50 transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs hover:shadow-lg hover:border-primary transition-all duration-300 flex flex-col justify-between overflow-hidden group"
       >
         {/* Top Photo Stage (16:10 aspect ratio matching PropertyCard) */}
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-900 select-none">
@@ -136,7 +136,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/25 pointer-events-none" />
             </>
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-rose-/40 dark:from-slate-900 dark:to-rose-/20 text-slate-400">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-primary/40 dark:from-slate-900 dark:to-primary/20 text-slate-400">
               <BedDouble className="w-10 h-10 stroke-[1.5] text-slate-300 dark:text-slate-600 mb-1" />
               <span className="text-[11px] font-medium text-slate-400">
                 {t('rooms.noPhoto')}
@@ -161,14 +161,14 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                 e.stopPropagation();
                 toggleRoomFavorite(room.id, room.roomNumber);
               }}
-              className="w-8 h-8 rounded-full bg-white/85 dark:bg-slate-900/85 hover:bg-white dark:hover:bg-slate-900 flex items-center justify-center text-slate-500 hover:text-rose-500 backdrop-blur-md shadow-xs transition-all cursor-pointer"
+              className="w-8 h-8 rounded-full bg-white/85 dark:bg-slate-900/85 hover:bg-white dark:hover:bg-slate-900 flex items-center justify-center text-slate-500 hover:text-primary500 backdrop-blur-md shadow-xs transition-all cursor-pointer"
               title={isFavorite ? t('properties.removeFromFavorite') : t('properties.addToFavorite')}
             >
               <Heart
                 className={`w-4 h-4 transition-colors ${
                   isFavorite
-                    ? 'fill-rose-500 text-rose-500'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-rose-500'
+                    ? 'fill-rose-500 text-primary500'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-primary500'
                 }`}
               />
             </button>
@@ -188,7 +188,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                   onClick={() => setIsDetailOpen(true)}
                   className="gap-2 cursor-pointer"
                 >
-                  <DoorClosed className="w-4 h-4 text-rose-" />
+                  <DoorClosed className="w-4 h-4 text-primary" />
                   <span>{t('rooms.viewDetail')}</span>
                 </DropdownMenuItem>
                 {room.propertyId && (
@@ -204,7 +204,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                 )}
                 <DropdownMenuItem
                   onClick={() => onDelete(room.id, room.roomNumber)}
-                  className="text-rose-600 focus:text-rose-600 focus:bg-rose-50 dark:focus:bg-rose-950/40 flex items-center gap-2 cursor-pointer"
+                  className="text-primary600 focus:text-primary600 focus:bg-primary50 dark:focus:bg-primary950/40 flex items-center gap-2 cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4" />
                   <span>{t('rooms.deleteButton')}</span>
@@ -233,7 +233,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             <div className="flex items-baseline justify-between gap-2">
               <h3
                 onClick={() => setIsDetailOpen(true)}
-                className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-rose- dark:group-hover:text-rose- transition-colors cursor-pointer"
+                className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-primary transition-colors cursor-pointer"
               >
                 {t('rooms.roomNumber', { number: room.roomNumber })}
               </h3>
@@ -307,7 +307,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               <Button
                 asChild
                 size="sm"
-                className="flex-1 h-8 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer gap-1.5"
+                className="flex-1 h-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer gap-1.5"
               >
                 <Link href={`/properties/${room.propertyId}`}>
                   <span>{t('rooms.propertyFallback')}</span>
@@ -319,7 +319,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                 type="button"
                 size="sm"
                 onClick={() => setIsDetailOpen(true)}
-                className="flex-1 h-8 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer"
+                className="flex-1 h-8 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold shadow-xs cursor-pointer"
               >
                 {t('rooms.quickManage')}
               </Button>
@@ -384,7 +384,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               </div>
               <div>
                 <span className="text-slate-400 block mb-0.5">{t('rooms.modalPriceLabel')}</span>
-                <span className="font-bold text-rose- dark:text-rose-">
+                <span className="font-bold text-primary">
                   {formatCurrency(Number(room.monthlyPrice))} /bln
                 </span>
               </div>
@@ -420,7 +420,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               {room.propertyId && (
                 <Button
                   asChild
-                  className="flex-1 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold cursor-pointer"
+                  className="flex-1 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground text-xs font-semibold cursor-pointer"
                 >
                   <Link href={`/properties/${room.propertyId}`}>
                     <Building2 className="w-3.5 h-3.5 mr-1.5" />
@@ -434,7 +434,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                   setIsDetailOpen(false);
                   onDelete(room.id, room.roomNumber);
                 }}
-                className="rounded-xl border-rose-200 text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-xs font-semibold cursor-pointer"
+                className="rounded-xl border-border200 text-primary600 hover:bg-primary/9050 dark:hover:bg-primary/90950/30 text-xs font-semibold cursor-pointer"
               >
                 <Trash2 className="w-3.5 h-3.5 mr-1.5" />
                 <span>{t('rooms.deleteButton')}</span>
