@@ -52,7 +52,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
       return {
         label: 'AC Repair',
         icon: Snowflake,
-        badgeClass: 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border-blue-100 dark:border-blue-900/40',
+        badgeClass: 'bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border-rose- dark:border-rose-/40',
       };
     }
     if (cat.includes('PLUMB') || cat.includes('PIPA') || cat.includes('AIR') || cat.includes('KRAN') || cat.includes('SANITASI')) {
@@ -72,7 +72,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
     return {
       label: category || 'General',
       icon: Wrench,
-      badgeClass: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 border-indigo-100 dark:border-indigo-900/40',
+      badgeClass: 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border-rose-100 dark:border-rose-900/40',
     };
   };
 
@@ -164,7 +164,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
           {/* Full Description */}
           <div>
             <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              <FileText className="w-3.5 h-3.5 text-blue-500" />
+              <FileText className="w-3.5 h-3.5 text-rose-" />
               <span>Deskripsi Lengkap Laporan</span>
             </div>
             <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-muted/30 p-3.5 rounded-xl border border-slate-100 dark:border-border/40">
@@ -180,7 +180,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
                 Pelapor (Tenant)
               </span>
               <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">
+                <div className="w-8 h-8 rounded-full bg-rose- dark:bg-rose- text-rose- dark:text-rose- flex items-center justify-center font-bold text-xs shrink-0">
                   {reporterName.slice(0, 2).toUpperCase()}
                 </div>
                 <div>
@@ -219,7 +219,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
           {ticket.attachments && ticket.attachments.length > 0 && (
             <div>
               <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-700 dark:text-slate-300 mb-2">
-                <ImageIcon className="w-3.5 h-3.5 text-blue-500" />
+                <ImageIcon className="w-3.5 h-3.5 text-rose-" />
                 <span>Foto Kerusakan ({ticket.attachments.length})</span>
               </div>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
@@ -267,7 +267,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
                 onOpenChange(false);
                 onOpenAssign(ticket);
               }}
-              className="rounded-xl h-10 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-xs"
+              className="rounded-xl h-10 text-xs font-semibold bg-rose- hover:bg-rose- text-white gap-1.5 shadow-xs"
             >
               <UserPlus className="w-4 h-4" />
               Tugaskan Teknisi
@@ -281,7 +281,7 @@ export const MaintenanceDetailModal: React.FC<MaintenanceDetailModalProps> = ({
                 onOpenChange(false);
                 onResolve(ticket.id);
               }}
-              className="rounded-xl h-10 text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white gap-1.5 shadow-xs"
+              className="rounded-xl h-10 text-xs font-semibold bg-rose- hover:bg-rose- text-white gap-1.5 shadow-xs"
             >
               <Check className="w-4 h-4" />
               Tandai Selesai

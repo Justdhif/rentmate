@@ -59,13 +59,13 @@ export function TechnicianQuickLinks() {
               Profil Teknisi
             </h3>
           </div>
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
             <Wrench className="w-5 h-5" />
           </div>
         </div>
         <Link
           href="/settings"
-          className="text-xs text-indigo-600 font-bold hover:underline mt-4 block"
+          className="text-xs text-rose-600 font-bold hover:underline mt-4 block"
         >
           Edit Nomor & Spesialisasi →
         </Link>

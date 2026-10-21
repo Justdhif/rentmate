@@ -26,12 +26,12 @@ export const RevenueChartCard: React.FC<RevenueChartCardProps> = ({
 
   return (
     <Card className="lg:col-span-2 rounded-2xl overflow-hidden border-gray-100 dark:border-border shadow-xs flex flex-col relative bg-card">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-violet-500" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-500 to-rose-700" />
       <CardHeader className="p-6 pb-2">
         <div className="flex items-center justify-between">
           <div>
             <CardTitle className="font-bold text-foreground text-base flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-indigo-500" />
+              <TrendingUp className="w-4 h-4 text-rose-500" />
               {t('analytics.revenueTitle')}
             </CardTitle>
             <p className="text-xs text-muted-foreground mt-0.5">

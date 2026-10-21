@@ -39,7 +39,7 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
       status: 'OVERDUE',
       dateLabel: formatDateLabel(false, new Date('2026-09-10')),
       initial: 'R',
-      avatarBg: 'bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400',
+      avatarBg: 'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
     },
     {
       id: '2',
@@ -69,7 +69,7 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
       status: 'PAID',
       dateLabel: formatDateLabel(true, new Date('2026-09-03')),
       initial: 'A',
-      avatarBg: 'bg-indigo-100 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400',
+      avatarBg: 'bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400',
     },
     {
       id: '5',
@@ -94,10 +94,10 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
             t('dashboard.tenantFallback', { number: idx + 1 });
           const initial = name.charAt(0).toUpperCase() || 'P';
           const colors = [
-            'bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400',
+            'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
             'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
             'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
-            'bg-indigo-100 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400',
+            'bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400',
             'bg-teal-100 text-teal-600 dark:bg-teal-950 dark:text-teal-400',
           ];
 
@@ -121,12 +121,12 @@ export const DashboardRecentBills: React.FC<DashboardRecentBillsProps> = ({
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card h-full flex flex-col justify-between">
       <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-          <Receipt className="w-4 h-4 text-blue-500" />
+          <Receipt className="w-4 h-4 text-rose-" />
           <span>{t('dashboard.recentBillsTitle')}</span>
         </CardTitle>
         <Link
           href="/payments"
-          className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-xs font-semibold text-rose- dark:text-rose- hover:underline"
         >
           {t('common.viewAll')}
         </Link>

@@ -613,7 +613,7 @@ export const CreatePropertyView: React.FC = () => {
               <Card className="rounded-2xl border border-gray-100 dark:border-border/60 shadow-xs bg-white dark:bg-card h-full">
                 <CardContent className="p-6 space-y-5">
                   <div className="flex items-center gap-2.5 pb-4 border-b border-gray-100 dark:border-border/60">
-                    <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center">
                       <Building2 className="w-5 h-5" />
                     </div>
                     <div>
@@ -637,7 +637,7 @@ export const CreatePropertyView: React.FC = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder={t('properties.namePlaceholder')}
-                        className="h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
+                        className="h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500"
                       />
                     </div>
 
@@ -647,7 +647,7 @@ export const CreatePropertyView: React.FC = () => {
                           {t('properties.typeLabel')}
                         </label>
                         <Select value={type} onValueChange={(val) => setType(val)}>
-                          <SelectTrigger className="w-full h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500">
+                          <SelectTrigger className="w-full h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus:ring-2 focus:ring-rose-500/20 focus:border-rose-500">
                             <SelectValue placeholder={t('properties.modalTypePlaceholder')} />
                           </SelectTrigger>
                           <SelectContent>
@@ -669,7 +669,7 @@ export const CreatePropertyView: React.FC = () => {
                             value={contactInfo}
                             onChange={(e) => setContactInfo(e.target.value)}
                             placeholder={t('properties.contactPlaceholder')}
-                            className="pl-10 h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
+                            className="pl-10 h-11 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500"
                           />
                         </div>
                       </div>
@@ -684,7 +684,7 @@ export const CreatePropertyView: React.FC = () => {
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder={t('properties.descPlaceholder')}
-                        className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed"
+                        className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 resize-none leading-relaxed"
                       />
                     </div>
 
@@ -697,7 +697,7 @@ export const CreatePropertyView: React.FC = () => {
                         value={rules}
                         onChange={(e) => setRules(e.target.value)}
                         placeholder={t('properties.rulesPlaceholder')}
-                        className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed"
+                        className="w-full p-3 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 resize-none leading-relaxed"
                       />
                     </div>
                   </div>
@@ -726,7 +726,7 @@ export const CreatePropertyView: React.FC = () => {
           <Card className="rounded-2xl border border-gray-100 dark:border-border/60 shadow-xs bg-white dark:bg-card">
             <CardContent className="p-6 space-y-4">
               <div className="flex items-center gap-2.5 pb-4 border-b border-gray-100 dark:border-border/60">
-                <div className="w-9 h-9 rounded-xl bg-violet-50 dark:bg-violet-500/10 text-violet-600 dark:text-violet-400 flex items-center justify-center">
+                <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose-/10 text-rose- dark:text-rose- flex items-center justify-center">
                   <Sparkles className="w-5 h-5" />
                 </div>
                 <div>
@@ -750,14 +750,14 @@ export const CreatePropertyView: React.FC = () => {
                       onClick={() => handleToggleFacility(facility.name)}
                       className={`flex items-center gap-3 p-3.5 rounded-xl border text-left transition-all duration-200 cursor-pointer ${
                         isSelected
-                          ? 'bg-indigo-50/80 dark:bg-indigo-950/40 border-indigo-300 dark:border-indigo-600 text-indigo-900 dark:text-indigo-200 shadow-xs ring-1 ring-indigo-500/30'
+                          ? 'bg-rose-50/80 dark:bg-rose-950/40 border-rose-300 dark:border-rose-600 text-rose-900 dark:text-rose-200 shadow-xs ring-1 ring-rose-500/30'
                           : 'bg-white dark:bg-card border-gray-200 dark:border-border text-gray-700 dark:text-muted-foreground hover:border-gray-300 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-accent/40'
                       }`}
                     >
                       <div
                         className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors ${
                           isSelected
-                            ? 'bg-indigo-600 text-white shadow-xs'
+                            ? 'bg-rose-600 text-white shadow-xs'
                             : 'bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-slate-400'
                         }`}
                       >
@@ -769,7 +769,7 @@ export const CreatePropertyView: React.FC = () => {
                         </span>
                       </div>
                       {isSelected && (
-                        <Check className="w-4 h-4 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                        <Check className="w-4 h-4 text-rose-600 dark:text-rose-400 shrink-0" />
                       )}
                     </button>
                   );
@@ -807,7 +807,7 @@ export const CreatePropertyView: React.FC = () => {
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
                         <span>{t('properties.provinceLabel')}</span>
                         {isLoadingProvinces && (
-                          <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
+                          <Loader2 className="w-3 h-3 animate-spin text-rose-600" />
                         )}
                       </label>
                       <Select
@@ -815,7 +815,7 @@ export const CreatePropertyView: React.FC = () => {
                         onValueChange={handleSelectProvince}
                         disabled={isLoadingProvinces}
                       >
-                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500">
+                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500">
                           <SelectValue placeholder={t('properties.provincePlaceholder')} />
                         </SelectTrigger>
                         <SelectContent className="max-h-64 bg-white dark:bg-card border-gray-200 dark:border-border">
@@ -832,7 +832,7 @@ export const CreatePropertyView: React.FC = () => {
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
                         <span>{t('properties.cityLabel')}</span>
                         {isLoadingRegencies && (
-                          <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
+                          <Loader2 className="w-3 h-3 animate-spin text-rose-600" />
                         )}
                       </label>
                       <Select
@@ -840,7 +840,7 @@ export const CreatePropertyView: React.FC = () => {
                         onValueChange={handleSelectRegency}
                         disabled={!selectedProvinceId || isLoadingRegencies}
                       >
-                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 disabled:opacity-50">
+                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 disabled:opacity-50">
                           <SelectValue
                             placeholder={
                               !selectedProvinceId
@@ -868,7 +868,7 @@ export const CreatePropertyView: React.FC = () => {
                       <label className="block text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider mb-1.5 flex items-center justify-between">
                         <span>{t('properties.districtLabel')}</span>
                         {isLoadingDistricts && (
-                          <Loader2 className="w-3 h-3 animate-spin text-indigo-600" />
+                          <Loader2 className="w-3 h-3 animate-spin text-rose-600" />
                         )}
                       </label>
                       <Select
@@ -876,7 +876,7 @@ export const CreatePropertyView: React.FC = () => {
                         onValueChange={handleSelectDistrict}
                         disabled={!selectedRegencyId || isLoadingDistricts}
                       >
-                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 disabled:opacity-50">
+                        <SelectTrigger className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 disabled:opacity-50">
                           <SelectValue
                             placeholder={
                               !selectedRegencyId
@@ -906,7 +906,7 @@ export const CreatePropertyView: React.FC = () => {
                         value={postalCode}
                         onChange={(e) => setPostalCode(e.target.value)}
                         placeholder={t('properties.postalPlaceholder')}
-                        className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
+                        className="h-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500"
                       />
                     </div>
                   </div>
@@ -939,13 +939,13 @@ export const CreatePropertyView: React.FC = () => {
                         size="sm"
                         onClick={handleUseCurrentLocation}
                         disabled={isLocating}
-                        className="group h-7 px-2.5 rounded-lg text-xs font-semibold gap-1.5 bg-indigo-50/80 hover:bg-indigo-100 text-indigo-700 border border-indigo-200/80 dark:bg-indigo-500/10 dark:hover:bg-indigo-500/20 dark:text-indigo-300 dark:border-indigo-500/25 cursor-pointer shadow-2xs transition-all duration-150 active:scale-95 disabled:opacity-60"
+                        className="group h-7 px-2.5 rounded-lg text-xs font-semibold gap-1.5 bg-rose-50/80 hover:bg-rose-100 text-rose-700 border border-rose-200/80 dark:bg-rose-500/10 dark:hover:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/25 cursor-pointer shadow-2xs transition-all duration-150 active:scale-95 disabled:opacity-60"
                         title={t('properties.myLocationTitle')}
                       >
                         {isLocating ? (
-                          <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-600 dark:text-indigo-400" />
+                          <Loader2 className="w-3.5 h-3.5 animate-spin text-rose-600 dark:text-rose-400" />
                         ) : (
-                          <LocateFixed className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-150" />
+                          <LocateFixed className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-150" />
                         )}
                         <span>{isLocating ? t('properties.myLocationSearching') : t('properties.myLocationButton')}</span>
                       </Button>
@@ -960,11 +960,11 @@ export const CreatePropertyView: React.FC = () => {
                           if (searchResults.length > 0) setShowDropdown(true);
                         }}
                         placeholder={t('properties.addressPlaceholder')}
-                        className="w-full flex-1 min-h-[140px] p-3 pr-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500 resize-none leading-relaxed shadow-xs"
+                        className="w-full flex-1 min-h-[140px] p-3 pr-10 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500 resize-none leading-relaxed shadow-xs"
                       />
                       {isSearching && (
                         <div className="absolute right-3 top-3">
-                          <Loader2 className="w-4 h-4 animate-spin text-indigo-600" />
+                          <Loader2 className="w-4 h-4 animate-spin text-rose-600" />
                         </div>
                       )}
                     </div>
@@ -973,7 +973,7 @@ export const CreatePropertyView: React.FC = () => {
                     {showDropdown && searchResults.length > 0 && (
                       <div className="absolute bottom-[100%] mb-2.5 left-0 right-0 bg-white dark:bg-card border border-gray-200 dark:border-border rounded-2xl shadow-2xl z-50 overflow-hidden max-h-64 overflow-y-auto divide-y divide-gray-100 dark:divide-border/60 animate-fade-in">
                         <div className="px-3.5 py-2 bg-gray-50/90 dark:bg-muted/60 text-xs text-gray-700 dark:text-gray-300 font-semibold flex items-center justify-between border-b border-gray-100 dark:border-border/60">
-                          <span className="flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400">
+                          <span className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400">
                             <Search className="w-3.5 h-3.5" />
                             <span>{t('properties.addressSuggestionHeader', { count: searchResults.length })}</span>
                           </span>
@@ -994,9 +994,9 @@ export const CreatePropertyView: React.FC = () => {
                               e.preventDefault();
                               handleSelectSuggestion(item);
                             }}
-                            className="w-full text-left p-3 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer group"
+                            className="w-full text-left p-3 hover:bg-rose-50/80 dark:hover:bg-rose-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer group"
                           >
-                            <div className="w-6 h-6 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+                            <div className="w-6 h-6 rounded-lg bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-rose-600 group-hover:text-white transition-colors">
                               <MapPin className="w-3.5 h-3.5" />
                             </div>
                             <div className="flex-1 min-w-0">
@@ -1014,11 +1014,11 @@ export const CreatePropertyView: React.FC = () => {
                   </div>
 
                   {/* 4. Sync Notice Banner */}
-                  <div className="p-3.5 bg-indigo-50/70 dark:bg-indigo-950/30 rounded-xl border border-indigo-100/80 dark:border-indigo-900/40 text-xs text-indigo-900 dark:text-indigo-300 leading-relaxed flex items-start gap-2.5 shrink-0">
-                    <MapPin className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                  <div className="p-3.5 bg-rose-50/70 dark:bg-rose-950/30 rounded-xl border border-rose-100/80 dark:border-rose-900/40 text-xs text-rose-900 dark:text-rose-300 leading-relaxed flex items-start gap-2.5 shrink-0">
+                    <MapPin className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                     <div>
                       <p className="font-semibold mb-0.5">{t('properties.syncNoticeTitle')}</p>
-                      <p className="text-[11px] text-indigo-700/90 dark:text-indigo-300/80">
+                      <p className="text-[11px] text-rose-700/90 dark:text-rose-300/80">
                         {t('properties.syncNoticeDesc')}
                       </p>
                     </div>
@@ -1051,7 +1051,7 @@ export const CreatePropertyView: React.FC = () => {
             <Button
               type="submit"
               disabled={submitting}
-              className="rounded-xl px-8 h-11 shadow-md shadow-indigo-500/20 font-semibold cursor-pointer"
+              className="rounded-xl px-8 h-11 shadow-md shadow-rose-500/20 font-semibold cursor-pointer"
             >
               {submitting ? t('properties.submitSaving') : t('properties.submitButton')}
             </Button>

@@ -122,7 +122,7 @@ export function HomeView() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground selection:bg-indigo-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-background text-slate-900 dark:text-foreground selection:bg-rose-500 selection:text-white">
       {/* 1. Public Navbar */}
       <HomeNavbar />
 

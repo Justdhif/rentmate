@@ -6,13 +6,11 @@ import { LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export type EmptyStateColor =
-  | 'blue'
-  | 'indigo'
   | 'rose'
+  | 'crimson'
   | 'amber'
   | 'emerald'
-  | 'slate'
-  | 'violet';
+  | 'slate';
 
 export type EmptyStateVariant = 'card' | 'dashed' | 'ghost';
 export type EmptyStateSize = 'sm' | 'md' | 'lg';
@@ -40,17 +38,13 @@ export interface EmptyStateProps {
 }
 
 const colorStyles: Record<EmptyStateColor, { bg: string; icon: string }> = {
-  blue: {
-    bg: 'bg-blue-50 dark:bg-blue-950/40 border-blue-100 dark:border-blue-900/50',
-    icon: 'text-blue-600 dark:text-blue-400',
-  },
-  indigo: {
-    bg: 'bg-indigo-50 dark:bg-indigo-950/40 border-indigo-100 dark:border-indigo-900/50',
-    icon: 'text-indigo-600 dark:text-indigo-400',
-  },
   rose: {
-    bg: 'bg-rose-50 dark:bg-rose-950/40 border-rose-100 dark:border-rose-900/50',
-    icon: 'text-rose-500 dark:text-rose-400',
+    bg: 'bg-rose-50 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/50',
+    icon: 'text-rose-600 dark:text-rose-400',
+  },
+  crimson: {
+    bg: 'bg-rose-100 dark:bg-rose-950/60 border-rose-200 dark:border-rose-900/60',
+    icon: 'text-rose-700 dark:text-rose-300',
   },
   amber: {
     bg: 'bg-amber-50 dark:bg-amber-950/40 border-amber-100 dark:border-amber-900/50',
@@ -63,10 +57,6 @@ const colorStyles: Record<EmptyStateColor, { bg: string; icon: string }> = {
   slate: {
     bg: 'bg-slate-100 dark:bg-slate-800/80 border-slate-200/80 dark:border-border/60',
     icon: 'text-slate-400 dark:text-slate-500',
-  },
-  violet: {
-    bg: 'bg-violet-50 dark:bg-violet-950/40 border-violet-100 dark:border-violet-900/50',
-    icon: 'text-violet-600 dark:text-violet-400',
   },
 };
 
@@ -102,7 +92,7 @@ const sizeStyles: Record<EmptyStateSize, { container: string; iconBox: string; i
 
 export const EmptyState: React.FC<EmptyStateProps> = ({
   icon: IconComponent,
-  iconColor = 'blue',
+  iconColor = 'rose',
   title,
   description,
   action,
@@ -113,7 +103,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
   children,
 }) => {
   const currentSize = sizeStyles[size];
-  const currentColor = colorStyles[iconColor] || colorStyles.blue;
+  const currentColor = (iconColor && colorStyles[iconColor]) || colorStyles.rose;
   const currentVariant = variantStyles[variant];
 
   const renderAction = (act: EmptyStateAction | React.ReactNode, isPrimary = true) => {
@@ -128,7 +118,7 @@ export const EmptyState: React.FC<EmptyStateProps> = ({
     const buttonVariant = actionObj.variant || (isPrimary ? 'default' : 'outline');
 
     const defaultBtnClass = isPrimary
-      ? 'rounded-xl text-xs font-semibold px-4 h-9.5 bg-blue-600 hover:bg-blue-700 text-white shadow-xs gap-1.5 cursor-pointer'
+      ? 'rounded-xl text-xs font-semibold px-4 h-9.5 bg-rose- hover:bg-rose- text-white shadow-xs gap-1.5 cursor-pointer'
       : 'rounded-xl text-xs font-semibold px-4 h-9.5 border-slate-200 dark:border-border text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 gap-1.5 cursor-pointer';
 
     const appliedClass = actionObj.className || defaultBtnClass;

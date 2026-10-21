@@ -35,7 +35,7 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
           } ${className}`}
           title="Ubah Bahasa / Switch Language"
         >
-          <Languages className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+          <Languages className="w-4 h-4 text-rose-600 dark:text-rose-400" />
           <span className="uppercase text-[11px] font-bold tracking-wider">{locale}</span>
         </Button>
       </DropdownMenuTrigger>
@@ -43,20 +43,20 @@ export const LanguageToggle: React.FC<LanguageToggleProps> = ({
         <DropdownMenuItem
           onClick={() => setLocale('id')}
           className={`cursor-pointer text-xs flex items-center justify-between rounded-lg px-2.5 py-1.5 ${
-            locale === 'id' ? 'font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40' : ''
+            locale === 'id' ? 'font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40' : ''
           }`}
         >
           <span>🇮🇩 Indonesia</span>
-          {locale === 'id' && <span className="text-[10px] bg-indigo-600 text-white rounded-full px-1.5 py-0.2">ID</span>}
+          {locale === 'id' && <span className="text-[10px] bg-rose-600 text-white rounded-full px-1.5 py-0.2">ID</span>}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => setLocale('en')}
           className={`cursor-pointer text-xs flex items-center justify-between rounded-lg px-2.5 py-1.5 ${
-            locale === 'en' ? 'font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/40' : ''
+            locale === 'en' ? 'font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/40' : ''
           }`}
         >
           <span>🇬🇧 English</span>
-          {locale === 'en' && <span className="text-[10px] bg-indigo-600 text-white rounded-full px-1.5 py-0.2">EN</span>}
+          {locale === 'en' && <span className="text-[10px] bg-rose-600 text-white rounded-full px-1.5 py-0.2">EN</span>}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

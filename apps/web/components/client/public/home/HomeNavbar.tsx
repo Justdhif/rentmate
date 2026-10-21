@@ -60,7 +60,7 @@ export function HomeNavbar() {
 
     return (
       <Link href={targetPath}>
-        <Button className="h-10 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md shadow-indigo-600/20 gap-2 cursor-pointer transition">
+        <Button className="h-10 px-4 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-md shadow-rose-600/20 gap-2 cursor-pointer transition">
           <Icon className="w-4 h-4" />
           <span>{label}</span>
         </Button>
@@ -76,14 +76,14 @@ export function HomeNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         {/* Brand */}
         <Link href="/" className="flex items-center gap-3 shrink-0 group">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-700 via-indigo-600 to-indigo-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-indigo-600/25 group-hover:scale-105 transition-transform">
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-rose-700 via-rose-600 to-rose-500 flex items-center justify-center text-white font-black text-xl shadow-md shadow-rose-600/25 group-hover:scale-105 transition-transform">
             R
           </div>
           <div className="flex flex-col">
             <span className="font-extrabold text-slate-900 dark:text-foreground text-lg tracking-tight leading-tight">
               RentMate
             </span>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-rose-600 dark:text-rose-400">
               Sewa & Manajemen Kos
             </span>
           </div>
@@ -93,19 +93,19 @@ export function HomeNavbar() {
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-muted-foreground">
           <a
             href="#properties"
-            className="hover:text-indigo-600 dark:hover:text-foreground transition-colors"
+            className="hover:text-rose-600 dark:hover:text-foreground transition-colors"
           >
             Jelajah Kos
           </a>
           <a
             href="#features"
-            className="hover:text-indigo-600 dark:hover:text-foreground transition-colors"
+            className="hover:text-rose-600 dark:hover:text-foreground transition-colors"
           >
             Keunggulan
           </a>
           <Link
             href="/register?role=OWNER"
-            className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline flex items-center gap-1"
+            className="text-rose-600 dark:text-rose-400 font-semibold hover:underline flex items-center gap-1"
           >
             <Building2 className="w-3.5 h-3.5" />
             <span>Daftarkan Kos Anda</span>
@@ -135,14 +135,14 @@ export function HomeNavbar() {
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <button className="flex items-center gap-2 outline-none cursor-pointer">
-                    <Avatar className="w-9 h-9 border border-indigo-200 dark:border-border">
+                    <Avatar className="w-9 h-9 border border-rose-200 dark:border-border">
                       {user.profile?.avatarUrl && (
                         <AvatarImage
                           src={user.profile.avatarUrl}
                           alt={user.profile.fullName || user.email}
                         />
                       )}
-                      <AvatarFallback className="bg-indigo-600 text-white font-bold text-xs">
+                      <AvatarFallback className="bg-rose-600 text-white font-bold text-xs">
                         {userInitials}
                       </AvatarFallback>
                     </Avatar>
@@ -159,7 +159,7 @@ export function HomeNavbar() {
                     <p className="text-[11px] text-slate-400 truncate">
                       {user.email}
                     </p>
-                    <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                    <span className="inline-block mt-1 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 dark:bg-rose-950 dark:text-rose-300">
                       {user.role}
                     </span>
                   </div>
@@ -210,7 +210,7 @@ export function HomeNavbar() {
               <Link href="/register">
                 <Button
                   size="sm"
-                  className="rounded-xl text-xs font-semibold h-9 px-4 bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-600/25 cursor-pointer"
+                  className="rounded-xl text-xs font-semibold h-9 px-4 bg-rose-600 hover:bg-rose-700 text-white shadow-sm shadow-rose-600/25 cursor-pointer"
                 >
                   Daftar
                 </Button>

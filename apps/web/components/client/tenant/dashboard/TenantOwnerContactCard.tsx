@@ -26,7 +26,7 @@ export function TenantOwnerContactCard({ owner }: TenantOwnerContactCardProps) {
       <Card className="rounded-3xl border-slate-200/80 dark:border-border/80 shadow-sm p-6 space-y-4">
         <CardHeader className="p-0">
           <CardTitle className="text-base font-bold flex items-center gap-2">
-            <Building2 className="w-4 h-4 text-indigo-600" />
+            <Building2 className="w-4 h-4 text-rose-600" />
             <span>Kontak Pemilik Kos</span>
           </CardTitle>
           <CardDescription className="text-xs text-slate-500">
@@ -58,9 +58,9 @@ export function TenantOwnerContactCard({ owner }: TenantOwnerContactCardProps) {
       </Card>
 
       {/* Maintenance CTA */}
-      <Card className="rounded-3xl border-slate-200/80 dark:border-border/80 shadow-sm p-6 space-y-3 bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-muted/20 dark:to-card">
+      <Card className="rounded-3xl border-slate-200/80 dark:border-border/80 shadow-sm p-6 space-y-3 bg-gradient-to-br from-rose-50/50 to-rose-/50 dark:from-muted/20 dark:to-card">
         <h3 className="font-bold text-sm text-slate-900 dark:text-foreground flex items-center gap-2">
-          <Wrench className="w-4 h-4 text-indigo-600" />
+          <Wrench className="w-4 h-4 text-rose-600" />
           <span>Ada Kerusakan Fasilitas?</span>
         </h3>
         <p className="text-xs text-slate-500 leading-relaxed">
@@ -69,7 +69,7 @@ export function TenantOwnerContactCard({ owner }: TenantOwnerContactCardProps) {
         <Link href="/maintenance" className="block pt-1">
           <Button
             size="sm"
-            className="w-full rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white gap-2"
+            className="w-full rounded-xl text-xs font-semibold bg-rose-600 hover:bg-rose-700 text-white gap-2"
           >
             <Wrench className="w-3.5 h-3.5" />
             <span>Buat Laporan Tiket</span>

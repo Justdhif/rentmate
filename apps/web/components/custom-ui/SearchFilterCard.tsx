@@ -151,7 +151,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
       {/* Header: Title, Icon & Quick Reset */}
       <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-border/60">
         <div className="flex items-center gap-2">
-          <HeaderIcon className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+          <HeaderIcon className="w-4 h-4 text-rose- dark:text-rose- shrink-0" />
           <h3 className="font-bold text-slate-900 dark:text-foreground text-sm truncate">
             {title}
           </h3>
@@ -160,7 +160,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
           <button
             type="button"
             onClick={onReset}
-            className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:underline cursor-pointer flex items-center gap-1 shrink-0"
+            className="text-xs font-semibold text-rose- dark:text-rose- hover:text-rose- hover:underline cursor-pointer flex items-center gap-1 shrink-0"
           >
             <RotateCcw className="w-3 h-3" />
             <span>{resetLabel}</span>
@@ -206,7 +206,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                 >
                   <span className="truncate">{opt.label}</span>
                   {sort.value === opt.value && (
-                    <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                    <Check className="w-3.5 h-3.5 text-rose- shrink-0" />
                   )}
                 </DropdownMenuItem>
               ))}
@@ -277,7 +277,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                     >
                       <span className="truncate">{opt.label}</span>
                       {sel.value === opt.value && (
-                        <Check className="w-3.5 h-3.5 text-blue-600 shrink-0" />
+                        <Check className="w-3.5 h-3.5 text-rose- shrink-0" />
                       )}
                     </DropdownMenuItem>
                   ))}
@@ -323,7 +323,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                       className={cn(
                         'py-1.5 px-2 rounded-lg text-xs font-semibold transition-all cursor-pointer text-center truncate',
                         isActive
-                          ? 'bg-blue-600 text-white shadow-xs'
+                          ? 'bg-rose- text-white shadow-xs'
                           : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                       )}
                     >
@@ -343,7 +343,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
             <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
               {priceRange.label || 'Rentang Harga'}
             </label>
-            <span className="text-xs font-semibold text-blue-600 dark:text-blue-400">
+            <span className="text-xs font-semibold text-rose- dark:text-rose-">
               {priceRange.formatValue
                 ? priceRange.formatValue(priceRange.value)
                 : `≤ Rp ${priceRange.value.toLocaleString('id-ID')}`}
@@ -382,7 +382,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                   </label>
                 )}
                 {selectedCount > 0 && (
-                  <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">
+                  <span className="text-[10px] text-rose- dark:text-rose- font-semibold">
                     {selectedCount} {group.selectedCountLabel || 'dipilih'}
                   </span>
                 )}
@@ -399,7 +399,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                         className={cn(
                           'flex items-center gap-2 p-2 rounded-xl border text-xs cursor-pointer select-none transition-all',
                           isChecked
-                            ? 'bg-blue-50/80 dark:bg-blue-950/40 border-blue-300 dark:border-blue-700 text-blue-900 dark:text-blue-200 font-semibold'
+                            ? 'bg-rose-/80 dark:bg-rose-/40 border-rose- dark:border-rose- text-rose- dark:text-rose- font-semibold'
                             : 'border-slate-200/80 dark:border-border/80 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-accent/40'
                         )}
                       >
@@ -419,7 +419,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
                     return (
                       <label
                         key={item.id}
-                        className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer select-none hover:text-blue-600 transition-colors"
+                        className="flex items-center gap-2 text-xs text-slate-700 dark:text-slate-300 cursor-pointer select-none hover:text-rose- transition-colors"
                       >
                         <Checkbox
                           checked={isChecked}
@@ -449,7 +449,7 @@ export const SearchFilterCard: React.FC<SearchFilterCardProps> = ({
           <Button
             onClick={applyButton.onClick}
             disabled={applyButton.disabled}
-            className="w-full h-10 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer gap-2"
+            className="w-full h-10 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-sm cursor-pointer gap-2"
           >
             {applyButton.icon ? (
               <applyButton.icon className="w-3.5 h-3.5" />

@@ -158,7 +158,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 
   return (
     <>
-      <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card overflow-hidden shadow-2xs hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700/50 transition-all duration-300 flex flex-col group">
+      <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card overflow-hidden shadow-2xs hover:shadow-lg hover:border-rose-300 dark:hover:border-rose-700/50 transition-all duration-300 flex flex-col group">
         {/* Photo Container */}
         <div className="relative aspect-[16/10] sm:aspect-[16/11] w-full overflow-hidden bg-slate-100 dark:bg-muted select-none">
           <img
@@ -216,7 +216,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
                       href={`/rooms?propertyId=${property.id}`}
                       className="flex items-center gap-2 cursor-pointer"
                     >
-                      <DoorClosed className="w-4 h-4 text-indigo-500" />
+                      <DoorClosed className="w-4 h-4 text-rose-500" />
                       <span>{t('properties.manageRooms')}</span>
                     </Link>
                   </DropdownMenuItem>
@@ -247,7 +247,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
         <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
           <div>
             {/* Property Name */}
-            <h3 className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+            <h3 className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-rose-600 dark:group-hover:text-rose-400 transition-colors">
               {property.name}
             </h3>
 
@@ -329,7 +329,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({
 
             <Link
               href={`/properties/${property.id}`}
-              className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 bg-indigo-50/80 hover:bg-indigo-100 dark:bg-indigo-950/40 dark:hover:bg-indigo-900/60 border border-indigo-200/70 dark:border-indigo-800/40 px-3 py-1.5 rounded-xl transition-all group/btn cursor-pointer"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 bg-rose-50/80 hover:bg-rose-100 dark:bg-rose-950/40 dark:hover:bg-rose-900/60 border border-rose-200/70 dark:border-rose-800/40 px-3 py-1.5 rounded-xl transition-all group/btn cursor-pointer"
             >
               <span>{t('properties.viewDetails')}</span>
               <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-0.5 transition-transform" />

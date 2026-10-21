@@ -25,7 +25,7 @@ export function UserStatsCards({ favoriteCount, userEmail }: UserStatsCardsProps
           </div>
           <Link
             href="/favorites"
-            className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold hover:underline mt-1 inline-block"
+            className="text-[11px] text-rose-600 dark:text-rose-400 font-semibold hover:underline mt-1 inline-block"
           >
             Kelola Favorit →
           </Link>

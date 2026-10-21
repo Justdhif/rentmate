@@ -339,7 +339,7 @@ export const TenantsView: React.FC = () => {
                 }
                 setIsModalOpen(true);
               }}
-              className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer flex items-center gap-2"
+              className="h-9 px-4 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer flex items-center gap-2"
             >
               <UserPlus className="w-4 h-4" />
               <span>{t('tenants.addButton', { defaultValue: 'Tambah Tenant' })}</span>
@@ -389,28 +389,28 @@ export const TenantsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterStatusAll', { defaultValue: 'Semua Status' })}</span>
-                  {filterStatus === 'ALL' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterStatus === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('ACTIVE')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterStatusActive', { defaultValue: 'Aktif' })}</span>
-                  {filterStatus === 'ACTIVE' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterStatus === 'ACTIVE' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('PENDING')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterStatusPending', { defaultValue: 'Pending' })}</span>
-                  {filterStatus === 'PENDING' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterStatus === 'PENDING' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => setFilterStatus('ENDED')}
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterStatusEnded', { defaultValue: 'Keluar' })}</span>
-                  {filterStatus === 'ENDED' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterStatus === 'ENDED' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -436,7 +436,7 @@ export const TenantsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterKostAll', { defaultValue: 'Semua Kost' })}</span>
-                  {filterProperty === 'ALL' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterProperty === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
                 {availableProperties.map((prop) => (
                   <DropdownMenuItem
@@ -445,7 +445,7 @@ export const TenantsView: React.FC = () => {
                     className="cursor-pointer flex items-center justify-between"
                   >
                     <span className="truncate">{prop}</span>
-                    {filterProperty === prop && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    {filterProperty === prop && <Check className="w-3.5 h-3.5 text-rose-" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -472,7 +472,7 @@ export const TenantsView: React.FC = () => {
                   className="cursor-pointer flex items-center justify-between"
                 >
                   <span>{t('tenants.filterRoomTypeAll', { defaultValue: 'Semua Tipe Kamar' })}</span>
-                  {filterRoomType === 'ALL' && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                  {filterRoomType === 'ALL' && <Check className="w-3.5 h-3.5 text-rose-" />}
                 </DropdownMenuItem>
                 {['Standard', 'Deluxe', 'Premium', ...availableRoomTypes.filter(t => !['standard', 'deluxe', 'premium'].includes(t.toLowerCase()))].map((type) => (
                   <DropdownMenuItem
@@ -481,7 +481,7 @@ export const TenantsView: React.FC = () => {
                     className="cursor-pointer flex items-center justify-between"
                   >
                     <span>{type}</span>
-                    {filterRoomType === type && <Check className="w-3.5 h-3.5 text-blue-600" />}
+                    {filterRoomType === type && <Check className="w-3.5 h-3.5 text-rose-" />}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -510,7 +510,7 @@ export const TenantsView: React.FC = () => {
           <div className="lg:col-span-8 xl:col-span-9">
             {isLoading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
+                <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin mb-3" />
                 <p className="text-xs text-slate-500 font-medium">
                   Memuat data penyewa...
                 </p>
@@ -518,7 +518,7 @@ export const TenantsView: React.FC = () => {
             ) : normalizedTenants.length === 0 ? (
               /* Fallback Empty State (Ketika data tenant masih kosong) */
               <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-14 text-center shadow-2xs">
-                <div className="w-16 h-16 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-4">
+                <div className="w-16 h-16 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
                   <Users className="w-8 h-8" />
                 </div>
                 <h3 className="font-bold text-slate-900 dark:text-foreground text-lg">
@@ -542,7 +542,7 @@ export const TenantsView: React.FC = () => {
                     }
                     setIsModalOpen(true);
                   }}
-                  className="mt-6 h-10 px-5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm cursor-pointer inline-flex items-center gap-2"
+                  className="mt-6 h-10 px-5 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-sm cursor-pointer inline-flex items-center gap-2"
                 >
                   <UserPlus className="w-4 h-4" />
                   <span>{t('tenants.addButton', { defaultValue: 'Tetapkan Penghuni Baru' })}</span>

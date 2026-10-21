@@ -42,11 +42,11 @@ const ERROR_CONFIG: Record<
 > = {
   '404': {
     icon: FileQuestion,
-    color: 'text-indigo-600 dark:text-indigo-400',
-    bgGlow: 'bg-indigo-500/10 dark:bg-indigo-500/20',
-    badgeBg: 'bg-indigo-50 dark:bg-indigo-950/60',
-    badgeText: 'text-indigo-700 dark:text-indigo-300',
-    badgeBorder: 'border-indigo-200 dark:border-indigo-800/60',
+    color: 'text-rose-600 dark:text-rose-400',
+    bgGlow: 'bg-rose-500/10 dark:bg-rose-500/20',
+    badgeBg: 'bg-rose-50 dark:bg-rose-950/60',
+    badgeText: 'text-rose-700 dark:text-rose-300',
+    badgeBorder: 'border-rose-200 dark:border-rose-800/60',
   },
   '403': {
     icon: ShieldAlert,
@@ -66,19 +66,19 @@ const ERROR_CONFIG: Record<
   },
   '502': {
     icon: WifiOff,
-    color: 'text-purple-600 dark:text-purple-400',
-    bgGlow: 'bg-purple-500/10 dark:bg-purple-500/20',
-    badgeBg: 'bg-purple-50 dark:bg-purple-950/60',
-    badgeText: 'text-purple-700 dark:text-purple-300',
-    badgeBorder: 'border-purple-200 dark:border-purple-800/60',
+    color: 'text-rose- dark:text-rose-',
+    bgGlow: 'bg-rose-/10 dark:bg-rose-/20',
+    badgeBg: 'bg-rose- dark:bg-rose-/60',
+    badgeText: 'text-rose- dark:text-rose-',
+    badgeBorder: 'border-rose- dark:border-rose-/60',
   },
   '503': {
     icon: ClockAlert,
-    color: 'text-blue-600 dark:text-blue-400',
-    bgGlow: 'bg-blue-500/10 dark:bg-blue-500/20',
-    badgeBg: 'bg-blue-50 dark:bg-blue-950/60',
-    badgeText: 'text-blue-700 dark:text-blue-300',
-    badgeBorder: 'border-blue-200 dark:border-blue-800/60',
+    color: 'text-rose- dark:text-rose-',
+    bgGlow: 'bg-rose-/10 dark:bg-rose-/20',
+    badgeBg: 'bg-rose- dark:bg-rose-/60',
+    badgeText: 'text-rose- dark:text-rose-',
+    badgeBorder: 'border-rose- dark:border-rose-/60',
   },
 };
 
@@ -119,7 +119,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
           href="/"
           className="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-2xl bg-white/80 dark:bg-card/80 backdrop-blur-md border border-slate-200/60 dark:border-border/60 shadow-xs hover:border-slate-300 transition-colors"
         >
-          <div className="w-6 h-6 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+          <div className="w-6 h-6 rounded-lg bg-rose-600 flex items-center justify-center text-white font-bold text-xs shadow-xs">
             R
           </div>
           <span className="font-bold text-slate-800 dark:text-foreground text-sm tracking-tight">
@@ -158,7 +158,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             <Button
               onClick={reset}
               variant="default"
-              className="w-full sm:w-auto h-11 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm gap-2"
+              className="w-full sm:w-auto h-11 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-sm gap-2"
             >
               <RefreshCw className="w-4 h-4" />
               <span>{t('errors.tryAgain') || 'Coba Lagi'}</span>
@@ -167,7 +167,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             <Button
               asChild
               variant="default"
-              className="w-full sm:w-auto h-11 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl shadow-sm gap-2"
+              className="w-full sm:w-auto h-11 px-6 bg-rose-600 hover:bg-rose-700 text-white rounded-xl shadow-sm gap-2"
             >
               <Link href={dashboardPath}>
                 {user ? (
@@ -204,7 +204,7 @@ export const ErrorView: React.FC<ErrorViewProps> = ({
             Butuh bantuan teknis? Hubungi tim dukungan RentMate di{' '}
             <a
               href="mailto:support@rentmate.com"
-              className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
+              className="text-rose-600 dark:text-rose-400 hover:underline font-medium"
             >
               support@rentmate.com
             </a>

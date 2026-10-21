@@ -54,7 +54,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-md p-0 overflow-hidden bg-white dark:bg-card border-slate-200 dark:border-border rounded-2xl shadow-xl">
         <DialogHeader className="px-6 py-4 border-b border-slate-100 dark:border-border/60 bg-slate-50/60 dark:bg-muted/20 flex flex-row items-center gap-3 space-y-0">
-          <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-950 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+          <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose- text-rose- dark:text-rose- flex items-center justify-center shrink-0">
             <Receipt className="w-5 h-5" />
           </div>
           <div>
@@ -195,7 +195,7 @@ export const CreateInvoiceModal: React.FC<CreateInvoiceModalProps> = ({
             <Button
               type="submit"
               disabled={submitting}
-              className="h-9 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer"
+              className="h-9 px-4 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer"
             >
               {submitting
                 ? t('payments.modalSubmitSaving', { defaultValue: 'Menyimpan...' })

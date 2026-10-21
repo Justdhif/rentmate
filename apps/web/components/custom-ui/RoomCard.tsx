@@ -120,7 +120,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
   return (
     <>
       <div
-        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs hover:shadow-lg hover:border-blue-300 dark:hover:border-blue-700/50 transition-all duration-300 flex flex-col justify-between overflow-hidden group"
+        className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs hover:shadow-lg hover:border-rose- dark:hover:border-rose-/50 transition-all duration-300 flex flex-col justify-between overflow-hidden group"
       >
         {/* Top Photo Stage (16:10 aspect ratio matching PropertyCard) */}
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100 dark:bg-slate-900 select-none">
@@ -136,7 +136,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/25 pointer-events-none" />
             </>
           ) : (
-            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-blue-50/40 dark:from-slate-900 dark:to-blue-950/20 text-slate-400">
+            <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-100 to-rose-/40 dark:from-slate-900 dark:to-rose-/20 text-slate-400">
               <BedDouble className="w-10 h-10 stroke-[1.5] text-slate-300 dark:text-slate-600 mb-1" />
               <span className="text-[11px] font-medium text-slate-400">
                 {t('rooms.noPhoto')}
@@ -188,7 +188,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                   onClick={() => setIsDetailOpen(true)}
                   className="gap-2 cursor-pointer"
                 >
-                  <DoorClosed className="w-4 h-4 text-blue-500" />
+                  <DoorClosed className="w-4 h-4 text-rose-" />
                   <span>{t('rooms.viewDetail')}</span>
                 </DropdownMenuItem>
                 {room.propertyId && (
@@ -233,7 +233,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
             <div className="flex items-baseline justify-between gap-2">
               <h3
                 onClick={() => setIsDetailOpen(true)}
-                className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors cursor-pointer"
+                className="font-bold text-slate-900 dark:text-foreground text-base line-clamp-1 group-hover:text-rose- dark:group-hover:text-rose- transition-colors cursor-pointer"
               >
                 {t('rooms.roomNumber', { number: room.roomNumber })}
               </h3>
@@ -307,7 +307,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               <Button
                 asChild
                 size="sm"
-                className="flex-1 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer gap-1.5"
+                className="flex-1 h-8 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer gap-1.5"
               >
                 <Link href={`/properties/${room.propertyId}`}>
                   <span>{t('rooms.propertyFallback')}</span>
@@ -319,7 +319,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
                 type="button"
                 size="sm"
                 onClick={() => setIsDetailOpen(true)}
-                className="flex-1 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer"
+                className="flex-1 h-8 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer"
               >
                 {t('rooms.quickManage')}
               </Button>
@@ -384,7 +384,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               </div>
               <div>
                 <span className="text-slate-400 block mb-0.5">{t('rooms.modalPriceLabel')}</span>
-                <span className="font-bold text-blue-600 dark:text-blue-400">
+                <span className="font-bold text-rose- dark:text-rose-">
                   {formatCurrency(Number(room.monthlyPrice))} /bln
                 </span>
               </div>
@@ -420,7 +420,7 @@ export const RoomCard: React.FC<RoomCardProps> = ({
               {room.propertyId && (
                 <Button
                   asChild
-                  className="flex-1 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold cursor-pointer"
+                  className="flex-1 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold cursor-pointer"
                 >
                   <Link href={`/properties/${room.propertyId}`}>
                     <Building2 className="w-3.5 h-3.5 mr-1.5" />

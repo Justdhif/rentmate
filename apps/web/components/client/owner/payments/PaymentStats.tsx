@@ -75,9 +75,9 @@ export const PaymentStats: React.FC<PaymentStatsProps> = ({
       </div>
 
       {/* 3. Total Tagihan / Akumulasi (Purple Theme) */}
-      <div className="rounded-2xl p-5 border border-purple-100/90 dark:border-purple-900/40 bg-purple-50/40 dark:bg-purple-950/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
+      <div className="rounded-2xl p-5 border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all flex flex-col justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-purple-100 dark:bg-purple-900/60 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0 shadow-2xs">
             <Receipt className="w-5 h-5" />
           </div>
           <span className="text-xs font-medium text-slate-600 dark:text-slate-400">

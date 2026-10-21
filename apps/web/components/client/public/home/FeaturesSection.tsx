@@ -7,7 +7,7 @@ export function FeaturesSection() {
   const features = [
     {
       icon: Search,
-      iconBg: "bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400",
+      iconBg: "bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400",
       title: "Ketersediaan Kamar Riil",
       description:
         "Status kamar kosong dan terisi selalu sinkron secara real-time langsung dengan sistem pemilik kos.",
@@ -21,14 +21,14 @@ export function FeaturesSection() {
     },
     {
       icon: Wrench,
-      iconBg: "bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400",
+      iconBg: "bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose-",
       title: "Layanan Maintenance Terpadu",
       description:
         "Lampu mati atau AC rusak? Penghuni cukup buat laporan tiket di web dan teknisi segera menangani.",
     },
     {
       icon: Sparkles,
-      iconBg: "bg-purple-100 dark:bg-purple-950/60 text-purple-600 dark:text-purple-400",
+      iconBg: "bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose-",
       title: "RentMate AI Assistant",
       description:
         "Rekomendasi kos pintar sesuai kebutuhan dan analitik okupansi otomatis untuk pemilik properti.",
@@ -42,7 +42,7 @@ export function FeaturesSection() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider">
+          <span className="text-rose-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider">
             Kenapa Memilih RentMate?
           </span>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-foreground mt-2 tracking-tight">

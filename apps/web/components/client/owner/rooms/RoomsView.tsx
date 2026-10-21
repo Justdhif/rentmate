@@ -265,7 +265,7 @@ function RoomsContent() {
               <div className="hidden sm:flex items-center gap-1.5">
                 <Badge
                   variant="outline"
-                  className="bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 border-blue-200 dark:border-blue-500/20 text-xs font-semibold px-2.5 py-1 rounded-lg"
+                  className="bg-rose- text-rose- dark:bg-rose-/10 dark:text-rose- border-rose- dark:border-rose-/20 text-xs font-semibold px-2.5 py-1 rounded-lg"
                 >
                   {t('rooms.totalRoomsBadge', { count: stats.total })}
                 </Badge>
@@ -285,7 +285,7 @@ function RoomsContent() {
 
               <Button
                 asChild
-                className="h-9 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-xs cursor-pointer gap-2"
+                className="h-9 rounded-xl bg-rose- hover:bg-rose- text-white text-xs font-semibold shadow-xs cursor-pointer gap-2"
               >
                 <Link
                   href={
@@ -348,7 +348,7 @@ function RoomsContent() {
                     </span>
                   )}
                   {statusFilter !== 'ALL' && (
-                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800/60">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- border border-rose- dark:border-rose-/60">
                       <span>
                         {statusFilter === 'AVAILABLE'
                           ? t('rooms.statusAvailable')
@@ -411,7 +411,7 @@ function RoomsContent() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer ml-1"
+                    className="text-xs font-semibold text-rose- dark:text-rose- hover:underline cursor-pointer ml-1"
                   >
                     {t('rooms.resetFilters')}
                   </button>
@@ -422,7 +422,7 @@ function RoomsContent() {
             {/* Room Cards Grid or Empty State */}
             {isLoading ? (
               <div className="py-24 flex flex-col items-center justify-center">
-                <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin mb-3" />
+                <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin mb-3" />
                 <p className="text-xs text-slate-500 font-medium">
                   {t('properties.loadingDatabase')}
                 </p>
@@ -430,7 +430,7 @@ function RoomsContent() {
             ) : filteredRooms.length === 0 ? (
               <EmptyState
                 icon={DoorClosed}
-                iconColor="blue"
+                iconColor="rose"
                 title={
                   rooms.length === 0
                     ? t('rooms.emptyTitle')
@@ -590,7 +590,7 @@ export const RoomsView: React.FC = () => {
     <Suspense
       fallback={
         <div className="min-h-screen flex items-center justify-center">
-          <div className="w-8 h-8 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
         </div>
       }
     >

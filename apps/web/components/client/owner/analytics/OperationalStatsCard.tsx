@@ -28,7 +28,7 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
       {/* Okupansi Rate Card */}
       <Card className="rounded-2xl border-gray-100 dark:border-border shadow-xs bg-card p-6">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+          <div className="w-10 h-10 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center">
             <DoorClosed className="w-5 h-5" />
           </div>
           <div>
@@ -43,7 +43,7 @@ export const OperationalStatsCard: React.FC<OperationalStatsCardProps> = ({
 
         <div className="w-full bg-slate-100 dark:bg-muted/40 rounded-full h-2.5 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-indigo-500 to-violet-600 h-full rounded-full transition-all duration-700"
+            className="bg-gradient-to-r from-rose-500 to-rose-700 h-full rounded-full transition-all duration-700"
             style={{ width: `${Math.min(occupancyRate, 100)}%` }}
           />
         </div>

@@ -210,7 +210,7 @@ export const ImageLightboxModal: React.FC<{
         {/* Header Bar */}
         <div className="flex items-center justify-between px-6 py-4 pr-14 border-b border-slate-800/80 bg-slate-900/60">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center">
               <Camera className="w-4 h-4" />
             </div>
             <div>
@@ -264,13 +264,13 @@ export const ImageLightboxModal: React.FC<{
                 onClick={() => setCurrentIndex(idx)}
                 className={`relative w-16 h-12 rounded-lg overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                   currentIndex === idx
-                    ? 'border-indigo-500 ring-2 ring-indigo-500/40 scale-105 opacity-100'
+                    ? 'border-rose-500 ring-2 ring-rose-500/40 scale-105 opacity-100'
                     : 'border-transparent opacity-50 hover:opacity-80'
                 }`}
               >
                 <img src={img} alt="" className="w-full h-full object-cover" />
                 {idx === 0 && (
-                  <span className="absolute bottom-0 inset-x-0 bg-indigo-600/90 text-[8px] font-bold text-white text-center py-0.5">
+                  <span className="absolute bottom-0 inset-x-0 bg-rose-600/90 text-[8px] font-bold text-white text-center py-0.5">
                     {t('gallery.lightboxCover')}
                   </span>
                 )}
@@ -435,7 +435,7 @@ export const PhotoUploadDialog: React.FC<{
         {/* Header - Bersih tanpa duplicate badge */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-border/60 bg-gray-50/50 dark:bg-muted/20">
           <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-xl bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center">
               <Camera className="w-5 h-5" />
             </div>
             <div>
@@ -468,7 +468,7 @@ export const PhotoUploadDialog: React.FC<{
             }}
             className={`relative w-full aspect-video sm:aspect-[16/9] max-h-[300px] rounded-2xl overflow-hidden border transition-all duration-300 ${
               isDragging
-                ? 'border-indigo-500 bg-indigo-50/20 ring-4 ring-indigo-500/20 scale-[0.99]'
+                ? 'border-rose-500 bg-rose-50/20 ring-4 ring-rose-500/20 scale-[0.99]'
                 : 'border-gray-200 dark:border-border bg-slate-900/5 dark:bg-slate-950'
             } shadow-sm group`}
           >
@@ -542,9 +542,9 @@ export const PhotoUploadDialog: React.FC<{
               /* Empty dropzone state: Click anywhere to upload */
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="flex flex-col items-center justify-center h-full p-6 text-center cursor-pointer hover:bg-indigo-50/10 transition-colors"
+                className="flex flex-col items-center justify-center h-full p-6 text-center cursor-pointer hover:bg-rose-50/10 transition-colors"
               >
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3 shadow-xs border border-indigo-100 dark:border-indigo-500/20">
+                <div className="w-14 h-14 rounded-2xl bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-3 shadow-xs border border-rose-100 dark:border-rose-500/20">
                   <UploadCloud className="w-7 h-7" />
                 </div>
                 <h4 className="text-sm font-bold text-gray-900 dark:text-foreground">
@@ -573,7 +573,7 @@ export const PhotoUploadDialog: React.FC<{
               type="button"
               onClick={() => fileInputRef.current?.click()}
               disabled={draftPhotos.length >= maxImages || isUploading}
-              className="h-10 px-5 text-xs rounded-xl gap-2 font-semibold shadow-xs cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white"
+              className="h-10 px-5 text-xs rounded-xl gap-2 font-semibold shadow-xs cursor-pointer bg-rose-600 hover:bg-rose-700 text-white"
             >
               <UploadCloud className="w-4 h-4" />
               <span>{isUploading ? t('gallery.processingPhotos') : t('gallery.selectFiles')}</span>
@@ -581,7 +581,7 @@ export const PhotoUploadDialog: React.FC<{
 
             <Badge
               variant="outline"
-              className="text-xs font-semibold px-3 py-1.5 bg-indigo-50/60 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 border-indigo-200/80 dark:border-indigo-800"
+              className="text-xs font-semibold px-3 py-1.5 bg-rose-50/60 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 border-rose-200/80 dark:border-rose-800"
             >
               {t('gallery.selectedCount', { count: draftPhotos.length, max: maxImages })}
             </Badge>
@@ -599,7 +599,7 @@ export const PhotoUploadDialog: React.FC<{
                   <button
                     type="button"
                     onClick={handlePrevPhoto}
-                    className="w-7 h-7 rounded-lg bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
+                    className="w-7 h-7 rounded-lg bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
                     title={t('gallery.thumbnailPrev')}
                   >
                     <ChevronLeft className="w-4 h-4" />
@@ -625,8 +625,8 @@ export const PhotoUploadDialog: React.FC<{
                       }}
                       className={`group/thumb relative w-18 h-14 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer shadow-xs ${
                         selectedIdx === idx
-                          ? 'border-indigo-600 ring-2 ring-indigo-500/30 scale-105'
-                          : 'border-gray-200 dark:border-border hover:border-indigo-300 opacity-75 hover:opacity-100'
+                          ? 'border-rose-600 ring-2 ring-rose-500/30 scale-105'
+                          : 'border-gray-200 dark:border-border hover:border-rose-300 opacity-75 hover:opacity-100'
                       }`}
                     >
                       <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
@@ -655,7 +655,7 @@ export const PhotoUploadDialog: React.FC<{
                   <button
                     type="button"
                     onClick={handleNextPhoto}
-                    className="w-7 h-7 rounded-lg bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
+                    className="w-7 h-7 rounded-lg bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
                     title={t('gallery.thumbnailNext')}
                   >
                     <ChevronRight className="w-4 h-4" />
@@ -778,9 +778,9 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-foreground flex items-center gap-2">
             {type === 'room' ? (
-              <BedDouble className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <BedDouble className="w-4 h-4 text-rose-600 dark:text-rose-400" />
             ) : (
-              <Building2 className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+              <Building2 className="w-4 h-4 text-rose-600 dark:text-rose-400" />
             )}
             {title || (type === 'room' ? t('gallery.widgetTitleRoom') : t('gallery.widgetTitleProperty'))}
           </h3>
@@ -791,7 +791,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
 
         <Badge
           variant="outline"
-          className="text-xs font-semibold bg-indigo-50/60 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 border-indigo-200/80 dark:border-indigo-800 shrink-0"
+          className="text-xs font-semibold bg-rose-50/60 dark:bg-rose-950/30 text-rose-700 dark:text-rose-300 border-rose-200/80 dark:border-rose-800 shrink-0"
         >
           {t('gallery.widgetCountBadge', { count: images.length, max: maxImages })}
         </Badge>
@@ -846,7 +846,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
             {/* Bottom Info Bar Overlay */}
             <div className="absolute bottom-3 inset-x-3 flex items-center justify-between text-white text-xs z-10 pointer-events-none">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-md bg-indigo-500/80 backdrop-blur-md flex items-center justify-center">
+                <div className="w-6 h-6 rounded-md bg-rose-500/80 backdrop-blur-md flex items-center justify-center">
                   <Camera className="w-3.5 h-3.5" />
                 </div>
                 <span className="font-semibold tracking-wide drop-shadow-md">
@@ -861,7 +861,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
         ) : (
           /* Clean Empty Placeholder */
           <div className="flex flex-col items-center justify-center h-full p-6 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3 shadow-xs border border-indigo-100 dark:border-indigo-500/20">
+            <div className="w-14 h-14 rounded-2xl bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center mb-3 shadow-xs border border-rose-100 dark:border-rose-500/20">
               <Camera className="w-7 h-7" />
             </div>
             <h4 className="text-sm font-bold text-gray-900 dark:text-foreground">
@@ -882,7 +882,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
             <button
               type="button"
               onClick={handlePrevPhoto}
-              className="w-8 h-8 rounded-xl bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
               title={t('gallery.thumbnailPrev')}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -903,8 +903,8 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
                 }}
                 className={`group/thumb relative w-20 h-16 rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer shadow-xs ${
                   selectedIdx === idx
-                    ? 'border-indigo-600 ring-2 ring-indigo-500/30 scale-105'
-                    : 'border-gray-200 dark:border-border hover:border-indigo-300 opacity-75 hover:opacity-100'
+                    ? 'border-rose-600 ring-2 ring-rose-500/30 scale-105'
+                    : 'border-gray-200 dark:border-border hover:border-rose-300 opacity-75 hover:opacity-100'
                 }`}
               >
                 <img src={img} alt={`Thumb ${idx + 1}`} className="w-full h-full object-cover" />
@@ -922,7 +922,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
             <button
               type="button"
               onClick={handleNextPhoto}
-              className="w-8 h-8 rounded-xl bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-gray-700 dark:text-gray-200 hover:text-indigo-600 dark:hover:text-indigo-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
+              className="w-8 h-8 rounded-xl bg-white dark:bg-card border border-gray-200 dark:border-border hover:bg-rose-50 dark:hover:bg-rose-950/40 text-gray-700 dark:text-gray-200 hover:text-rose-600 dark:hover:text-rose-400 flex items-center justify-center shrink-0 shadow-xs transition-all hover:scale-105 cursor-pointer"
               title={t('gallery.thumbnailNext')}
             >
               <ChevronRight className="w-4 h-4" />
@@ -936,7 +936,7 @@ export const ImageGalleryUploader: React.FC<ImageGalleryUploaderProps> = ({
         <Button
           type="button"
           onClick={() => setIsUploadDialogOpen(true)}
-          className="w-full h-11 rounded-xl gap-2 font-semibold text-sm shadow-sm hover:shadow-md transition-all cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white"
+          className="w-full h-11 rounded-xl gap-2 font-semibold text-sm shadow-sm hover:shadow-md transition-all cursor-pointer bg-rose-600 hover:bg-rose-700 text-white"
         >
           <UploadCloud className="w-4 h-4" />
           <span>

@@ -20,7 +20,7 @@ export function TenantEmptyRoomCard() {
       </p>
       <div className="pt-2 flex justify-center gap-3">
         <Link href="/">
-          <Button className="rounded-2xl text-xs font-bold bg-indigo-600 hover:bg-indigo-700 text-white gap-2">
+          <Button className="rounded-2xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white gap-2">
             <Search className="w-4 h-4" />
             <span>Cari Kos di Beranda</span>
           </Button>

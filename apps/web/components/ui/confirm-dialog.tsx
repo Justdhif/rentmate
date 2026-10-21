@@ -69,14 +69,14 @@ const variantConfig: Record<
   info: {
     icon: HelpCircle,
     badgeClass:
-      'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-900/50 ring-4 ring-indigo-50 dark:ring-indigo-950/20',
+      'bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/50 ring-4 ring-rose-50 dark:ring-rose-950/20',
     buttonClass:
-      'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white shadow-sm shadow-indigo-500/20 focus-visible:ring-indigo-500',
+      'bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white shadow-sm shadow-rose-500/20 focus-visible:ring-rose-500',
   },
   default: {
     icon: HelpCircle,
     badgeClass:
-      'bg-indigo-100 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200/80 dark:border-indigo-900/50 ring-4 ring-indigo-50 dark:ring-indigo-950/20',
+      'bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 border border-rose-200/80 dark:border-rose-900/50 ring-4 ring-rose-50 dark:ring-rose-950/20',
     buttonClass:
       'bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm shadow-primary/20',
   },

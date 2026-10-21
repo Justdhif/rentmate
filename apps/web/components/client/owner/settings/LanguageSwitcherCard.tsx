@@ -54,7 +54,7 @@ export const LanguageSwitcherCard: React.FC = () => {
                 onClick={() => setLocale(opt.id)}
                 className={`w-full p-3 sm:p-3.5 rounded-xl border text-left transition-all cursor-pointer flex items-center justify-between ${
                   isSelected
-                    ? 'border-indigo-600 bg-indigo-50/60 dark:bg-indigo-500/10 ring-2 ring-indigo-500/20 shadow-xs'
+                    ? 'border-rose-600 bg-rose-50/60 dark:bg-rose-500/10 ring-2 ring-rose-500/20 shadow-xs'
                     : 'border-border bg-background hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-50/50 dark:hover:bg-muted/20'
                 }`}
               >
@@ -68,7 +68,7 @@ export const LanguageSwitcherCard: React.FC = () => {
                   </div>
                 </div>
                 {isSelected && (
-                  <div className="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center shrink-0 ml-2 shadow-xs">
+                  <div className="w-5 h-5 rounded-full bg-rose-600 text-white flex items-center justify-center shrink-0 ml-2 shadow-xs">
                     <Check className="w-3 h-3 stroke-[2.5]" />
                   </div>
                 )}

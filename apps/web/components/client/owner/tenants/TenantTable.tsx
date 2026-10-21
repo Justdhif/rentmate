@@ -146,7 +146,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
   if (tenants.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-12 text-center shadow-2xs">
-        <div className="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
           <Users className="w-7 h-7" />
         </div>
         <h3 className="font-bold text-slate-900 dark:text-foreground text-base">
@@ -218,7 +218,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                 <TableRow
                   key={item.id}
                   className={`hover:bg-slate-50/80 dark:hover:bg-muted/20 transition-colors ${
-                    isSelected ? 'bg-blue-50/40 dark:bg-blue-950/20' : ''
+                    isSelected ? 'bg-rose-/40 dark:bg-rose-/20' : ''
                   }`}
                 >
                   {/* Checkbox Column */}
@@ -233,7 +233,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                   {/* Nama Tenant Column */}
                   <TableCell className="py-3.5 px-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white font-bold flex items-center justify-center text-xs shadow-2xs shrink-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-br from-rose- to-rose-600 text-white font-bold flex items-center justify-center text-xs shadow-2xs shrink-0">
                         {item.name.charAt(0).toUpperCase()}
                       </div>
                       <div className="min-w-0">
@@ -356,7 +356,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
                             href="/rooms"
                             className="flex items-center gap-2 cursor-pointer"
                           >
-                            <DoorClosed className="w-4 h-4 text-blue-500" />
+                            <DoorClosed className="w-4 h-4 text-rose-" />
                             <span>
                               {t('tenants.actionRoomDetail', {
                                 defaultValue: 'Kelola Kamar',
@@ -416,7 +416,7 @@ export const TenantTable: React.FC<TenantTableProps> = ({
               onClick={() => setCurrentPage(page)}
               className={`h-8 w-8 p-0 rounded-lg text-xs font-semibold cursor-pointer ${
                 page === validPage
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  ? 'bg-rose- hover:bg-rose- text-white'
                   : 'border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-50'
               }`}
             >

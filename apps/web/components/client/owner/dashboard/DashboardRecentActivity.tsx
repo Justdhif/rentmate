@@ -38,7 +38,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
             asChild
             variant="ghost"
             size="sm"
-            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+            className="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40"
           >
             <Link href="/maintenance">{t('common.viewAll')}</Link>
           </Button>
@@ -95,7 +95,7 @@ export const DashboardRecentActivity: React.FC<DashboardRecentActivityProps> = (
             asChild
             variant="ghost"
             size="sm"
-            className="text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950/40"
+            className="text-xs font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40"
           >
             <Link href="/payments">{t('common.viewAll')}</Link>
           </Button>

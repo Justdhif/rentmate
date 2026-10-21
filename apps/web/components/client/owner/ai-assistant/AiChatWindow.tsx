@@ -125,13 +125,13 @@ const VoiceMessageBubble: React.FC<{
         <button
           type="button"
           onClick={togglePlay}
-          className="w-10 h-10 rounded-full bg-white text-indigo-700 hover:bg-slate-100 flex items-center justify-center shadow-md cursor-pointer shrink-0 transition-transform active:scale-95"
+          className="w-10 h-10 rounded-full bg-white text-rose-700 hover:bg-slate-100 flex items-center justify-center shadow-md cursor-pointer shrink-0 transition-transform active:scale-95"
           title={isPlaying ? 'Jeda' : 'Putar pesan suara'}
         >
           {isPlaying ? (
-            <Pause className="w-5 h-5 fill-indigo-700" />
+            <Pause className="w-5 h-5 fill-rose-700" />
           ) : (
-            <Play className="w-5 h-5 fill-indigo-700 ml-0.5" />
+            <Play className="w-5 h-5 fill-rose-700 ml-0.5" />
           )}
         </button>
 
@@ -247,9 +247,9 @@ const FormattedAssistantMessage: React.FC<{ content: string }> = ({ content }) =
           return (
             <h4
               key={idx}
-              className="font-bold text-slate-900 dark:text-white text-sm sm:text-base mt-3 mb-1 text-indigo-600 dark:text-indigo-400 flex items-center gap-1.5"
+              className="font-bold text-slate-900 dark:text-white text-sm sm:text-base mt-3 mb-1 text-rose-600 dark:text-rose-400 flex items-center gap-1.5"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
               {highlightRupiahAndBold(trimmed.slice(4))}
             </h4>
           );
@@ -279,7 +279,7 @@ const FormattedAssistantMessage: React.FC<{ content: string }> = ({ content }) =
         if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
           return (
             <div key={idx} className="flex items-start gap-2 pl-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 shrink-0" />
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500 mt-2 shrink-0" />
               <div className="flex-1 text-slate-700 dark:text-slate-200">
                 {highlightRupiahAndBold(trimmed.slice(2))}
               </div>
@@ -292,7 +292,7 @@ const FormattedAssistantMessage: React.FC<{ content: string }> = ({ content }) =
           const numMatch = trimmed.match(/^(\d+\.)\s(.*)/);
           return (
             <div key={idx} className="flex items-start gap-2 pl-1">
-              <span className="font-semibold text-indigo-600 dark:text-indigo-400 shrink-0 text-xs mt-0.5">
+              <span className="font-semibold text-rose-600 dark:text-rose-400 shrink-0 text-xs mt-0.5">
                 {numMatch ? numMatch[1] : '•'}
               </span>
               <div className="flex-1 text-slate-700 dark:text-slate-200">
@@ -351,8 +351,8 @@ export const AiChatWindow: React.FC<AiChatWindowProps> = ({
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 shadow-2xs ${
                 isUser
-                  ? 'bg-gradient-to-tr from-indigo-600 to-violet-600 text-white'
-                  : 'bg-gradient-to-tr from-indigo-500 to-purple-600 text-white shadow-xs'
+                  ? 'bg-gradient-to-tr from-rose-600 to-rose-700 text-white'
+                  : 'bg-gradient-to-tr from-rose-500 to-rose- text-white shadow-xs'
               }`}
             >
               {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -363,7 +363,7 @@ export const AiChatWindow: React.FC<AiChatWindowProps> = ({
               <div
                 className={`relative rounded-2xl p-3.5 sm:p-4 shadow-2xs transition-all ${
                   isUser
-                    ? 'bg-indigo-600 text-white rounded-tr-xs'
+                    ? 'bg-rose-600 text-white rounded-tr-xs'
                     : 'bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-border/60 text-slate-800 dark:text-slate-100 rounded-tl-xs hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
@@ -416,14 +416,14 @@ export const AiChatWindow: React.FC<AiChatWindowProps> = ({
       {/* Typing Indicator with 3 Bouncing Dots */}
       {isSending && (
         <div className="flex gap-3 max-w-md mr-auto animate-fade-in">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-600 text-white flex items-center justify-center shrink-0 shadow-xs">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-rose-500 to-rose- text-white flex items-center justify-center shrink-0 shadow-xs">
             <Sparkles className="w-4 h-4" />
           </div>
           <div className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-border/60 rounded-2xl rounded-tl-xs p-3.5 px-4 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 shadow-2xs">
             <div className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-bounce [animation-delay:-0.3s]" />
-              <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-bounce [animation-delay:-0.15s]" />
-              <span className="w-2 h-2 rounded-full bg-indigo-600 dark:bg-indigo-400 animate-bounce" />
+              <span className="w-2 h-2 rounded-full bg-rose-600 dark:bg-rose-400 animate-bounce [animation-delay:-0.3s]" />
+              <span className="w-2 h-2 rounded-full bg-rose-600 dark:bg-rose-400 animate-bounce [animation-delay:-0.15s]" />
+              <span className="w-2 h-2 rounded-full bg-rose-600 dark:bg-rose-400 animate-bounce" />
             </div>
             <span className="text-[11px] font-medium ml-1">
               {t('ai.thinkingIndicator', { defaultValue: 'Sedang menganalisis data properti...' })}

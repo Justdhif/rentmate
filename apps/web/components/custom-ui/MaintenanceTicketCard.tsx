@@ -95,7 +95,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
       return {
         label: 'AC Repair',
         icon: Snowflake,
-        badgeClass: 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border-blue-100 dark:border-blue-900/30',
+        badgeClass: 'bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border-rose- dark:border-rose-/30',
       };
     }
     if (
@@ -109,7 +109,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
       return {
         label: 'Plumbing',
         icon: Droplets,
-        badgeClass: 'bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border-blue-100 dark:border-blue-900/30',
+        badgeClass: 'bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border-rose- dark:border-rose-/30',
       };
     }
     if (
@@ -127,7 +127,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
     return {
       label: category || 'General',
       icon: Wrench,
-      badgeClass: 'bg-indigo-50 text-indigo-600 dark:bg-indigo-950/40 dark:text-indigo-400 border-indigo-100 dark:border-indigo-900/30',
+      badgeClass: 'bg-rose-50 text-rose-600 dark:bg-rose-950/40 dark:text-rose-400 border-rose-100 dark:border-rose-900/30',
     };
   };
 
@@ -238,7 +238,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
         <div className="mt-3.5">
           <h3
             onClick={() => onViewDetail && onViewDetail(ticket)}
-            className="font-bold text-slate-900 dark:text-white text-base leading-snug line-clamp-1 cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            className="font-bold text-slate-900 dark:text-white text-base leading-snug line-clamp-1 cursor-pointer hover:text-rose- dark:hover:text-rose- transition-colors"
             title={displayTitle}
           >
             {displayTitle}
@@ -254,7 +254,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
         <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-slate-100/80 dark:border-border/40">
           <div className="flex items-center gap-2.5 min-w-0">
             {/* Avatar circle */}
-            <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300 font-bold text-xs flex items-center justify-center shrink-0 border border-blue-200/60 dark:border-blue-800/40">
+            <div className="w-8 h-8 rounded-full bg-rose- dark:bg-rose- text-rose- dark:text-rose- font-bold text-xs flex items-center justify-center shrink-0 border border-rose-/60 dark:border-rose-/40">
               {reporterName.slice(0, 2).toUpperCase()}
             </div>
             <div className="min-w-0">
@@ -315,7 +315,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
           <Button
             size="sm"
             onClick={() => onResolve(ticket.id)}
-            className="flex-1 h-9.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
+            className="flex-1 h-9.5 rounded-xl bg-rose- hover:bg-rose- text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
           >
             <Check className="w-3.5 h-3.5" />
             <span>Mark as Resolved</span>
@@ -324,7 +324,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
           <Button
             size="sm"
             onClick={() => onOpenAssign(ticket)}
-            className="flex-1 h-9.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
+            className="flex-1 h-9.5 rounded-xl bg-rose- hover:bg-rose- text-white font-semibold text-xs gap-1.5 shadow-xs cursor-pointer"
           >
             <UserPlus className="w-3.5 h-3.5" />
             <span>Assign Technician</span>
@@ -347,7 +347,7 @@ export const MaintenanceTicketCard: React.FC<MaintenanceTicketCardProps> = ({
               onClick={() => onOpenAssign(ticket)}
               className="gap-2 cursor-pointer text-xs"
             >
-              <UserPlus className="w-3.5 h-3.5 text-blue-500" />
+              <UserPlus className="w-3.5 h-3.5 text-rose-" />
               <span>{technicianName ? 'Ganti Teknisi' : 'Tugaskan Teknisi'}</span>
             </DropdownMenuItem>
 

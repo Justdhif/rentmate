@@ -113,7 +113,7 @@ export const RegisterView: React.FC = () => {
 
         <div className="w-full max-w-md animate-fade-in my-auto py-8">
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-600 via-indigo-500 to-purple-600 text-white font-black text-3xl shadow-xl shadow-indigo-500/25 border border-white/20 dark:border-white/10 mb-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-rose-600 via-rose-500 to-rose- text-white font-black text-3xl shadow-xl shadow-rose-500/25 border border-white/20 dark:border-white/10 mb-6">
               R
             </div>
             <h1 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-foreground">
@@ -140,7 +140,7 @@ export const RegisterView: React.FC = () => {
                   onClick={() => setSelectedRole('USER')}
                   className={`py-2 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                     selectedRole === 'USER'
-                      ? 'bg-white dark:bg-card text-indigo-600 dark:text-indigo-400 shadow-xs font-bold'
+                      ? 'bg-white dark:bg-card text-rose-600 dark:text-rose-400 shadow-xs font-bold'
                       : 'text-slate-500 hover:text-slate-900 dark:text-muted-foreground dark:hover:text-foreground'
                   }`}
                 >
@@ -152,7 +152,7 @@ export const RegisterView: React.FC = () => {
                   onClick={() => setSelectedRole('OWNER')}
                   className={`py-2 px-3 text-xs font-semibold rounded-xl transition-all cursor-pointer flex items-center justify-center gap-1.5 ${
                     selectedRole === 'OWNER'
-                      ? 'bg-white dark:bg-card text-indigo-600 dark:text-indigo-400 shadow-xs font-bold'
+                      ? 'bg-white dark:bg-card text-rose-600 dark:text-rose-400 shadow-xs font-bold'
                       : 'text-slate-500 hover:text-slate-900 dark:text-muted-foreground dark:hover:text-foreground'
                   }`}
                 >
@@ -237,7 +237,7 @@ export const RegisterView: React.FC = () => {
                 <Button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-4 h-12 rounded-xl font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-600/25 hover:shadow-indigo-600/35 transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full mt-4 h-12 rounded-xl font-semibold bg-rose-600 hover:bg-rose-700 text-white shadow-lg shadow-rose-600/25 hover:shadow-rose-600/35 transition-all flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {loading ? (
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
@@ -255,7 +255,7 @@ export const RegisterView: React.FC = () => {
                   {t('auth.hasAccount')}
                   <Link
                     href="/login"
-                    className="font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:underline transition-colors"
+                    className="font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:underline transition-colors"
                   >
                     {t('auth.loginLink')}
                   </Link>

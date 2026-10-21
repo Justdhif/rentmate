@@ -443,7 +443,7 @@ export const AiChatInput: React.FC<AiChatInputProps> = ({
                     textareaRef.current.focus();
                   }
                 }}
-                className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-slate-100/90 dark:bg-muted/40 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-slate-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-300 border border-slate-200/80 dark:border-border/60 hover:border-indigo-300 dark:hover:border-indigo-700 transition-all cursor-pointer whitespace-nowrap shadow-2xs group"
+                className="shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs bg-slate-100/90 dark:bg-muted/40 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-slate-600 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-300 border border-slate-200/80 dark:border-border/60 hover:border-rose-300 dark:hover:border-rose-700 transition-all cursor-pointer whitespace-nowrap shadow-2xs group"
                 title={prompt.fullPrompt}
               >
                 <span className="text-[11px]">{prompt.icon}</span>
@@ -510,7 +510,7 @@ export const AiChatInput: React.FC<AiChatInputProps> = ({
           </div>
         ) : (
           /* STANDARD TEXT INPUT BAR */
-          <div className="relative flex items-end gap-2 bg-slate-50 dark:bg-muted/20 border border-slate-200 dark:border-border/80 rounded-2xl p-2 px-3 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/10 transition-all shadow-2xs">
+          <div className="relative flex items-end gap-2 bg-slate-50 dark:bg-muted/20 border border-slate-200 dark:border-border/80 rounded-2xl p-2 px-3 focus-within:border-rose-500 focus-within:ring-2 focus-within:ring-rose-500/10 transition-all shadow-2xs">
             {/* Auto-expanding Textarea */}
             <textarea
               ref={textareaRef}
@@ -547,7 +547,7 @@ export const AiChatInput: React.FC<AiChatInputProps> = ({
                 variant="ghost"
                 size="icon"
                 onClick={startVoiceRecording}
-                className="h-8 w-8 rounded-xl text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-950/30 transition-colors"
+                className="h-8 w-8 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
                 title="Input suara (Mic)"
               >
                 <Mic className="w-4 h-4" />
@@ -557,7 +557,7 @@ export const AiChatInput: React.FC<AiChatInputProps> = ({
               <Button
                 type="submit"
                 disabled={!inputMessage.trim() || isSending}
-                className="h-8.5 px-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-xs cursor-pointer gap-1.5 transition-all disabled:opacity-50"
+                className="h-8.5 px-3.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-semibold text-xs shadow-xs cursor-pointer gap-1.5 transition-all disabled:opacity-50"
               >
                 <span>Kirim</span>
                 <Send className="w-3.5 h-3.5" />

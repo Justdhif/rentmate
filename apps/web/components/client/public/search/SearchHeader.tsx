@@ -16,7 +16,7 @@ export function SearchHeader({ searchQuery, setSearchQuery }: SearchHeaderProps)
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
         <Link
           href="/"
-          className="flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-indigo-600 transition"
+          className="flex items-center gap-2 text-xs font-semibold text-slate-600 hover:text-rose-600 transition"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Beranda</span>
@@ -33,7 +33,7 @@ export function SearchHeader({ searchQuery, setSearchQuery }: SearchHeaderProps)
           </div>
         </div>
         <Link href="/">
-          <div className="w-8 h-8 rounded-xl bg-indigo-600 text-white font-black flex items-center justify-center text-sm shadow-md shadow-indigo-600/20">
+          <div className="w-8 h-8 rounded-xl bg-rose-600 text-white font-black flex items-center justify-center text-sm shadow-md shadow-rose-600/20">
             R
           </div>
         </Link>

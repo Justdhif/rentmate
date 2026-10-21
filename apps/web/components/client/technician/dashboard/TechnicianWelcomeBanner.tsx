@@ -11,7 +11,7 @@ interface TechnicianWelcomeBannerProps {
 
 export function TechnicianWelcomeBanner({ fullName }: TechnicianWelcomeBannerProps) {
   return (
-    <div className="rounded-3xl bg-gradient-to-r from-amber-600 via-orange-600 to-indigo-600 p-6 sm:p-8 text-white shadow-xl shadow-orange-600/15 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div className="rounded-3xl bg-gradient-to-r from-amber-600 via-orange-600 to-rose-600 p-6 sm:p-8 text-white shadow-xl shadow-orange-600/15 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <div className="relative z-10 max-w-xl">
         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-3">
           <Wrench className="w-3.5 h-3.5" />

@@ -314,16 +314,16 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
                 }
               }}
               placeholder={t('properties.mapSearchPlaceholder')}
-              className="pr-10 h-10 rounded-xl bg-white dark:bg-card shadow-xs text-xs sm:text-sm border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500/20 focus-visible:border-indigo-500"
+              className="pr-10 h-10 rounded-xl bg-white dark:bg-card shadow-xs text-xs sm:text-sm border-gray-200 dark:border-border text-gray-900 dark:text-foreground placeholder:text-gray-400 dark:placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-rose-500/20 focus-visible:border-rose-500"
             />
             <button
               type="button"
               onClick={() => handleSearch()}
               disabled={isSearching}
-              className="absolute right-2 top-2.5 text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer disabled:opacity-50"
+              className="absolute right-2 top-2.5 text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 cursor-pointer disabled:opacity-50"
             >
               {isSearching ? (
-                <Loader2 className="w-4 h-4 animate-spin text-indigo-600" />
+                <Loader2 className="w-4 h-4 animate-spin text-rose-600" />
               ) : (
                 <Search className="w-4 h-4" />
               )}
@@ -337,9 +337,9 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
                     key={idx}
                     type="button"
                     onClick={() => handleSelectSearchResult(item)}
-                    className="w-full text-left p-3 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer"
+                    className="w-full text-left p-3 hover:bg-rose-50 dark:hover:bg-rose-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer"
                   >
-                    <MapPin className="w-4 h-4 text-indigo-600 shrink-0 mt-0.5" />
+                    <MapPin className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                     <span className="line-clamp-2 text-gray-800 dark:text-gray-200">
                       {item.display_name}
                     </span>
@@ -354,13 +354,13 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
             variant="outline"
             onClick={handleUseCurrentLocation}
             disabled={isLocatingUser}
-            className="group h-10 px-3.5 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border shadow-xs text-xs font-semibold shrink-0 flex items-center gap-1.5 cursor-pointer hover:bg-indigo-50 hover:text-indigo-600 dark:hover:bg-indigo-950/40 dark:hover:text-indigo-400 text-gray-700 dark:text-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-60"
+            className="group h-10 px-3.5 rounded-xl bg-white dark:bg-card border-gray-200 dark:border-border shadow-xs text-xs font-semibold shrink-0 flex items-center gap-1.5 cursor-pointer hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-950/40 dark:hover:text-rose-400 text-gray-700 dark:text-gray-200 transition-all duration-150 active:scale-95 disabled:opacity-60"
             title={t('properties.mapGpsButton')}
           >
             {isLocatingUser ? (
-              <Loader2 className="w-4 h-4 animate-spin text-indigo-600 dark:text-indigo-400" />
+              <Loader2 className="w-4 h-4 animate-spin text-rose-600 dark:text-rose-400" />
             ) : (
-              <LocateFixed className="w-4 h-4 text-indigo-600 dark:text-indigo-400 group-hover:scale-110 transition-transform duration-150" />
+              <LocateFixed className="w-4 h-4 text-rose-600 dark:text-rose-400 group-hover:scale-110 transition-transform duration-150" />
             )}
             <span className="hidden sm:inline">
               {isLocatingUser ? t('properties.myLocationSearching') : t('properties.myLocationButton')}
@@ -381,7 +381,7 @@ export const PropertyMapPicker: React.FC<PropertyMapPickerProps> = ({
         <div className="absolute bottom-3 left-3 z-[400] bg-white/95 dark:bg-card/95 backdrop-blur-md px-3 py-1.5 rounded-xl border border-gray-200/80 dark:border-border/80 text-[11px] shadow-md flex items-center gap-2">
           {isGeocoding ? (
             <>
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-600" />
+              <Loader2 className="w-3.5 h-3.5 animate-spin text-rose-600" />
               <span className="text-gray-600 dark:text-gray-300 font-medium">
                 {t('properties.mapGeocoding')}
               </span>

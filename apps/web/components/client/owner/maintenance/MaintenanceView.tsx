@@ -322,7 +322,7 @@ export const MaintenanceView: React.FC<MaintenanceViewProps> = ({ initialTaskId 
         {/* 3. Ticket Grid / Content */}
         {isLoading ? (
           <div className="py-24 flex flex-col items-center justify-center gap-3">
-            <div className="w-9 h-9 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <div className="w-9 h-9 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-muted-foreground animate-pulse">Memuat data tiket perbaikan...</p>
           </div>
         ) : tickets.length === 0 ? (

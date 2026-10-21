@@ -231,13 +231,13 @@ export const AnalyticsView: React.FC = () => {
         );
       case 'TENANT':
         return (
-          <div className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center shrink-0">
             <UserPlus className="w-4 h-4" />
           </div>
         );
       case 'MAINTENANCE':
         return (
-          <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0">
             <Wrench className="w-4 h-4" />
           </div>
         );
@@ -261,7 +261,7 @@ export const AnalyticsView: React.FC = () => {
     }
     if (statusType === 'info' || status === 'Aktif') {
       return (
-        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-blue-50 text-blue-600 dark:bg-blue-950/40 dark:text-blue-400 border border-blue-200/60 dark:border-blue-800/40">
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-[11px] font-semibold bg-rose- text-rose- dark:bg-rose-/40 dark:text-rose- border border-rose-/60 dark:border-rose-/40">
           {status}
         </span>
       );
@@ -303,7 +303,7 @@ export const AnalyticsView: React.FC = () => {
 
         {isLoading ? (
           <div className="py-24 flex flex-col items-center justify-center gap-3">
-            <div className="w-9 h-9 border-3 border-blue-600 border-t-transparent rounded-full animate-spin" />
+            <div className="w-9 h-9 border-3 border-rose- border-t-transparent rounded-full animate-spin" />
             <p className="text-xs text-muted-foreground animate-pulse">Memuat analitik properti...</p>
           </div>
         ) : (
@@ -314,7 +314,7 @@ export const AnalyticsView: React.FC = () => {
               <Card className="rounded-2xl border-slate-100 dark:border-border shadow-xs bg-card hover:shadow-md transition-shadow overflow-hidden p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-rose-/10 text-rose- dark:bg-rose-/20 dark:text-rose- flex items-center justify-center shrink-0">
                       <Wallet className="w-5 h-5" />
                     </div>
                     <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -374,7 +374,7 @@ export const AnalyticsView: React.FC = () => {
               <Card className="rounded-2xl border-slate-100 dark:border-border shadow-xs bg-card hover:shadow-md transition-shadow overflow-hidden p-5 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 dark:bg-purple-500/20 dark:text-purple-400 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-rose-/10 text-rose- dark:bg-rose-/20 dark:text-rose- flex items-center justify-center shrink-0">
                       <Users className="w-5 h-5" />
                     </div>
                     <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
@@ -480,7 +480,7 @@ export const AnalyticsView: React.FC = () => {
                                     <div className="text-slate-400 font-medium">
                                       {pData.date || pData.label}
                                     </div>
-                                    <div className="text-blue-600 dark:text-blue-400 font-bold text-sm mt-0.5">
+                                    <div className="text-rose- dark:text-rose- font-bold text-sm mt-0.5">
                                       {formatCurrency(Number(pData.revenue))}
                                     </div>
                                   </div>
@@ -611,13 +611,13 @@ export const AnalyticsView: React.FC = () => {
                       {/* Chart Legend Top Right */}
                       <div className="flex items-center gap-3 shrink-0 text-xs font-medium">
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-blue-500" />
+                          <span className="w-2 h-2 rounded-full bg-rose-" />
                           <span className="text-slate-600 dark:text-slate-300 text-[11px]">
                             Pemasukan
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5">
-                          <span className="w-2 h-2 rounded-full bg-purple-400" />
+                          <span className="w-2 h-2 rounded-full bg-rose-" />
                           <span className="text-slate-600 dark:text-slate-300 text-[11px]">
                             Pengeluaran
                           </span>
@@ -784,7 +784,7 @@ export const AnalyticsView: React.FC = () => {
                     </div>
                     <Link
                       href="/payments"
-                      className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                      className="text-xs font-semibold text-rose- dark:text-rose- hover:underline inline-flex items-center gap-1"
                     >
                       Lihat Semua
                     </Link>

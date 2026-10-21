@@ -11,9 +11,9 @@ interface AdminWelcomeBannerProps {
 
 export function AdminWelcomeBanner({ fullName }: AdminWelcomeBannerProps) {
   return (
-    <div className="rounded-3xl bg-linear-to-r from-slate-900 via-indigo-950 to-purple-950 p-6 sm:p-8 text-white shadow-xl shadow-black/20 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-indigo-900/50">
+    <div className="rounded-3xl bg-linear-to-r from-slate-900 via-rose-950 to-rose- p-6 sm:p-8 text-white shadow-xl shadow-black/20 relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-rose-900/50">
       <div className="relative z-10 max-w-xl">
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-500/30 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-3 text-indigo-300 border border-indigo-500/30">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-500/30 backdrop-blur-md text-[11px] font-bold uppercase tracking-wider mb-3 text-rose-300 border border-rose-500/30">
           <Shield className="w-3.5 h-3.5" />
           <span>Super Administrator</span>
         </div>
@@ -27,7 +27,7 @@ export function AdminWelcomeBanner({ fullName }: AdminWelcomeBannerProps) {
 
       <div className="relative z-10 shrink-0 flex flex-wrap gap-3">
         <Link href="/dashboard">
-          <Button className="h-11 px-5 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/30 gap-2 cursor-pointer transition">
+          <Button className="h-11 px-5 rounded-2xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md shadow-rose-600/30 gap-2 cursor-pointer transition">
             <BarChart3 className="w-4 h-4" />
             <span>Statistik Keseluruhan</span>
           </Button>

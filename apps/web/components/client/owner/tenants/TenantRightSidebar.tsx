@@ -45,7 +45,7 @@ export const TenantRightSidebar: React.FC<TenantRightSidebarProps> = ({
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs overflow-hidden">
         <CardHeader className="p-5 pb-2">
           <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <Users className="w-4 h-4 text-rose- dark:text-rose-" />
             <span>{t('tenants.summaryTitle', { defaultValue: 'Ringkasan Tenant' })}</span>
           </CardTitle>
         </CardHeader>
@@ -157,14 +157,14 @@ export const TenantRightSidebar: React.FC<TenantRightSidebarProps> = ({
       <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card shadow-2xs overflow-hidden">
         <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between space-y-0">
           <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-            <Users className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+            <Users className="w-4 h-4 text-rose- dark:text-rose-" />
             <span>{t('tenants.recentTenantsTitle', { defaultValue: 'Tenant Terbaru' })}</span>
           </CardTitle>
           {onViewAll && (
             <button
               type="button"
               onClick={onViewAll}
-              className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+              className="text-xs font-semibold text-rose- dark:text-rose- hover:underline cursor-pointer"
             >
               {t('tenants.viewAll', { defaultValue: 'Lihat Semua' })}
             </button>
@@ -189,9 +189,9 @@ export const TenantRightSidebar: React.FC<TenantRightSidebarProps> = ({
                 );
 
                 const avatarBgColors = [
-                  'bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400',
+                  'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
                   'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
-                  'bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400',
+                  'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
                   'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
                 ];
                 const avatarBg = avatarBgColors[idx % avatarBgColors.length];
@@ -236,9 +236,9 @@ export const TenantRightSidebar: React.FC<TenantRightSidebarProps> = ({
       </Card>
 
       {/* Card 3: Butuh bantuan? (Consistent with Dashboard Blue KPI Tint) */}
-      <div className="rounded-2xl p-5 border border-blue-100/90 dark:border-blue-900/40 bg-blue-50/40 dark:bg-blue-950/20 shadow-2xs hover:shadow-xs transition-all">
+      <div className="rounded-2xl p-5 border border-rose-/90 dark:border-rose-/40 bg-rose-/40 dark:bg-rose-/20 shadow-2xs hover:shadow-xs transition-all">
         <div className="flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-2xl bg-blue-100 dark:bg-blue-900/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 shadow-2xs">
+          <div className="w-10 h-10 rounded-2xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center shrink-0 shadow-2xs">
             <Headphones className="w-5 h-5" />
           </div>
           <div>
@@ -257,7 +257,7 @@ export const TenantRightSidebar: React.FC<TenantRightSidebarProps> = ({
           <Button
             asChild
             variant="outline"
-            className="w-full h-9 rounded-xl bg-white dark:bg-card border-blue-200/80 dark:border-blue-800 text-blue-600 dark:text-blue-400 hover:bg-blue-50 hover:text-blue-700 text-xs font-semibold shadow-2xs cursor-pointer gap-2"
+            className="w-full h-9 rounded-xl bg-white dark:bg-card border-rose-/80 dark:border-rose- text-rose- dark:text-rose- hover:bg-rose- hover:text-rose- text-xs font-semibold shadow-2xs cursor-pointer gap-2"
           >
             <a
               href="https://wa.me/6281234567890?text=Halo%20Admin%20RentMate,%20saya%20butuh%20bantuan%20terkait%20manajemen%20tenant."

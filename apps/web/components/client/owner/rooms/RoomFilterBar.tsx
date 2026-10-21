@@ -68,7 +68,7 @@ export const RoomFilterBar: React.FC<RoomFilterBarProps> = ({
             onClick={() => setStatusFilter('OCCUPIED')}
             className={`px-3 py-1.5 rounded-lg transition-all cursor-pointer whitespace-nowrap ${
               statusFilter === 'OCCUPIED'
-                ? 'bg-white dark:bg-card text-indigo-600 dark:text-indigo-400 shadow-xs font-semibold'
+                ? 'bg-white dark:bg-card text-rose-600 dark:text-rose-400 shadow-xs font-semibold'
                 : 'text-gray-500 dark:text-muted-foreground hover:text-gray-900'
             }`}
           >

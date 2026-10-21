@@ -80,12 +80,12 @@ export const DashboardRoomsTable: React.FC<DashboardRoomsTableProps> = ({
     <Card className="rounded-2xl border border-slate-200/80 dark:border-border/60 shadow-2xs bg-white dark:bg-card h-full flex flex-col justify-between">
       <CardHeader className="p-5 pb-3 flex flex-row items-center justify-between space-y-0">
         <CardTitle className="font-bold text-slate-900 dark:text-foreground text-sm sm:text-base flex items-center gap-2">
-          <DoorClosed className="w-4 h-4 text-blue-500" />
+          <DoorClosed className="w-4 h-4 text-rose-" />
           <span>{t('dashboard.roomsListTitle')}</span>
         </CardTitle>
         <Link
           href="/rooms"
-          className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
+          className="text-xs font-semibold text-rose- dark:text-rose- hover:underline"
         >
           {t('common.viewAll')}
         </Link>
@@ -103,7 +103,7 @@ export const DashboardRoomsTable: React.FC<DashboardRoomsTableProps> = ({
               >
                 {/* Left: Room Badge + Type & Tenant Name */}
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-xl bg-blue-100 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
+                  <div className="w-9 h-9 rounded-xl bg-rose- dark:bg-rose-/60 text-rose- dark:text-rose- flex items-center justify-center font-bold text-xs shrink-0 shadow-2xs">
                     {room.roomNumber}
                   </div>
                   <div className="min-w-0">
@@ -127,7 +127,7 @@ export const DashboardRoomsTable: React.FC<DashboardRoomsTableProps> = ({
                         {t('dashboard.statusOccupied')}
                       </span>
                     ) : (
-                      <span className="inline-flex items-center text-[10px] font-semibold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/50 border border-blue-200/60 dark:border-blue-800/60 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center text-[10px] font-semibold text-rose- dark:text-rose- bg-rose- dark:bg-rose-/50 border border-rose-/60 dark:border-rose-/60 px-2 py-0.5 rounded-full">
                         {t('dashboard.statusVacant')}
                       </span>
                     )}

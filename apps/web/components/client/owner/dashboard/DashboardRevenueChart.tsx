@@ -103,7 +103,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
         <div className="rounded-xl border border-slate-700/80 bg-slate-900 text-white px-3.5 py-2.5 shadow-xl pointer-events-none">
           <p className="text-xs font-semibold text-slate-400">{label}</p>
           <p className="text-sm font-bold text-white mt-1 flex items-center gap-1.5">
-            <span className="text-blue-400 font-medium">{t('dashboard.revenueTooltip')}</span>
+            <span className="text-rose- font-medium">{t('dashboard.revenueTooltip')}</span>
             <span>{formatCurrency(Number(val))}</span>
           </p>
         </div>
@@ -144,7 +144,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
               onClick={() => setSelectedKostId('ALL')}
               className={`text-xs font-medium cursor-pointer rounded-lg px-2.5 py-2 flex items-center justify-between ${
                 selectedKostId === 'ALL'
-                  ? 'bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400 font-semibold'
+                  ? 'bg-rose- text-rose- dark:bg-rose-/50 dark:text-rose- font-semibold'
                   : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-muted'
               }`}
             >
@@ -160,7 +160,7 @@ export const DashboardRevenueChart: React.FC<DashboardRevenueChartProps> = ({
                   onClick={() => setSelectedKostId(prop.id)}
                   className={`text-xs font-medium cursor-pointer rounded-lg px-2.5 py-2 flex items-center justify-between ${
                     isSelected
-                      ? 'bg-blue-50 text-blue-600 dark:bg-blue-950/50 dark:text-blue-400 font-semibold'
+                      ? 'bg-rose- text-rose- dark:bg-rose-/50 dark:text-rose- font-semibold'
                       : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-muted'
                   }`}
                 >

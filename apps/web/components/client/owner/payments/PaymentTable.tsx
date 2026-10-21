@@ -153,7 +153,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
   if (payments.length === 0) {
     return (
       <div className="rounded-2xl border border-slate-200/80 dark:border-border/60 bg-white dark:bg-card p-12 text-center shadow-2xs">
-        <div className="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-full bg-rose- dark:bg-rose-/40 text-rose- dark:text-rose- flex items-center justify-center mx-auto mb-4">
           <Receipt className="w-7 h-7" />
         </div>
         <h3 className="font-bold text-slate-900 dark:text-foreground text-base">
@@ -244,9 +244,9 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
               const isPending = p.status === 'PENDING';
 
               const avatarBgColors = [
-                'bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400',
+                'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
                 'bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400',
-                'bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400',
+                'bg-rose- text-rose- dark:bg-rose- dark:text-rose-',
                 'bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-400',
               ];
               const avatarBg = avatarBgColors[idx % avatarBgColors.length];
@@ -267,7 +267,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
                 <TableRow
                   key={p.id}
                   className={`hover:bg-slate-50/80 dark:hover:bg-muted/20 transition-colors ${
-                    isSelected ? 'bg-blue-50/40 dark:bg-blue-950/20' : ''
+                    isSelected ? 'bg-rose-/40 dark:bg-rose-/20' : ''
                   }`}
                 >
                   {/* Checkbox Column */}
@@ -398,7 +398,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
                               href={p.snapRedirectUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center gap-2 cursor-pointer font-medium text-blue-600 dark:text-blue-400"
+                              className="flex items-center gap-2 cursor-pointer font-medium text-rose- dark:text-rose-"
                             >
                               <ExternalLink className="w-4 h-4" />
                               <span>{t('payments.actionPaySnap', { defaultValue: 'Buka Link Bayar (Snap)' })}</span>
@@ -476,7 +476,7 @@ export const PaymentTable: React.FC<PaymentTableProps> = ({
               onClick={() => setCurrentPage(page)}
               className={`h-8 w-8 p-0 rounded-lg text-xs font-semibold cursor-pointer ${
                 page === validPage
-                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  ? 'bg-rose- hover:bg-rose- text-white'
                   : 'border-slate-200 dark:border-border text-slate-600 dark:text-slate-300 hover:bg-slate-50'
               }`}
             >

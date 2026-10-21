@@ -38,7 +38,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
         {isDark ? (
           <Sun className="w-4 h-4 text-amber-500 transition-transform duration-300 rotate-0 hover:rotate-45" />
         ) : (
-          <Moon className="w-4 h-4 text-indigo-600 transition-transform duration-300 rotate-0 hover:-rotate-12" />
+          <Moon className="w-4 h-4 text-rose-600 transition-transform duration-300 rotate-0 hover:-rotate-12" />
         )}
       </div>
       {showLabel && (

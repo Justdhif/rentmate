@@ -160,7 +160,7 @@ export const ProfileSettingsForm: React.FC<ProfileSettingsFormProps> = ({
                     className="rounded-2xl object-cover w-full h-full"
                   />
                 )}
-                <AvatarFallback className="rounded-2xl bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-bold text-3xl">
+                <AvatarFallback className="rounded-2xl bg-gradient-to-br from-rose-500 to-rose-700 text-white font-bold text-3xl">
                   {fullName?.charAt(0) || user?.email?.charAt(0) || 'U'}
                 </AvatarFallback>
               </Avatar>
@@ -218,7 +218,7 @@ export const ProfileSettingsForm: React.FC<ProfileSettingsFormProps> = ({
                 {user?.role || t('settings.roleFallback')}
               </Badge>
               {isCloudinary && (
-                <Badge variant="outline" className="bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border-indigo-200 dark:border-indigo-800 text-[10px]">
+                <Badge variant="outline" className="bg-rose-50 dark:bg-rose-950 text-rose-700 dark:text-rose-300 border-rose-200 dark:border-rose-800 text-[10px]">
                   {t('settings.cloudinaryBadge')}
                 </Badge>
               )}
@@ -319,7 +319,7 @@ export const ProfileSettingsForm: React.FC<ProfileSettingsFormProps> = ({
             {setAvatarUrl && (
               <div className="pt-2">
                 <label className="block text-sm font-semibold text-foreground mb-1.5 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-indigo-500" />
+                  <Sparkles className="w-4 h-4 text-rose-500" />
                   {t('settings.avatarLabel')}
                 </label>
                 <p className="text-xs text-muted-foreground mb-3">
@@ -335,7 +335,7 @@ export const ProfileSettingsForm: React.FC<ProfileSettingsFormProps> = ({
                         onClick={() => setAvatarUrl(url)}
                         className={`relative aspect-square rounded-xl p-1 border-2 transition-all cursor-pointer hover:scale-105 ${
                           isSelected
-                            ? 'border-indigo-600 bg-indigo-50 dark:bg-indigo-950/50 shadow-sm ring-2 ring-indigo-500/20'
+                            ? 'border-rose-600 bg-rose-50 dark:bg-rose-950/50 shadow-sm ring-2 ring-rose-500/20'
                             : 'border-border hover:border-slate-300 dark:hover:border-slate-700 bg-card'
                         }`}
                         title={t('settings.avatarSelect', { index: index + 1 })}
@@ -346,7 +346,7 @@ export const ProfileSettingsForm: React.FC<ProfileSettingsFormProps> = ({
                           className="w-full h-full object-contain rounded-lg"
                         />
                         {isSelected && (
-                          <div className="absolute -top-1.5 -right-1.5 bg-indigo-600 text-white rounded-full p-0.5 shadow-xs">
+                          <div className="absolute -top-1.5 -right-1.5 bg-rose-600 text-white rounded-full p-0.5 shadow-xs">
                             <Check className="w-2.5 h-2.5 stroke-[3]" />
                           </div>
                         )}

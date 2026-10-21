@@ -169,7 +169,7 @@ export function LocationSearchInput({
               type="button"
               onClick={onLocateMe}
               disabled={isLocating}
-              className="inline-flex items-center gap-1 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 hover:underline cursor-pointer transition disabled:opacity-50"
+              className="inline-flex items-center gap-1 text-[11px] font-semibold text-rose-600 dark:text-rose-400 hover:text-rose-700 hover:underline cursor-pointer transition disabled:opacity-50"
             >
               {isLocating ? (
                 <Loader2 className="w-3 h-3 animate-spin" />
@@ -184,7 +184,7 @@ export function LocationSearchInput({
 
       {/* Input Field with Pin and Action Icons */}
       <div className="relative">
-        <MapPin className="w-4 h-4 text-indigo-600 dark:text-indigo-400 absolute left-3.5 top-3.5 pointer-events-none" />
+        <MapPin className="w-4 h-4 text-rose-600 dark:text-rose-400 absolute left-3.5 top-3.5 pointer-events-none" />
         <Input
           type="text"
           placeholder={placeholder}
@@ -193,13 +193,13 @@ export function LocationSearchInput({
           onFocus={() => {
             if (searchResults.length > 0) setShowDropdown(true);
           }}
-          className="pl-10 pr-9 h-11 rounded-xl border-slate-200 dark:border-border bg-slate-50/70 dark:bg-muted/30 text-xs font-medium focus-visible:ring-indigo-500"
+          className="pl-10 pr-9 h-11 rounded-xl border-slate-200 dark:border-border bg-slate-50/70 dark:bg-muted/30 text-xs font-medium focus-visible:ring-rose-500"
         />
 
         {/* Right Status / Clear Icon */}
         {isSearching ? (
           <div className="absolute right-3 top-3.5 pointer-events-none">
-            <Loader2 className="w-4 h-4 animate-spin text-indigo-600 dark:text-indigo-400" />
+            <Loader2 className="w-4 h-4 animate-spin text-rose-600 dark:text-rose-400" />
           </div>
         ) : value ? (
           <button
@@ -221,7 +221,7 @@ export function LocationSearchInput({
       {showDropdown && searchResults.length > 0 && (
         <div className="absolute top-[100%] mt-2 left-0 right-0 bg-white dark:bg-card border border-slate-200 dark:border-border rounded-xl shadow-2xl z-50 overflow-hidden max-h-60 overflow-y-auto divide-y divide-slate-100 dark:divide-border/60 animate-in fade-in duration-150">
           <div className="px-3 py-1.5 bg-slate-50 dark:bg-muted/50 text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center justify-between">
-            <span className="flex items-center gap-1 text-indigo-600 dark:text-indigo-400">
+            <span className="flex items-center gap-1 text-rose-600 dark:text-rose-400">
               <Search className="w-3 h-3" />
               <span>Saran Lokasi ({searchResults.length})</span>
             </span>
@@ -241,9 +241,9 @@ export function LocationSearchInput({
                 e.preventDefault();
                 handleSelect(item);
               }}
-              className="w-full text-left p-2.5 hover:bg-indigo-50/80 dark:hover:bg-indigo-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer group"
+              className="w-full text-left p-2.5 hover:bg-rose-50/80 dark:hover:bg-rose-950/40 text-xs flex items-start gap-2.5 transition-colors cursor-pointer group"
             >
-              <div className="w-6 h-6 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
+              <div className="w-6 h-6 rounded-lg bg-rose-50 dark:bg-rose-500/10 text-rose-600 dark:text-rose-400 flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-rose-600 group-hover:text-white transition-colors">
                 <MapPin className="w-3.5 h-3.5" />
               </div>
               <div className="flex-1 min-w-0">

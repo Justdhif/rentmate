@@ -20,13 +20,13 @@ const badgeVariants = cva(
         info: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-400",
         // RentMate Rental & Operational Status Variants
         available: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-400",
-        occupied: "border-blue-200 bg-blue-50 text-blue-700 dark:border-blue-800 dark:bg-blue-950/50 dark:text-blue-400",
+        occupied: "border-rose- bg-rose- text-rose- dark:border-rose- dark:bg-rose-/50 dark:text-rose-",
         maintenance: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950/50 dark:text-amber-400",
         paid: "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-800 dark:bg-emerald-950/50 dark:text-emerald-400",
         pending: "border-amber-200 bg-amber-50 text-amber-700 dark:border-amber-800 dark:bg-amber-950/50 dark:text-amber-400",
         failed: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-400",
         blue: "border-sky-200 bg-sky-50 text-sky-700 dark:border-sky-800 dark:bg-sky-950/50 dark:text-sky-400",
-        purple: "border-indigo-200 bg-indigo-50 text-indigo-700 dark:border-indigo-800 dark:bg-indigo-950/50 dark:text-indigo-400",
+        purple: "border-rose-200 bg-rose-50 text-rose-700 dark:border-rose-800 dark:bg-rose-950/50 dark:text-rose-400",
       },
       size: {
         default: "px-2.5 py-0.5 text-xs",
@@ -68,7 +68,7 @@ function resolveDotColor(children: React.ReactNode): string | null {
   if (typeof children !== "string") return null
   const upper = children.toUpperCase()
   if (!LIVE_STATUS_SET.has(upper)) return null
-  if (upper === "OCCUPIED") return "bg-blue-500"
+  if (upper === "OCCUPIED") return "bg-rose-"
   if (upper === "IN_PROGRESS") return "bg-sky-500"
   if (upper === "ASSIGNED") return "bg-amber-500"
   if (upper === "PENDING") return "bg-amber-500"

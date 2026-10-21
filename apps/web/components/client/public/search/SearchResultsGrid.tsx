@@ -36,7 +36,7 @@ export function SearchResultsGrid({
               onClick={() => setSelectedType(t)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0 ${
                 selectedType === t
-                  ? "bg-indigo-600 text-white shadow-xs"
+                  ? "bg-rose-600 text-white shadow-xs"
                   : "bg-white dark:bg-card border border-slate-200 dark:border-border text-slate-600 dark:text-muted-foreground hover:bg-slate-50 dark:hover:bg-accent"
               }`}
             >

@@ -34,7 +34,7 @@ export function TenantActiveRoomCard({ data }: TenantActiveRoomCardProps) {
           <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 block">
             Biaya Sewa
           </span>
-          <div className="text-xl font-black text-indigo-600 dark:text-indigo-400">
+          <div className="text-xl font-black text-rose-600 dark:text-rose-400">
             Rp {Number(data.assignment?.monthlyRent || 0).toLocaleString("id-ID")}
             <span className="text-xs font-normal text-slate-400">/bln</span>
           </div>

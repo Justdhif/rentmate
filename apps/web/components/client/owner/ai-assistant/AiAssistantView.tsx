@@ -394,7 +394,7 @@ export const AiAssistantView: React.FC = () => {
           {/* Chat Window Header */}
           <div className="h-16 px-5 sm:px-6 border-b border-slate-200/80 dark:border-border/60 flex items-center justify-between bg-slate-50/50 dark:bg-muted/10 shrink-0">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-violet-600 text-white flex items-center justify-center shadow-xs shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 via-rose-600 to-rose-700 text-white flex items-center justify-center shadow-xs shrink-0">
                 <Sparkles className="w-4.5 h-4.5" />
               </div>
               <div className="min-w-0">

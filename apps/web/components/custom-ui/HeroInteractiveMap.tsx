@@ -386,8 +386,8 @@ export function HeroInteractiveMap({
   return (
     <section className="relative overflow-hidden pt-8 pb-16 lg:pt-12 lg:pb-20 border-b border-slate-200/80 dark:border-border/70 bg-slate-50/60 dark:bg-background/95">
       {/* Subtle organic ambient glow */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/5 dark:bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-80 h-80 bg-blue-500/5 dark:bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-rose-500/5 dark:bg-rose-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-10 w-80 h-80 bg-rose-/5 dark:bg-rose-/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* TOP ROW: Trust Header */}
@@ -399,7 +399,7 @@ export function HeroInteractiveMap({
             </span>
             <span>Live Map Explorer</span>
             <span className="text-slate-300 dark:text-muted-foreground">•</span>
-            <span className="text-indigo-600 dark:text-indigo-400 font-bold">
+            <span className="text-rose-600 dark:text-rose-400 font-bold">
               1,200+ Kamar Kos Aktif
             </span>
           </div>
@@ -427,7 +427,7 @@ export function HeroInteractiveMap({
             <div>
               <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-black tracking-tight text-slate-900 dark:text-white leading-[1.15]">
                 Cari & Temukan Kos Nyaman Langsung dari{" "}
-                <span className="text-indigo-600 dark:text-indigo-400">
+                <span className="text-rose-600 dark:text-rose-400">
                   Peta Interaktif.
                 </span>
               </h1>
@@ -481,7 +481,7 @@ export function HeroInteractiveMap({
                         }}
                         className={`text-xs px-3 py-1.5 rounded-lg font-semibold transition cursor-pointer border shrink-0 whitespace-nowrap ${
                           isActive
-                            ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+                            ? "bg-rose-600 text-white border-rose-600 shadow-xs"
                             : "bg-slate-50 dark:bg-muted/40 text-slate-600 dark:text-slate-300 border-slate-200/90 dark:border-border hover:bg-slate-100 dark:hover:bg-muted"
                         }`}
                       >
@@ -523,7 +523,7 @@ export function HeroInteractiveMap({
                         onClick={() => setSelectedType(item.id)}
                         className={`text-xs py-1.5 rounded-lg font-semibold transition cursor-pointer border text-center ${
                           isSelected
-                            ? "bg-indigo-600 text-white border-indigo-600 shadow-xs"
+                            ? "bg-rose-600 text-white border-rose-600 shadow-xs"
                             : "bg-slate-50 dark:bg-muted/40 text-slate-600 dark:text-slate-300 border-slate-200/90 dark:border-border hover:bg-slate-100 dark:hover:bg-muted"
                         }`}
                       >
@@ -538,7 +538,7 @@ export function HeroInteractiveMap({
               <div className="pt-1">
                 <a
                   href="#properties"
-                  className="w-full h-11 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/20 flex items-center justify-center gap-2 transition cursor-pointer"
+                  className="w-full h-11 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-md shadow-rose-600/20 flex items-center justify-center gap-2 transition cursor-pointer"
                 >
                   <Search className="w-4 h-4" />
                   <span>
@@ -552,7 +552,7 @@ export function HeroInteractiveMap({
 
           {/* RIGHT COLUMN: Interactive Leaflet Map Canvas (lg:col-span-7) */}
           <div className="lg:col-span-7 flex flex-col">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 dark:border-border shadow-2xl shadow-indigo-950/10 dark:shadow-black/60 bg-slate-100 dark:bg-card h-[500px] sm:h-[560px] lg:h-full min-h-[520px]">
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200/90 dark:border-border shadow-2xl shadow-rose-950/10 dark:shadow-black/60 bg-slate-100 dark:bg-card h-[500px] sm:h-[560px] lg:h-full min-h-[520px]">
               {/* Map Canvas Container */}
               <div
                 ref={mapContainerRef}
@@ -562,13 +562,13 @@ export function HeroInteractiveMap({
               {/* Top Floating Badge Bar */}
               <div className="absolute top-3 left-3 right-3 flex items-center justify-between pointer-events-none z-[1000]">
                 <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200/90 dark:border-slate-800 shadow-md flex items-center gap-2 pointer-events-auto">
-                  <MapPin className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                  <MapPin className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
                   <span className="text-xs font-bold text-slate-800 dark:text-slate-200">
                     {selectedCity === "Semua Kota"
                       ? "Area: Seluruh Indonesia"
                       : `Area: ${selectedCity}`}
                   </span>
-                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 font-bold">
+                  <span className="text-[11px] px-2 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/80 text-rose-700 dark:text-rose-300 font-bold">
                     {visibleMapProperties.length} Kos
                   </span>
                 </div>
@@ -577,7 +577,7 @@ export function HeroInteractiveMap({
                 {(selectedCity !== "Semua Kota" || searchQuery) && (
                   <button
                     onClick={handleResetView}
-                    className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-slate-800 shadow-md text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition pointer-events-auto cursor-pointer flex items-center gap-1.5"
+                    className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-200/90 dark:border-slate-800 shadow-md text-xs font-semibold text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-400 transition pointer-events-auto cursor-pointer flex items-center gap-1.5"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset Area</span>
@@ -595,7 +595,7 @@ export function HeroInteractiveMap({
                   title="Cari Kos di Dekat Lokasi Saya"
                 >
                   <Navigation
-                    className={`w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400 ${
+                    className={`w-3.5 h-3.5 text-rose-600 dark:text-rose-400 ${
                       isLocating ? "animate-spin" : ""
                     }`}
                   />
@@ -607,7 +607,7 @@ export function HeroInteractiveMap({
                 {/* Legend Pill */}
                 <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200/80 dark:border-slate-800 text-[11px] font-medium text-slate-600 dark:text-slate-400 flex items-center gap-3 pointer-events-auto shadow-xs">
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-indigo-500" />
+                    <span className="w-2 h-2 rounded-full bg-rose-500" />
                     <span>Campur</span>
                   </div>
                   <div className="flex items-center gap-1.5">
@@ -615,7 +615,7 @@ export function HeroInteractiveMap({
                     <span>Putri</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-blue-500" />
+                    <span className="w-2 h-2 rounded-full bg-rose-" />
                     <span>Putra</span>
                   </div>
                 </div>
@@ -668,7 +668,7 @@ export function HeroInteractiveMap({
 
                       <div className="flex items-center justify-between mt-2 pt-1.5 border-t border-slate-100 dark:border-border/60">
                         <div>
-                          <p className="text-xs font-black text-indigo-600 dark:text-indigo-400">
+                          <p className="text-xs font-black text-rose-600 dark:text-rose-400">
                             {formatShortPrice(activeProperty.price)}
                             <span className="text-[10px] text-slate-400 font-normal">
                               /bln
@@ -677,7 +677,7 @@ export function HeroInteractiveMap({
                         </div>
                         <Link
                           href={`/properties/${activeProperty.id}`}
-                          className="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-[11px] font-bold cursor-pointer transition shadow-xs"
+                          className="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-[11px] font-bold cursor-pointer transition shadow-xs"
                         >
                           Lihat Detail
                         </Link>

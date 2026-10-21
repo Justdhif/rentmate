@@ -27,7 +27,7 @@ export function PropertiesDiscoverySection({
     >
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
         <div>
-          <div className="inline-flex items-center gap-1.5 text-indigo-600 dark:text-indigo-400 text-xs font-bold uppercase tracking-wider mb-1">
+          <div className="inline-flex items-center gap-1.5 text-rose-600 dark:text-rose-400 text-xs font-bold uppercase tracking-wider mb-1">
             <Home className="w-4 h-4" />
             <span>Daftar Properti</span>
           </div>
@@ -47,7 +47,7 @@ export function PropertiesDiscoverySection({
               onClick={() => setSelectedType(type)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer shrink-0 ${
                 selectedType === type
-                  ? "bg-indigo-600 text-white shadow-xs"
+                  ? "bg-rose-600 text-white shadow-xs"
                   : "bg-white dark:bg-card border border-slate-200/80 dark:border-border text-slate-600 dark:text-muted-foreground hover:bg-slate-50 dark:hover:bg-accent"
               }`}
             >
