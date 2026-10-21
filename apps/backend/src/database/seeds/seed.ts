@@ -141,6 +141,16 @@ async function runSeed() {
         birthDate: '2002-08-18',
         avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200',
       },
+      {
+        email: 'user@rentmate.com',
+        role: 'USER' as const,
+        fullName: 'Rian Pratama (Pencari Kos)',
+        username: 'rianpratama',
+        phoneNumber: '+628151234567',
+        gender: 'Laki-laki',
+        birthDate: '2001-08-10',
+        avatarUrl: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=200',
+      },
     ];
 
     const usersMap: Record<string, any> = {};

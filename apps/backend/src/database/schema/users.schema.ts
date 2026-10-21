@@ -7,13 +7,14 @@ export const userRoleEnum = pgEnum('user_role', [
   'OWNER',
   'TENANT',
   'TECHNICIAN',
+  'USER',
 ]);
 
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   passwordHash: varchar('password_hash', { length: 255 }).notNull(),
-  role: userRoleEnum('role').default('TENANT').notNull(),
+  role: userRoleEnum('role').default('USER').notNull(),
   isVerified: boolean('is_verified').default(false).notNull(),
   provider: varchar('provider', { length: 50 }).default('local').notNull(),
   providerId: varchar('provider_id', { length: 255 }),

@@ -1,2 +1,2 @@
-export * from '@/components/common/EmptyState';
-export { default } from '@/components/common/EmptyState';
+export * from '@/components/custom-ui/EmptyState';
+export { default } from '@/components/custom-ui/EmptyState';

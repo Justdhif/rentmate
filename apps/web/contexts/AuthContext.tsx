@@ -24,7 +24,7 @@ export interface UserProfile {
 export interface User {
   id: string;
   email: string;
-  role: 'OWNER' | 'ADMIN' | 'TENANT' | 'TECHNICIAN';
+  role: 'OWNER' | 'ADMIN' | 'TENANT' | 'TECHNICIAN' | 'USER';
   profile?: UserProfile;
 }
 
@@ -39,12 +39,28 @@ export interface GoogleAuthResult {
   refreshToken?: string;
 }
 
+export const getRoleRedirectPath = (role?: string): string => {
+  switch (role) {
+    case 'OWNER':
+      return '/owner/dashboard';
+    case 'TENANT':
+      return '/tenant/dashboard';
+    case 'TECHNICIAN':
+      return '/technician/dashboard';
+    case 'ADMIN':
+      return '/admin/dashboard';
+    case 'USER':
+    default:
+      return '/user/dashboard';
+  }
+};
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
-  loginWithGoogle: (idToken: string, role?: 'OWNER' | 'TENANT') => Promise<GoogleAuthResult>;
+  loginWithGoogle: (idToken: string, role?: 'OWNER' | 'TENANT' | 'USER') => Promise<GoogleAuthResult>;
   register: (fullName: string, email: string, password: string, role?: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
@@ -177,13 +193,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setStoredUser(res.data.user);
       setToken(res.data.accessToken);
       setUser(res.data.user);
-      router.push('/dashboard');
+      router.push(getRoleRedirectPath(res.data.user.role));
     }
   };
 
   const loginWithGoogle = async (
     idToken: string,
-    role?: 'OWNER' | 'TENANT',
+    role?: 'OWNER' | 'TENANT' | 'USER',
   ): Promise<GoogleAuthResult> => {
     const res = await api.post<GoogleAuthResult>('/auth/google', {
       idToken,
@@ -200,7 +216,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setStoredUser(res.data.user);
         setToken(res.data.accessToken);
         setUser(res.data.user);
-        router.push('/dashboard');
+        router.push(getRoleRedirectPath(res.data.user.role));
       }
       return res.data;
     }
@@ -212,7 +228,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     fullName: string,
     email: string,
     password: string,
-    role = 'OWNER',
+    role = 'USER',
   ) => {
     const res = await api.post<{ user: User; accessToken: string; refreshToken: string }>(
       '/auth/register',
@@ -224,7 +240,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setStoredUser(res.data.user);
       setToken(res.data.accessToken);
       setUser(res.data.user);
-      router.push('/dashboard');
+      router.push(getRoleRedirectPath(res.data.user.role));
     }
   };
 

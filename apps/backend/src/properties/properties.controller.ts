@@ -16,11 +16,34 @@ import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles.decorator';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
+import { Public } from '../common/decorators/public.decorator';
 
 @Controller('properties')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class PropertiesController {
   constructor(private readonly propertiesService: PropertiesService) {}
+
+  @Get('public/explore')
+  @Public()
+  async explore() {
+    const propertyList = await this.propertiesService.findPublic();
+    return {
+      success: true,
+      data: propertyList,
+    };
+  }
+
+  @Get('public/:id')
+  @Public()
+  async findOnePublic(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+  ) {
+    const property = await this.propertiesService.findOne(id);
+    return {
+      success: true,
+      data: property,
+    };
+  }
 
   @Post()
   @Roles('OWNER', 'ADMIN')

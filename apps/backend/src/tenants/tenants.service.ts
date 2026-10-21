@@ -8,7 +8,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { eq, and, inArray, desc } from 'drizzle-orm';
+import { eq, and, inArray, desc, ne } from 'drizzle-orm';
 import { DRIZZLE } from '../database/database.provider';
 import type { DrizzleDB } from '../database/database.provider';
 import * as schema from '../database/schema';
@@ -63,9 +63,9 @@ export class TenantsService {
       );
     }
 
-    if (tenantUser.role !== 'TENANT') {
+    if (tenantUser.role !== 'TENANT' && tenantUser.role !== 'USER') {
       throw new BadRequestException(
-        `User ${dto.tenantEmail} has role '${tenantUser.role}', only 'TENANT' can be assigned to a room.`,
+        `User ${dto.tenantEmail} has role '${tenantUser.role}', only 'USER' or 'TENANT' can be assigned to a room.`,
       );
     }
 
@@ -107,6 +107,14 @@ export class TenantsService {
         throw new ConflictException(
           'Penyewa ini sudah memiliki kamar aktif lain. Akhiri penempatan sebelumnya terlebih dahulu.',
         );
+      }
+
+      // 3. Promote USER to TENANT if currently regular user
+      if (tenantUser.role === 'USER') {
+        await tx
+          .update(schema.users)
+          .set({ role: 'TENANT', updatedAt: new Date() })
+          .where(eq(schema.users.id, tenantUser.id));
       }
 
       const [newAssignment] = await tx
@@ -193,6 +201,21 @@ export class TenantsService {
           updatedAt: new Date(),
         })
         .where(eq(schema.rooms.id, roomId));
+
+      // Revert role to USER if no remaining active assignments
+      const remainingActive = await tx.query.roomAssignments.findFirst({
+        where: and(
+          eq(schema.roomAssignments.tenantId, activeAssignment.tenantId),
+          eq(schema.roomAssignments.status, 'ACTIVE'),
+          ne(schema.roomAssignments.id, activeAssignment.id),
+        ),
+      });
+      if (!remainingActive) {
+        await tx
+          .update(schema.users)
+          .set({ role: 'USER', updatedAt: new Date() })
+          .where(eq(schema.users.id, activeAssignment.tenantId));
+      }
 
       return assignmentResult;
     });

@@ -103,7 +103,10 @@
     "roleOwnerTitle": "Pemilik Kost",
     "roleOwnerBadge": "Owner",
     "roleOwnerDesc": "Kelola properti, data kamar, tagihan otomatis ke penyewa, dan terima laporan perbaikan.",
-    "roleTenantTitle": "Penyewa Kost",
+    "roleUserTitle": "Pencari Kos",
+    "roleUserBadge": "Pencari Kos",
+    "roleUserDesc": "Jelajahi berbagai pilihan kos, simpan ke wishlist favorit, dan ajukan sewa kamar.",
+    "roleTenantTitle": "Penghuni Kost",
     "roleTenantBadge": "Tenant",
     "roleTenantDesc": "Lihat status sewa kamar, bayar sewa digital via payment gateway, dan laporkan kerusakan fasilitas.",
     "roleContinue": "Lanjutkan ke Dashboard",
@@ -161,6 +164,8 @@
     "revenueChartTitle": "Pendapatan 6 Bulan Terakhir",
     "allKost": "Semua Kost",
     "revenueTooltip": "Pendapatan:",
+    "noRevenueInPeriod": "Belum ada transaksi sewa lunas (PAID)",
+    "allTransactionsZero": "Pendapatan 6 bulan terakhir tercatat IDR 0",
     "currencyMillionSuffix": "jt",
     "roomStatusTitle": "Status Kamar",
     "statusOccupied": "Terisi",
@@ -937,5 +942,38 @@
     "propertyCount": "{{count}} Properti",
     "roomCount": "{{count}} Kamar",
     "showingSaved": "Menampilkan {{count}} item tersimpan"
+  },
+  "errors": {
+    "backToHome": "Kembali ke Beranda",
+    "backToDashboard": "Kembali ke Dashboard",
+    "tryAgain": "Coba Lagi",
+    "contactSupport": "Hubungi Bantuan",
+    "checkStatus": "Cek Status Sistem",
+    "refreshPage": "Muat Ulang Halaman",
+    "404": {
+      "badge": "Error 404",
+      "title": "Halaman Tidak Ditemukan",
+      "desc": "Maaf, halaman atau rute yang Anda cari tidak dapat ditemukan, telah dipindahkan, atau alamat URL yang dimasukkan salah."
+    },
+    "403": {
+      "badge": "Error 403",
+      "title": "Akses Ditolak / Dibatasi",
+      "desc": "Anda tidak memiliki izin atau hak akses untuk melihat halaman ini. Pastikan Anda masuk dengan akun dan peran (role) yang sesuai."
+    },
+    "500": {
+      "badge": "Error 500",
+      "title": "Kesalahan Server Internal",
+      "desc": "Terjadi gangguan tak terduga pada sistem internal kami. Tim pengembang kami telah menerima notifikasi dan sedang menanganinya."
+    },
+    "502": {
+      "badge": "Error 502",
+      "title": "Gerbang Tidak Valid (Bad Gateway)",
+      "desc": "Server upstream kami tidak merespons atau sedang memproses beban permintaan yang tinggi. Silakan coba beberapa saat lagi."
+    },
+    "503": {
+      "badge": "Error 503",
+      "title": "Layanan Sedang Pemeliharaan (Service Unavailable)",
+      "desc": "Sistem RentMate sedang dalam proses pemeliharaan terjadwal atau kapasitas server sedang penuh. Layanan akan segera normal kembali."
+    }
   }
 }

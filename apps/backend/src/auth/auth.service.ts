@@ -220,7 +220,7 @@ export class AuthService {
           .values({
             email: dto.email.toLowerCase().trim(),
             passwordHash,
-            role: dto.role,
+            role: (dto.role as any) || 'USER',
             isVerified: false,
             provider: 'local',
           })

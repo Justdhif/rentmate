@@ -1,6 +1,7 @@
 import { IsEmail, IsEnum, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export enum AllowedRegisterRole {
+  USER = 'USER',
   OWNER = 'OWNER',
   TENANT = 'TENANT',
   TECHNICIAN = 'TECHNICIAN',
@@ -21,7 +22,7 @@ export class RegisterDto {
   fullName: string;
 
   @IsEnum(AllowedRegisterRole, {
-    message: 'Role must be OWNER, TENANT, or TECHNICIAN',
+    message: 'Role must be USER, OWNER, TENANT, or TECHNICIAN',
   })
-  role: AllowedRegisterRole;
+  role?: AllowedRegisterRole;
 }

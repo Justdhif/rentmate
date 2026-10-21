@@ -1,1 +1,1 @@
-﻿export * from '@/components/common/SearchFilterCard';
+﻿export * from '@/components/custom-ui/SearchFilterCard';

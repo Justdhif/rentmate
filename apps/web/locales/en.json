@@ -103,6 +103,9 @@
     "roleOwnerTitle": "Property Owner",
     "roleOwnerBadge": "Owner",
     "roleOwnerDesc": "Manage properties, room data, automated billing to tenants, and receive repair reports.",
+    "roleUserTitle": "Property Seeker",
+    "roleUserBadge": "Seeker",
+    "roleUserDesc": "Explore rooms, save properties to wishlist, and apply for room rental.",
     "roleTenantTitle": "Tenant",
     "roleTenantBadge": "Tenant",
     "roleTenantDesc": "View room rental status, pay rent digitally via payment gateway, and report facility damages.",
@@ -161,6 +164,8 @@
     "revenueChartTitle": "Last 6 Months Revenue",
     "allKost": "All Properties",
     "revenueTooltip": "Revenue:",
+    "noRevenueInPeriod": "No completed payments (PAID) yet",
+    "allTransactionsZero": "Last 6 months revenue recorded as IDR 0",
     "currencyMillionSuffix": "M",
     "roomStatusTitle": "Room Status",
     "statusOccupied": "Occupied",
@@ -937,5 +942,38 @@
     "propertyCount": "{{count}} Properties",
     "roomCount": "{{count}} Rooms",
     "showingSaved": "Showing {{count}} saved items"
+  },
+  "errors": {
+    "backToHome": "Back to Home",
+    "backToDashboard": "Back to Dashboard",
+    "tryAgain": "Try Again",
+    "contactSupport": "Contact Support",
+    "checkStatus": "Check System Status",
+    "refreshPage": "Reload Page",
+    "404": {
+      "badge": "Error 404",
+      "title": "Page Not Found",
+      "desc": "Sorry, the page or destination you are looking for could not be found, may have been removed, or the address URL is incorrect."
+    },
+    "403": {
+      "badge": "Error 403",
+      "title": "Access Forbidden",
+      "desc": "You do not have permission or credentials to access this page. Please make sure you are signed in with the correct role."
+    },
+    "500": {
+      "badge": "Error 500",
+      "title": "Internal Server Error",
+      "desc": "An unexpected error occurred on our servers. Our technical team has been notified and is currently looking into it."
+    },
+    "502": {
+      "badge": "Error 502",
+      "title": "Bad Gateway",
+      "desc": "Our upstream server did not respond or is experiencing heavy traffic loads. Please try again in a few moments."
+    },
+    "503": {
+      "badge": "Error 503",
+      "title": "Service Temporarily Unavailable",
+      "desc": "RentMate services are currently undergoing scheduled maintenance or the server capacity is temporarily exceeded. We will be back shortly."
+    }
   }
 }

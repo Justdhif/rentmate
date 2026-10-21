@@ -120,6 +120,37 @@ export class PropertiesService {
     });
   }
 
+  async findPublic() {
+    const propertyList = await this.db.query.properties.findMany({
+      with: {
+        facilities: true,
+        rooms: true,
+        reviews: true,
+      },
+      orderBy: (properties, { desc }) => [desc(properties.createdAt)],
+    });
+
+    return propertyList.map((prop: any) => {
+      const { rating, reviewCount } = calculateRating(prop.reviews);
+
+      return {
+        ...prop,
+        rating,
+        reviewCount,
+        totalRooms: prop.rooms ? prop.rooms.length : 0,
+        occupiedRooms: prop.rooms
+          ? prop.rooms.filter((r: any) => r.status === 'OCCUPIED').length
+          : 0,
+        availableRooms: prop.rooms
+          ? prop.rooms.filter((r: any) => r.status === 'AVAILABLE').length
+          : 0,
+        maintenanceRooms: prop.rooms
+          ? prop.rooms.filter((r: any) => r.status === 'MAINTENANCE').length
+          : 0,
+      };
+    });
+  }
+
   async findOne(id: string, _userId?: string, _userRole?: string) {
     const property = await this.db.query.properties.findFirst({
       where: eq(schema.properties.id, id),

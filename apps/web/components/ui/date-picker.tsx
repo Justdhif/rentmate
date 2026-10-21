@@ -106,7 +106,7 @@ export function DatePicker({
           id={id}
           disabled={disabled}
           className={cn(
-            "flex h-10 w-full items-center justify-between rounded-xl border border-slate-200 dark:border-border bg-background px-3 py-2 text-xs font-medium ring-offset-background transition-colors placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 text-left cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-800/30",
+            "flex h-10 w-full items-center justify-between rounded-xl border border-slate-200 dark:border-border bg-background px-3 py-2 text-xs font-medium transition-colors placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 text-left cursor-pointer hover:bg-slate-50/50 dark:hover:bg-slate-800/30",
             !selectedDate && "text-muted-foreground",
             className
           )}
